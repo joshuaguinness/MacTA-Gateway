@@ -103,9 +103,17 @@ class ApplyPosition extends React.Component {
         <Grid container spacing={2} justify="center">
           <Grid item>
             <ButtonGroup disableElevation variant="contained" color="primary">
-              <Button>Required Documents</Button>
-              <Button>Additional Questions</Button>
-              <Button>Review Application</Button>
+              <Button onClick={(event) => this.setState({ active: "ReqDoc" })}>
+                Required Documents
+              </Button>
+              <Button
+                onClick={(event) => this.setState({ active: "Questions" })}
+              >
+                Additional Questions
+              </Button>
+              <Button onClick={(event) => this.setState({ active: "Review" })}>
+                Review Application
+              </Button>
             </ButtonGroup>
           </Grid>
         </Grid>
