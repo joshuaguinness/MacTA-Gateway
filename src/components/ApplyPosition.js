@@ -1,5 +1,11 @@
 import React from "react";
-import { Grid, Button, ButtonGroup } from "@material-ui/core";
+import {
+  Grid,
+  Button,
+  ButtonGroup,
+  Typography,
+  TextField,
+} from "@material-ui/core";
 
 class ReqDoc extends React.Component {
   render() {
@@ -15,7 +21,55 @@ class Questions extends React.Component {
   render() {
     return (
       <div>
-        <h1>Addtional Questions</h1>
+        <Grid spacing={2} justify="flex-start">
+          <Grid item>
+            <Typography align="left" variant="h3">
+              Question 1
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography align="left">
+              What do you consider to be your weaknesses?
+            </Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              id="outlined-multiline-static"
+              label="Answer"
+              multiline
+              rows={7}
+              variant="outlined"
+              style={{ width: "1000px" }}
+            />
+          </Grid>
+        </Grid>
+
+        <br />
+        <br />
+        <br />
+
+        <Grid spacing={2} justify="flex-start">
+          <Grid item>
+            <Typography align="left" variant="h3">
+              Question 2
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography align="left">
+              What do you consider to be your strengths?
+            </Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              id="outlined-multiline-static"
+              label="Answer"
+              multiline
+              rows={7}
+              variant="outlined"
+              style={{ width: "1000px" }}
+            />
+          </Grid>
+        </Grid>
       </div>
     );
   }
@@ -35,7 +89,7 @@ class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      temp: true,
+      active: "Questions", // Which page is active?
     };
   }
 
@@ -50,6 +104,11 @@ class ApplyPosition extends React.Component {
               <Button>Review Application</Button>
             </ButtonGroup>
           </Grid>
+        </Grid>
+        <Grid>
+          {this.state.active === "ReqDoc" && <ReqDoc />}
+          {this.state.active === "Questions" && <Questions />}
+          {this.state.active === "Review" && <Review />}
         </Grid>
       </div>
     );
