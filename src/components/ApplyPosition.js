@@ -6,12 +6,23 @@ import {
   Typography,
   TextField,
 } from "@material-ui/core";
+import { DropzoneArea } from "material-ui-dropzone";
 
 class ReqDoc extends React.Component {
   render() {
     return (
       <div>
         <h1>Required Documents</h1>
+        <p>Required: Resume, Transcript</p>
+        <DropzoneArea
+          showFileNamesInPreview={true}
+          showPreviewsInDropzone={false}
+          showPreviews={true}
+        //   acceptedFiles={[".pdf", ".doc", ".docx"]}
+        //   dropzoneText={
+        //     "Drag and drop a file here or click (.pdf, .doc, .docx)"
+        //   }
+        />
       </div>
     );
   }
@@ -93,7 +104,7 @@ class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: "Questions", // Which page is active?
+      active: "ReqDoc", // Which page is active?
     };
   }
 
