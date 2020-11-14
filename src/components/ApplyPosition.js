@@ -18,10 +18,6 @@ class ReqDoc extends React.Component {
           showFileNamesInPreview={true}
           showPreviewsInDropzone={false}
           showPreviews={true}
-        //   acceptedFiles={[".pdf", ".doc", ".docx"]}
-        //   dropzoneText={
-        //     "Drag and drop a file here or click (.pdf, .doc, .docx)"
-        //   }
         />
       </div>
     );
@@ -29,9 +25,20 @@ class ReqDoc extends React.Component {
 }
 
 class Questions extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      questions: [
+        "What do you consider to be your weaknesses?",
+        "What do you consider to be your strengths?",
+      ],
+    };
+  }
+
   render() {
     return (
       <div>
+        <h1>Additional Questions</h1>
         <Grid spacing={2} justify="flex-start">
           <Grid item>
             <Typography align="left" variant="h3">
@@ -39,9 +46,7 @@ class Questions extends React.Component {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography align="left">
-              What do you consider to be your weaknesses?
-            </Typography>
+            <Typography align="left">{this.state.questions[0]}</Typography>
           </Grid>
           <Grid item>
             <TextField
@@ -66,9 +71,7 @@ class Questions extends React.Component {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography align="left">
-              What do you consider to be your strengths?
-            </Typography>
+            <Typography align="left">{this.state.questions[1]}</Typography>
           </Grid>
           <Grid item>
             <TextField
