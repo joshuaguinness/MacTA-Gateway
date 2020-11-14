@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DropzoneArea } from "material-ui-dropzone";
+import "../style/ApplyPosition.css";
 
 class ReqDoc extends React.Component {
   saveFiles(files) {
@@ -15,7 +16,7 @@ class ReqDoc extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={"ReqDoc"}>
         <h1>Required Documents</h1>
         <p>Required: Resume, Transcript</p>
         <DropzoneArea
@@ -37,36 +38,33 @@ class Questions extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={"Questions"}>
         <h1>Additional Questions</h1>
 
         {this.props.appQuestions.map(({ id, q, a }) => (
-          <div key={id}>
-            <Grid spacing={2} justify="flex-start">
+          <div key={id} className={"questionsBody"}>
+            <Grid spacing={2}>
               <Grid item>
-                <Typography align="left" variant="h3">
-                  Question {id}
-                </Typography>
+                <h3>Question {id}</h3>
               </Grid>
               <Grid item>
-                <Typography align="left">{q}</Typography>
+                <p>{q}</p>
               </Grid>
               <br />
               <Grid item>
                 <TextField
                   key={id}
                   id="outlined-multiline-static"
+                  className={"inputField"}
                   label="Answer"
                   multiline
                   rows={7}
                   variant="outlined"
-                  style={{ width: "1000px" }}
                   defaultValue={a}
                   onChange={(event) => this.saveAnswer(id, event)}
                 />
               </Grid>
             </Grid>
-            <br />
           </div>
         ))}
       </div>
@@ -77,19 +75,21 @@ class Questions extends React.Component {
 class Review extends React.Component {
   render() {
     return (
-      <div>
+      <div className={"Review"}>
         <h1>Review Application</h1>
-        <h2>Uploaded Documents</h2>
+        <h2 className={"reviewBody"}>Uploaded Documents</h2>
         {this.props.appFiles.map((file) => (
-          <p key={file.name}>{file.name}</p>
+          <p key={file.name} className={"reviewBody"}>
+            {file.name}
+          </p>
         ))}
-        <h2>Additional Questions</h2>
+        <h2 className={"reviewBody"}>Additional Questions</h2>
         {this.props.appQuestions.map(({ id, q, a }) => (
           <div key={id}>
-            <h3>
+            <h3 className={"reviewBody"}>
               Question {id}: {q}
             </h3>
-            <p>{a}</p>
+            <p className={"reviewBody"}>{a}</p>
           </div>
         ))}
       </div>
@@ -124,77 +124,80 @@ class ApplyPosition extends React.Component {
 
   render() {
     return (
-      <div>
-        <Grid container spacing={2} justify="center">
-          <Grid item>
-            <ButtonGroup disableElevation variant="contained" color="primary">
-              <Button onClick={(event) => this.setState({ active: "ReqDoc" })}>
-                Required Documents
-              </Button>
-              <Button
-                onClick={(event) => this.setState({ active: "Questions" })}
-              >
-                Additional Questions
-              </Button>
-              <Button onClick={(event) => this.setState({ active: "Review" })}>
-                Review Application
-              </Button>
-            </ButtonGroup>
+      <div className={"background"}>
+        <div className={"foreground"}>
+          <Grid container spacing={2}>
+            <Grid item>
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                <Button
+                  onClick={(event) => this.setState({ active: "ReqDoc" })}
+                >
+                  Required Documents
+                </Button>
+                <Button
+                  onClick={(event) => this.setState({ active: "Questions" })}
+                >
+                  Additional Questions
+                </Button>
+                <Button
+                  onClick={(event) => this.setState({ active: "Review" })}
+                >
+                  Review Application
+                </Button>
+              </ButtonGroup>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid>
-          {/* Required Documents Page */}
-          {this.state.active === "ReqDoc" && (
-            <div>
-              <ReqDoc
-                appFiles={this.state.files}
-                parentSaveFiles={this.saveFiles}
-              />
-              <br />
-              <Button
-                disableElevation
-                variant="contained"
-                color="primary"
-                onClick={(event) => this.setState({ active: "Questions" })}
-              >
-                Additional Questions &gt;
-              </Button>
-            </div>
-          )}
+          <Grid>
+            {/* Required Documents Page */}
+            {this.state.active === "ReqDoc" && (
+              <div>
+                <ReqDoc
+                  appFiles={this.state.files}
+                  parentSaveFiles={this.saveFiles}
+                />
+                <Button
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  onClick={(event) => this.setState({ active: "Questions" })}
+                >
+                  Additional Questions &gt;
+                </Button>
+              </div>
+            )}
 
-          {/* Additional Questions Page */}
-          {this.state.active === "Questions" && (
-            <div>
-              <Questions
-                appQuestions={this.state.questions}
-                parentSaveAnswer={this.saveAnswers}
-              />
-              <br />
-              <Button
-                disableElevation
-                variant="contained"
-                color="primary"
-                onClick={(event) => this.setState({ active: "Review" })}
-              >
-                Review Application &gt;
-              </Button>
-            </div>
-          )}
+            {/* Additional Questions Page */}
+            {this.state.active === "Questions" && (
+              <div>
+                <Questions
+                  appQuestions={this.state.questions}
+                  parentSaveAnswer={this.saveAnswers}
+                />
+                <Button
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  onClick={(event) => this.setState({ active: "Review" })}
+                >
+                  Review Application &gt;
+                </Button>
+              </div>
+            )}
 
-          {/* Review Application Page */}
-          {this.state.active === "Review" && (
-            <div>
-              <Review
-                appFiles={this.state.files}
-                appQuestions={this.state.questions}
-              />
-              <br />
-              <Button disableElevation variant="contained" color="primary">
-                Submit
-              </Button>
-            </div>
-          )}
-        </Grid>
+            {/* Review Application Page */}
+            {this.state.active === "Review" && (
+              <div>
+                <Review
+                  appFiles={this.state.files}
+                  appQuestions={this.state.questions}
+                />
+                <Button disableElevation variant="contained" color="primary">
+                  Submit
+                </Button>
+              </div>
+            )}
+          </Grid>
+        </div>
       </div>
     );
   }
