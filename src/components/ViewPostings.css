@@ -32,3 +32,13 @@
 	width: 100%;
 	height: 86vh;
 }
+
+.dSpacing {
+	margin-left: 15%;
+	margin-right: 0;
+}
+
+.spacingControl {
+	padding-right: 150px !important;
+	width: 150px !important;
+}

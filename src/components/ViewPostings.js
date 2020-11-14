@@ -1,6 +1,6 @@
 import React from "react";
 import './ViewPostings.css';
-import {Grid, Box, Button} from '@material-ui/core';
+import {Grid, Box, Button, Select, MenuItem, InputLabel, FormControl, Checkbox, ListItemText, Input  } from '@material-ui/core';
 
 class Thumbnail extends React.Component {
 	
@@ -47,6 +47,108 @@ class PostDetails extends React.Component {
 	}
 }
 
+
+
+function FilterDropdowns() {
+  	const [deptName, setDeptName] = React.useState([]);
+  	const [hrs, setHrs] = React.useState([]);
+  	const [resp, setResp] = React.useState([]);
+
+  	const depts = [
+  		'Department of Chemistry and Chemical Biology',
+  		'Department of Computing and Software',
+  		'Department of Economics',
+  		'Department of English and Cultural Studies',
+  		'Faculty of Engineering',
+	];
+
+	const hours = [
+  		'0-5',
+  		'5-10',
+  		'15-20',
+  		'Full Time',
+	];
+
+	const responsibilities = [
+  		'Project/Lab Development',
+  		'Tutorial Instruction',
+  		'Equiptment Maintenence',
+  		'Invigillating',
+	];
+
+  	const handleChangeDept = (event) => {
+    	setDeptName(event.target.value);
+  	};
+
+  	const handleChangeHrs = (event) => {
+    	setHrs(event.target.value);
+  	};
+
+  	const handleChangeResp = (event) => {
+    	setResp(event.target.value);
+  	};
+
+	return (
+		<div>
+		<div className="dSpacing">
+		<FormControl className="spacingControl">
+			<InputLabel id="dept-label">Department</InputLabel>
+			<Select labelId="dept-label" multiple
+          	value={deptName}
+          	onChange={handleChangeDept}
+          	input={<Input />}
+          	renderValue={(selected) => selected.join(', ')}>
+				{depts.map((name) => (
+	   			 <MenuItem key={name} value={name}>
+	      			<Checkbox checked={deptName.indexOf(name) > -1} />
+	      			<ListItemText primary={name} />
+	    		</MenuItem>
+	  			))}
+			</Select>
+			</FormControl>
+			<FormControl className="spacingControl">
+			<InputLabel id="hr-label">Hours</InputLabel>
+			<Select labelId="hr-label" multiple
+          	value={hrs}
+          	onChange={handleChangeHrs}
+          	input={<Input />}
+          	renderValue={(selected) => selected.join(', ')}>
+				{hours.map((name) => (
+	   			 <MenuItem key={name} value={name}>
+	      			<Checkbox checked={hrs.indexOf(name) > -1} />
+	      			<ListItemText primary={name} />
+	    		</MenuItem>
+	  			))}
+			</Select>
+			</FormControl>
+			<FormControl className="spacingControl">
+			<InputLabel id="resp-label">Responsibilities</InputLabel>
+			<Select labelId="resp-label" multiple
+          	value={resp}
+          	onChange={handleChangeResp}
+          	input={<Input />}
+          	renderValue={(selected) => selected.join(', ')}>
+				{responsibilities.map((name) => (
+	   			 <MenuItem key={name} value={name}>
+	      			<Checkbox checked={resp.indexOf(name) > -1} />
+	      			<ListItemText primary={name} />
+	    		</MenuItem>
+	  			))}
+			</Select>
+			</FormControl>
+			<FormControl className="spacingControl">
+			<InputLabel id="sl-label">Shortlist Only</InputLabel>
+			<Select labelId="sl-label">
+				<MenuItem value={false}>No</MenuItem>
+	  			<MenuItem value={true}>Yes</MenuItem>
+	  			
+			</Select>
+			</FormControl>
+		</div>
+		</div>
+	);
+}
+
 class ViewPostings extends React.Component {
 
   constructor(props) {
@@ -57,15 +159,17 @@ class ViewPostings extends React.Component {
   			 title: "ENGINEER 1P13 EPIC Lab IAI",
   			 dept: "Faculty of Engineering",
   			 hours: "Full Time",
-  			 resp: "Code",
-  			 desc: "placeholder"},
+  			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence",
+  			 desc: "placeholder",
+  			 shortlist: false},
 
   			 {id: 1,
-  			 title: "ENGINEER 1P13 EPIC Lab IAI",
-  			 dept: "Faculty of Engineering",
-  			 hours: "Part Time",
-  			 resp: "CAD",
-  			 desc: "placeholder"}
+  			 title: "English 2AA3 Teaching Assistant",
+  			 dept: "Department of English and Cultural Studies",
+  			 hours: "5-10",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 shortlist: false}
   			],
 
   				currDetails: []};
@@ -91,17 +195,18 @@ class ViewPostings extends React.Component {
       	<Box component="div" className="foreground">
       		<Grid container spacing={0}>
         		<Grid item xs={12}>
-        			<Box component="div" className="pOutline filters">Filters</Box>
+        			<Box component="div" className="pOutline filters">
+        				<FilterDropdowns />
+        			</Box>
         		</Grid>
         		<Grid item xs={4}>
-         			<Box component="div" className="pOutline posts">Posts
+         			<Box component="div" className="pOutline posts">
          				<Thumbnail posts={this.state.posts} displayDetails={this.changeCurrentDetails} />
          			</Box>
         		</Grid>
         		<Grid item xs={8}>
-        			<Box component="div" className="pOutline details">Details
+        			<Box component="div" className="pOutline details"> test
         				<PostDetails cDetails={this.state.currDetails} />
-        				test
         			</Box>
         		</Grid>
       		</Grid>
