@@ -38,7 +38,7 @@ class Thumbnail extends React.Component {
 
 		if(toShow.length === 0) toShow = toShow.concat(this.props.posts);
 
-		if(onSL) toShow = temp.filter(posts => posts.shortlist === true);
+		if(onSL) toShow = toShow.filter(posts => posts.shortlist === true);
 
 		return(
 			<div>
@@ -102,6 +102,7 @@ class FilterDropdowns extends React.Component {
 		hours : [
   		'0-5',
   		'5-10',
+  		'10-15',
   		'15-20',
   		'Full Time',
 		],
@@ -268,7 +269,7 @@ class ViewPostings extends React.Component {
   			 {id: 5,
   			 title: "English 1AA3 Teaching Assistant",
   			 dept: "Department of English and Cultural Studies",
-  			 hours: "5-10",
+  			 hours: "0-5",
   			 resp: "Tutorial Instruction, Invigillating",
   			 desc: "placeholder",
   			 shortlist: false},
