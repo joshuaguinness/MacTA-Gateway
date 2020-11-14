@@ -9,15 +9,21 @@ import {
 import { DropzoneArea } from "material-ui-dropzone";
 
 class ReqDoc extends React.Component {
+  saveFiles(files) {
+    this.props.parentSaveFiles(files);
+  }
+
   render() {
     return (
       <div>
         <h1>Required Documents</h1>
         <p>Required: Resume, Transcript</p>
         <DropzoneArea
+          initialFiles={this.props.appFiles}
           showFileNamesInPreview={true}
           showPreviewsInDropzone={false}
           showPreviews={true}
+          onChange={(files) => this.saveFiles(files)}
         />
       </div>
     );
@@ -74,8 +80,9 @@ class Review extends React.Component {
       <div>
         <h1>Review Application</h1>
         <h2>Uploaded Documents</h2>
-        <p>sample-resume.pdf</p>
-        <p>sample-cover-letter.pdf</p>
+        {this.props.files.map((file) => (
+          <p>{file.name}</p>
+        ))}
         <h2>Additional Questions</h2>
         <h3>What do you consider to be your weaknesses?</h3>
         <p>This is a sample answer</p>
@@ -90,8 +97,10 @@ class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
     this.saveAnswers = this.saveAnswers.bind(this);
+    this.saveFiles = this.saveFiles.bind(this);
     this.state = {
       active: "ReqDoc", // Which page is active?
+      files: [],
       questions: [
         { id: 1, q: "What do you consider to be your weaknesses?", a: "" },
         { id: 2, q: "What do you consider to be your strengths?", a: "" },
@@ -103,6 +112,10 @@ class ApplyPosition extends React.Component {
     let newQuestions = this.state.questions;
     newQuestions[index - 1].a = answer;
     this.setState({ questions: newQuestions });
+  }
+
+  saveFiles(fileList) {
+    this.setState({ files: fileList });
   }
 
   render() {
@@ -129,7 +142,10 @@ class ApplyPosition extends React.Component {
           {/* Required Documents Page */}
           {this.state.active === "ReqDoc" && (
             <div>
-              <ReqDoc />
+              <ReqDoc
+                appFiles={this.state.files}
+                parentSaveFiles={this.saveFiles}
+              />
               <br />
               <Button
                 disableElevation
@@ -164,7 +180,7 @@ class ApplyPosition extends React.Component {
           {/* Review Application Page */}
           {this.state.active === "Review" && (
             <div>
-              <Review />
+              <Review files={this.state.files} />
               <br />
               <Button disableElevation variant="contained" color="primary">
                 Submit
