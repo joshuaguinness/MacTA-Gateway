@@ -80,14 +80,18 @@ class Review extends React.Component {
       <div>
         <h1>Review Application</h1>
         <h2>Uploaded Documents</h2>
-        {this.props.files.map((file) => (
+        {this.props.appFiles.map((file) => (
           <p>{file.name}</p>
         ))}
         <h2>Additional Questions</h2>
-        <h3>What do you consider to be your weaknesses?</h3>
-        <p>This is a sample answer</p>
-        <h3>What do you consider to be your strengths?</h3>
-        <p>This is a sample answer</p>
+        {this.props.appQuestions.map(({ id, q, a }) => (
+          <div key={id}>
+            <h3>
+              Question {id}: {q}
+            </h3>
+            <p>{a}</p>
+          </div>
+        ))}
       </div>
     );
   }
@@ -180,7 +184,10 @@ class ApplyPosition extends React.Component {
           {/* Review Application Page */}
           {this.state.active === "Review" && (
             <div>
-              <Review files={this.state.files} />
+              <Review
+                appFiles={this.state.files}
+                appQuestions={this.state.questions}
+              />
               <br />
               <Button disableElevation variant="contained" color="primary">
                 Submit
