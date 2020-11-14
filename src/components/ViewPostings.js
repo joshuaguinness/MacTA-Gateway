@@ -38,15 +38,17 @@ class Thumbnail extends React.Component {
 
 		if(toShow.length === 0) toShow = toShow.concat(this.props.posts);
 
-		if(onSL) toShow = temp.filter(posts => posts.SL === true);
+		if(onSL) toShow = temp.filter(posts => posts.shortlist === true);
 
 		return(
 			<div>
          		 {toShow.map(
          		 ({id, title, dept, desc, hours, resp}) =>
-         			<Button key={id} data-index={id} onClick={this.handleChange}>
-         		 		<p> {title} </p>
-         				<p> {dept} </p>
+         			<Button className="postButton" key={id} data-index={id} onClick={this.handleChange}>
+         				<div className="info">
+         		 			<p className="title"> <b> {title} </b> </p>
+         					<p className="department"> <em> {dept} </em> </p>
+         				</div>
          		 	</Button>
          		 )}
          	</div>
@@ -55,13 +57,26 @@ class Thumbnail extends React.Component {
 }
 
 class PostDetails extends React.Component {
+
+	constructor(props){
+		super(props);
+		this.toggleSl = this.toggleSl.bind(this);
+		this.state = {message:"Add to Shortlist", slVal : false}
+	}
+
+	toggleSl(e) {
+		this.setState({slVal: !this.state.slVal})
+		this.props.updateSlVal(e.currentTarget.dataset.index)
+	}
+
 	render() {
 		return(
 			<div>
 			{this.props.cDetails.map(
-         		({id, title, dept, desc, hours, resp}) =>
+         		({id, title, dept, desc, hours, resp, sl}) =>
          			<div key={id}>
          				<p> {title} </p>
+         				<Button key={id} data-index={id} onClick={this.toggleSl}> {this.state.message}  </Button>
          				<p> {desc} </p>
          				<p> {hours} </p>
          				<p> {resp} </p>
@@ -207,6 +222,7 @@ class ViewPostings extends React.Component {
   	this.updateRespFilter = this.updateRespFilter.bind(this)
   	this.updateHoursFilter = this.updateHoursFilter.bind(this)
   	this.updateOnSL = this.updateOnSL.bind(this)
+  	this.updateSlVal = this.updateSlVal.bind(this)
 
   	this.state = {posts: [
   			{id: 0,
@@ -280,7 +296,6 @@ class ViewPostings extends React.Component {
   }
 
   changeCurrentDetails(id) {
-  	console.log(id)
   	let postsHolder = this.state.posts;
   	let detailsHolder = this.state.currDetails;
   	detailsHolder[0] = postsHolder[id];
@@ -304,7 +319,15 @@ class ViewPostings extends React.Component {
   	this.setState({onSL : e});
   }
 
+  updateSlVal(e) {
+  	let postHolder = this.state.posts;
+  	postHolder[e]['shortlist'] = !postHolder[e]['shortlist']
+  	console.log(postHolder[e]['shortlist'])
+  	this.setState({postHolder})
+  }
+
   render() {
+
     return (
       <Box component="div" className="background">
       	<Box component="div" className="foreground">
@@ -333,7 +356,10 @@ class ViewPostings extends React.Component {
         		</Grid>
         		<Grid item xs={8}>
         			<Box component="div" className="pOutline details"> <br />
-        				<PostDetails cDetails={this.state.currDetails} />
+        				<PostDetails 
+        				cDetails={this.state.currDetails} 
+        				updateSlVal={this.updateSlVal}
+        				/>
         			</Box>
         		</Grid>
       		</Grid>
