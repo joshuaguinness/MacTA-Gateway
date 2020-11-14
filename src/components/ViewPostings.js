@@ -47,106 +47,130 @@ class PostDetails extends React.Component {
 	}
 }
 
+class FilterDropdowns extends React.Component {
 
+	constructor(props){
+		super(props);
+		this.state = { depts : [
+  		'Chemistry and Chemical Biology',
+  		'Computing and Software',
+  		'Economics',
+  		'English and Cultural Studies',
+  		'Engineering',
+		],
 
-function FilterDropdowns() {
-  	const [deptName, setDeptName] = React.useState([]);
-  	const [hrs, setHrs] = React.useState([]);
-  	const [resp, setResp] = React.useState([]);
-
-  	const depts = [
-  		'Department of Chemistry and Chemical Biology',
-  		'Department of Computing and Software',
-  		'Department of Economics',
-  		'Department of English and Cultural Studies',
-  		'Faculty of Engineering',
-	];
-
-	const hours = [
+		hours : [
   		'0-5',
   		'5-10',
   		'15-20',
   		'Full Time',
-	];
+		],
 
-	const responsibilities = [
+		responsibilities : [
   		'Project/Lab Development',
   		'Tutorial Instruction',
   		'Equiptment Maintenence',
   		'Invigillating',
-	];
+		],
 
-  	const handleChangeDept = (event) => {
-    	setDeptName(event.target.value);
-  	};
+		deptName : [],
+		numHours : [],
+		respList : [],
+		SL : false };
 
-  	const handleChangeHrs = (event) => {
-    	setHrs(event.target.value);
-  	};
+		this.handleDeptChange = this.handleDeptChange.bind(this);
+		this.handleHoursChange = this.handleHoursChange.bind(this);
+		this.handleRespChange = this.handleRespChange.bind(this);
+		this.handleSLChange = this.handleSLChange.bind(this);
+	}
 
-  	const handleChangeResp = (event) => {
-    	setResp(event.target.value);
-  	};
+	handleDeptChange(e) {
+		this.setState({deptName: e.target.value})
+		this.props.updateDeptFilter(e.target.value)
+	}
+	handleHoursChange(e) {
+		this.setState({numHours: e.target.value})
+		//this.props.updateDeptFilter(e.target.value)
+	}
+	handleRespChange(e) {
+		this.setState({respList: e.target.value})
+		//this.props.updateDeptFilter(e.target.value)
+	}
+	handleSLChange(e) {
+		this.setState({SL: e.target.value})
+		//this.props.updateDeptFilter(e.target.value)
+	}
 
-	return (
-		<div>
-		<div className="dSpacing">
-		<FormControl className="spacingControl">
-			<InputLabel id="dept-label">Department</InputLabel>
-			<Select labelId="dept-label" multiple
-          	value={deptName}
-          	onChange={handleChangeDept}
-          	input={<Input />}
-          	renderValue={(selected) => selected.join(', ')}>
-				{depts.map((name) => (
-	   			 <MenuItem key={name} value={name}>
-	      			<Checkbox checked={deptName.indexOf(name) > -1} />
-	      			<ListItemText primary={name} />
-	    		</MenuItem>
-	  			))}
-			</Select>
-			</FormControl>
-			<FormControl className="spacingControl">
-			<InputLabel id="hr-label">Hours</InputLabel>
-			<Select labelId="hr-label" multiple
-          	value={hrs}
-          	onChange={handleChangeHrs}
-          	input={<Input />}
-          	renderValue={(selected) => selected.join(', ')}>
-				{hours.map((name) => (
-	   			 <MenuItem key={name} value={name}>
-	      			<Checkbox checked={hrs.indexOf(name) > -1} />
-	      			<ListItemText primary={name} />
-	    		</MenuItem>
-	  			))}
-			</Select>
-			</FormControl>
-			<FormControl className="spacingControl">
-			<InputLabel id="resp-label">Responsibilities</InputLabel>
-			<Select labelId="resp-label" multiple
-          	value={resp}
-          	onChange={handleChangeResp}
-          	input={<Input />}
-          	renderValue={(selected) => selected.join(', ')}>
-				{responsibilities.map((name) => (
-	   			 <MenuItem key={name} value={name}>
-	      			<Checkbox checked={resp.indexOf(name) > -1} />
-	      			<ListItemText primary={name} />
-	    		</MenuItem>
-	  			))}
-			</Select>
-			</FormControl>
-			<FormControl className="spacingControl">
-			<InputLabel id="sl-label">Shortlist Only</InputLabel>
-			<Select labelId="sl-label">
-				<MenuItem value={false}>No</MenuItem>
-	  			<MenuItem value={true}>Yes</MenuItem>
-	  			
-			</Select>
-			</FormControl>
-		</div>
-		</div>
-	);
+	render() {
+		return (
+			<div>
+				<div className="dSpacing">
+					<FormControl className="spacingControl">
+						<InputLabel id="dept-label">Department</InputLabel>
+						<Select labelId="dept-label" multiple
+			          	input={<Input />}
+			          	value={this.state.deptName}
+			          	onChange={this.handleDeptChange}
+			          	renderValue={(selected) => selected.join(', ')}
+			          	>
+							{this.state.depts.map((name) => (
+				   			 	<MenuItem key={name} value={name} >
+		              				<Checkbox checked={this.state.deptName.indexOf(name) > -1} />
+		              				<ListItemText primary={name} />
+		            			</MenuItem>
+				  			))}
+						</Select>
+					</FormControl>
+				
+					<FormControl className="spacingControl">
+						<InputLabel id="hours-label">Weekly Hours</InputLabel>
+						<Select labelId="hours-label" multiple
+			          	input={<Input />}
+			          	value={this.state.numHours}
+			          	onChange={this.handleHoursChange}
+			          	renderValue={(selected) => selected.join(', ')}
+			          	>
+							{this.state.hours.map((name) => (
+				   			 	<MenuItem key={name} value={name} >
+		              				<Checkbox checked={this.state.numHours.indexOf(name) > -1} />
+		              				<ListItemText primary={name} />
+		            			</MenuItem>
+				  			))}
+						</Select>
+					</FormControl>
+
+					<FormControl className="spacingControl">
+						<InputLabel id="resp-label">Responsibilities</InputLabel>
+						<Select labelId="resp-label" multiple
+			          	input={<Input />}
+			          	value={this.state.respList}
+			          	onChange={this.handleRespChange}
+			          	renderValue={(selected) => selected.join(', ')}
+			          	>
+							{this.state.responsibilities.map((name) => (
+				   			 	<MenuItem key={name} value={name} >
+		              				<Checkbox checked={this.state.respList.indexOf(name) > -1} />
+		              				<ListItemText primary={name} />
+		            			</MenuItem>
+				  			))}
+						</Select>
+					</FormControl>
+
+					<FormControl className="spacingControl">
+						<InputLabel id="resp-label">Shortlist Only?</InputLabel>
+						<Select labelId="resp-label" 
+			          	input={<Input />}
+			          	value={this.state.SL}
+			          	onChange={this.handleSLChange}
+			          	>
+				   			<MenuItem value={false}> No </MenuItem>
+				   			<MenuItem value={true}> Yes </MenuItem>
+						</Select>
+					</FormControl>
+				</div>
+			</div>
+		);
+	}
 }
 
 class ViewPostings extends React.Component {
@@ -154,6 +178,7 @@ class ViewPostings extends React.Component {
   constructor(props) {
   	super(props);
   	this.changeCurrentDetails = this.changeCurrentDetails.bind(this)
+  	this.updateDeptFilter = this.updateDeptFilter.bind(this)
   	this.state = {posts: [
   			{id: 0,
   			 title: "ENGINEER 1P13 EPIC Lab IAI",
@@ -189,6 +214,10 @@ class ViewPostings extends React.Component {
   	this.setState({detailsHolder});
   }
 
+  updateDeptFilter(e) {
+  	console.log(e)
+  }
+
   render() {
     return (
       <Box component="div" className="background">
@@ -196,7 +225,7 @@ class ViewPostings extends React.Component {
       		<Grid container spacing={0}>
         		<Grid item xs={12}>
         			<Box component="div" className="pOutline filters">
-        				<FilterDropdowns />
+        				<FilterDropdowns updateDeptFilter={this.updateDeptFilter}/>
         			</Box>
         		</Grid>
         		<Grid item xs={4}>
