@@ -81,7 +81,7 @@ class Review extends React.Component {
         <h1>Review Application</h1>
         <h2>Uploaded Documents</h2>
         {this.props.appFiles.map((file) => (
-          <p>{file.name}</p>
+          <p key={file.name}>{file.name}</p>
         ))}
         <h2>Additional Questions</h2>
         {this.props.appQuestions.map(({ id, q, a }) => (
