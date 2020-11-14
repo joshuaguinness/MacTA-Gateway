@@ -98,6 +98,17 @@ class Review extends React.Component {
     return (
       <div>
         <h1>Review Application</h1>
+        <h2>Uploaded Documents</h2>
+        <p>sample-resume.pdf</p>
+        <p>sample-cover-letter.pdf</p>
+        <h2>Additional Questions</h2>
+        <h3>What do you consider to be your weaknesses?</h3>
+        <p>This is a sample answer</p>
+        <h3>What do you consider to be your strengths?</h3>
+        <p>This is a sample answer</p>
+        <Button disableElevation variant="contained" color="primary">
+          Submit
+        </Button>
       </div>
     );
   }
@@ -107,7 +118,7 @@ class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: "ReqDoc", // Which page is active?
+      active: "Review", // Which page is active?
     };
   }
 
