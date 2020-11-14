@@ -1,6 +1,7 @@
 import React from "react";
 import './ViewPostings.css';
-import {Grid, Box, Button, Select, MenuItem, InputLabel, FormControl, Checkbox, ListItemText, Input  } from '@material-ui/core';
+import {Grid, Box, Button, Select, MenuItem, 
+	InputLabel, FormControl, Checkbox, ListItemText, Input  } from '@material-ui/core';
 
 class Thumbnail extends React.Component {
 	
@@ -15,9 +16,33 @@ class Thumbnail extends React.Component {
 	}
 
 	render() {
+
+		var temp = this.props.posts
+		var toShow = [];
+		var deptFilters = this.props.deptFilters;
+		var hoursFilters = this.props.hoursFilters;
+		var respFilters = this.props.respFilters;
+		var onSL = this.props.SLFilters;
+
+			deptFilters.forEach(function(name){
+				toShow = toShow.concat(temp.filter(posts => posts.dept.includes(name) === true));
+			});
+
+			hoursFilters.forEach(function(name){
+				toShow = toShow.concat(temp.filter(posts => posts.hours.includes(name) === true));
+			});
+
+			respFilters.forEach(function(name){
+				toShow = toShow.concat(temp.filter(posts => posts.resp.includes(name) === true));
+			});
+
+		if(toShow.length === 0) toShow = toShow.concat(this.props.posts);
+
+		if(onSL) toShow = temp.filter(posts => posts.SL === true);
+
 		return(
 			<div>
-         		 {this.props.posts.map(
+         		 {toShow.map(
          		 ({id, title, dept, desc, hours, resp}) =>
          			<Button key={id} data-index={id} onClick={this.handleChange}>
          		 		<p> {title} </p>
@@ -90,15 +115,15 @@ class FilterDropdowns extends React.Component {
 	}
 	handleHoursChange(e) {
 		this.setState({numHours: e.target.value})
-		//this.props.updateDeptFilter(e.target.value)
+		this.props.updateHoursFilter(e.target.value)
 	}
 	handleRespChange(e) {
 		this.setState({respList: e.target.value})
-		//this.props.updateDeptFilter(e.target.value)
+		this.props.updateRespFilter(e.target.value)
 	}
 	handleSLChange(e) {
 		this.setState({SL: e.target.value})
-		//this.props.updateDeptFilter(e.target.value)
+		this.props.updateOnSL(e.target.value)
 	}
 
 	render() {
@@ -179,8 +204,44 @@ class ViewPostings extends React.Component {
   	super(props);
   	this.changeCurrentDetails = this.changeCurrentDetails.bind(this)
   	this.updateDeptFilter = this.updateDeptFilter.bind(this)
+  	this.updateRespFilter = this.updateRespFilter.bind(this)
+  	this.updateHoursFilter = this.updateHoursFilter.bind(this)
+  	this.updateOnSL = this.updateOnSL.bind(this)
+
   	this.state = {posts: [
   			{id: 0,
+  			 title: "CHEM 1A03 Teaching Assistant",
+  			 dept: "Department of Chemistry and Chemical Biology",
+  			 hours: "15-20",
+  			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence",
+  			 desc: "placeholder",
+  			 shortlist: false},
+
+  			 {id: 1,
+  			 title: "COMPSCI 2XA3 Teaching Assistant",
+  			 dept: "Department of Computing and Software",
+  			 hours: "10-15",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 shortlist: false},
+
+  			 {id: 2,
+  			 title: "COMPSCI 2XB3 Teaching Assistant",
+  			 dept: "Department of Computing and Software",
+  			 hours: "10-15",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 shortlist: false},
+
+  			 {id: 3,
+  			 title: "ECON 1B03 Teaching Assistant",
+  			 dept: "Department of Economics",
+  			 hours: "5-10",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 shortlist: false},
+
+  			 {id: 4,
   			 title: "ENGINEER 1P13 EPIC Lab IAI",
   			 dept: "Faculty of Engineering",
   			 hours: "Full Time",
@@ -188,7 +249,15 @@ class ViewPostings extends React.Component {
   			 desc: "placeholder",
   			 shortlist: false},
 
-  			 {id: 1,
+  			 {id: 5,
+  			 title: "English 1AA3 Teaching Assistant",
+  			 dept: "Department of English and Cultural Studies",
+  			 hours: "5-10",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 shortlist: false},
+
+  			 {id: 6,
   			 title: "English 2AA3 Teaching Assistant",
   			 dept: "Department of English and Cultural Studies",
   			 hours: "5-10",
@@ -197,7 +266,11 @@ class ViewPostings extends React.Component {
   			 shortlist: false}
   			],
 
-  				currDetails: []};
+  			currDetails: [],
+  			deptFilters: [],
+  			hoursFilters: [],
+  			respFilters: [],
+  			onSL: false,};
 
 
   	let postsHolder = this.state.posts;
@@ -216,6 +289,19 @@ class ViewPostings extends React.Component {
 
   updateDeptFilter(e) {
   	console.log(e)
+  	this.setState({deptFilters : e});
+  }
+  updateHoursFilter(e) {
+  	console.log(e)
+  	this.setState({hoursFilters : e});
+  }
+  updateRespFilter(e) {
+  	console.log(e)
+  	this.setState({respFilters : e});
+  }
+  updateOnSL(e) {
+  	console.log(e)
+  	this.setState({onSL : e});
   }
 
   render() {
@@ -225,16 +311,28 @@ class ViewPostings extends React.Component {
       		<Grid container spacing={0}>
         		<Grid item xs={12}>
         			<Box component="div" className="pOutline filters">
-        				<FilterDropdowns updateDeptFilter={this.updateDeptFilter}/>
+        				<FilterDropdowns 
+        					updateDeptFilter={this.updateDeptFilter}
+        					updateHoursFilter={this.updateHoursFilter}
+        					updateRespFilter={this.updateRespFilter}
+        					updateOnSL={this.updateOnSL}
+    					/>
         			</Box>
         		</Grid>
         		<Grid item xs={4}>
          			<Box component="div" className="pOutline posts">
-         				<Thumbnail posts={this.state.posts} displayDetails={this.changeCurrentDetails} />
+         				<Thumbnail 
+         					posts={this.state.posts} 
+         					displayDetails={this.changeCurrentDetails} 
+         					deptFilters={this.state.deptFilters} 
+         					hoursFilters={this.state.hoursFilters} 
+         					respFilters={this.state.respFilters} 
+         					SLFilters={this.state.onSL} 
+         				/>
          			</Box>
         		</Grid>
         		<Grid item xs={8}>
-        			<Box component="div" className="pOutline details"> test
+        			<Box component="div" className="pOutline details"> <br />
         				<PostDetails cDetails={this.state.currDetails} />
         			</Box>
         		</Grid>
