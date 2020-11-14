@@ -84,10 +84,6 @@ class Questions extends React.Component {
             />
           </Grid>
         </Grid>
-        <br />
-        <Button disableElevation variant="contained" color="primary">
-          Review Application &gt;{" "}
-        </Button>
       </div>
     );
   }
@@ -106,9 +102,6 @@ class Review extends React.Component {
         <p>This is a sample answer</p>
         <h3>What do you consider to be your strengths?</h3>
         <p>This is a sample answer</p>
-        <Button disableElevation variant="contained" color="primary">
-          Submit
-        </Button>
       </div>
     );
   }
@@ -118,7 +111,7 @@ class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: "Review", // Which page is active?
+      active: "ReqDoc", // Which page is active?
     };
   }
 
@@ -143,9 +136,44 @@ class ApplyPosition extends React.Component {
           </Grid>
         </Grid>
         <Grid>
-          {this.state.active === "ReqDoc" && <ReqDoc />}
-          {this.state.active === "Questions" && <Questions />}
-          {this.state.active === "Review" && <Review />}
+          {this.state.active === "ReqDoc" && (
+            <div>
+              <ReqDoc />
+              <br />
+              <Button
+                disableElevation
+                variant="contained"
+                color="primary"
+                onClick={(event) => this.setState({ active: "Questions" })}
+              >
+                Additional Questions &gt;
+              </Button>
+            </div>
+          )}
+
+          {this.state.active === "Questions" && (
+            <div>
+              <Questions />
+              <br />
+              <Button
+                disableElevation
+                variant="contained"
+                color="primary"
+                onClick={(event) => this.setState({ active: "Review" })}
+              >
+                Review Application &gt;
+              </Button>
+            </div>
+          )}
+          {this.state.active === "Review" && (
+            <div>
+              <Review />
+              <br />
+              <Button disableElevation variant="contained" color="primary">
+                Submit
+              </Button>
+            </div>
+          )}
         </Grid>
       </div>
     );
