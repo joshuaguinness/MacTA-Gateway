@@ -25,65 +25,44 @@ class ReqDoc extends React.Component {
 }
 
 class Questions extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      questions: [
-        "What do you consider to be your weaknesses?",
-        "What do you consider to be your strengths?",
-      ],
-    };
+  saveAnswer(id, e) {
+    this.props.parentSaveAnswer(id, e.target.value);
   }
 
   render() {
     return (
       <div>
         <h1>Additional Questions</h1>
-        <Grid spacing={2} justify="flex-start">
-          <Grid item>
-            <Typography align="left" variant="h3">
-              Question 1
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography align="left">{this.state.questions[0]}</Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              id="outlined-multiline-static"
-              label="Answer"
-              multiline
-              rows={7}
-              variant="outlined"
-              style={{ width: "1000px" }}
-            />
-          </Grid>
-        </Grid>
 
-        <br />
-        <br />
-        <br />
-
-        <Grid spacing={2} justify="flex-start">
-          <Grid item>
-            <Typography align="left" variant="h3">
-              Question 2
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography align="left">{this.state.questions[1]}</Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              id="outlined-multiline-static"
-              label="Answer"
-              multiline
-              rows={7}
-              variant="outlined"
-              style={{ width: "1000px" }}
-            />
-          </Grid>
-        </Grid>
+        {this.props.appQuestions.map(({ id, q, a }) => (
+          <div key={id}>
+            <Grid spacing={2} justify="flex-start">
+              <Grid item>
+                <Typography align="left" variant="h3">
+                  Question {id}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography align="left">{q}</Typography>
+              </Grid>
+              <br />
+              <Grid item>
+                <TextField
+                  key={id}
+                  id="outlined-multiline-static"
+                  label="Answer"
+                  multiline
+                  rows={7}
+                  variant="outlined"
+                  style={{ width: "1000px" }}
+                  defaultValue={a}
+                  onChange={(event) => this.saveAnswer(id, event)}
+                />
+              </Grid>
+            </Grid>
+            <br />
+          </div>
+        ))}
       </div>
     );
   }
@@ -110,9 +89,20 @@ class Review extends React.Component {
 class ApplyPosition extends React.Component {
   constructor(props) {
     super(props);
+    this.saveAnswers = this.saveAnswers.bind(this);
     this.state = {
       active: "ReqDoc", // Which page is active?
+      questions: [
+        { id: 1, q: "What do you consider to be your weaknesses?", a: "" },
+        { id: 2, q: "What do you consider to be your strengths?", a: "" },
+      ],
     };
+  }
+
+  saveAnswers(index, answer) {
+    let newQuestions = this.state.questions;
+    newQuestions[index - 1].a = answer;
+    this.setState({ questions: newQuestions });
   }
 
   render() {
@@ -136,6 +126,7 @@ class ApplyPosition extends React.Component {
           </Grid>
         </Grid>
         <Grid>
+          {/* Required Documents Page */}
           {this.state.active === "ReqDoc" && (
             <div>
               <ReqDoc />
@@ -151,9 +142,13 @@ class ApplyPosition extends React.Component {
             </div>
           )}
 
+          {/* Additional Questions Page */}
           {this.state.active === "Questions" && (
             <div>
-              <Questions />
+              <Questions
+                appQuestions={this.state.questions}
+                parentSaveAnswer={this.saveAnswers}
+              />
               <br />
               <Button
                 disableElevation
@@ -165,6 +160,8 @@ class ApplyPosition extends React.Component {
               </Button>
             </div>
           )}
+
+          {/* Review Application Page */}
           {this.state.active === "Review" && (
             <div>
               <Review />
