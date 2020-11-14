@@ -5,6 +5,7 @@ class ViewPostings extends React.Component {
     return (
       <div>
         <p>View Postings Page</p>
+        <p> placeholder </p>
       </div>
     );
   }
