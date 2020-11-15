@@ -3,6 +3,9 @@ import './ReviewApplications.css';
 import {Box, Button, Grid, Tabs, Tab, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { pdfjs } from 'react-pdf';
+import myPdf from './static/pdf/comp_sci_-_two_page_sample.pdf'
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -81,7 +84,7 @@ class BodyTabs extends React.Component {
 
       			<div className="alignRight">
   			      <TabPanel value={this.state.value} index={0}>
-			        Item One
+			        <AppBody />
 			      </TabPanel>
 			      <TabPanel value={this.state.value} index={1}>
 			        Item Two
@@ -105,7 +108,66 @@ class BodyTabs extends React.Component {
   			</div>
   		);
   	}
+}
 
+class Sample extends React.Component {
+  state = {
+    numPages: null,
+  }
+
+  onFileChange = (event) => {
+    this.setState({
+      file: event.target.files[0],
+    });
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+  }
+
+  render() {
+    const { numPages } = this.state;
+    return (
+          <div className="docs">
+            <Document
+              file={this.props.file}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+              options={{
+    				cMapUrl: `//cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/cmaps/`,
+    				cMapPacked: true,
+  				}}
+            >
+              {
+                Array.from(
+                  new Array(numPages),
+                  (el, index) => (
+                    <Page
+                      key={`page_${index + 1}`}
+                      pageNumber={index + 1}
+                    />
+                  ),
+                )
+              }
+            </Document>
+          </div>
+    );
+  }
+}
+
+class AppBody extends React.Component {
+	
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		const f1 = myPdf;
+		return(
+			<div className="overview">
+				<Sample file={f1}/>
+			</div>
+		);
+	}
 }
 
 class ReviewApplications extends React.Component {
@@ -125,6 +187,9 @@ class ReviewApplications extends React.Component {
             				Back to List
             			</Button>
           			</NavLink>
+          		</Grid>
+          		<Grid item xs={11}>
+          		    <p> Name </p>
           		</Grid>
           	</Grid>
           	<BodyTabs />
