@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import CreatePosting from "./components/CreatePosting.js";
 import ViewPostings from "./components/ViewPostings.js";
 import ApplyPosition from "./components/ApplyPosition.js";
+import Profile from "./components/Profile.js";
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 
 class App extends React.Component {
@@ -21,6 +21,9 @@ class App extends React.Component {
           <NavLink exact to="/applyposition">
             Apply for Position
           </NavLink>
+          <NavLink exact to="/profile">
+            Profile
+          </NavLink>
 
           <Route exact path="/createposting">
             <CreatePosting />
@@ -30,6 +33,9 @@ class App extends React.Component {
           </Route>
           <Route exact path="/applyposition">
             <ApplyPosition />
+          </Route>
+          <Route exact path="/profile">
+            <Profile />
           </Route>
         </Router>
       </div>
