@@ -11,3 +11,23 @@
 	margin: 0 auto;
     position: relative;
 }
+
+.FixPadding {
+	margin: 0 !important;
+}
+
+.Title {
+	text-align: center;
+	padding-left: 0;
+}
+
+.linkButton {
+	width: 25%;
+	height: 200%;
+}
+
+.linkText {
+	font-size: 15px;
+	color: black;
+	text-decoration: none;
+}

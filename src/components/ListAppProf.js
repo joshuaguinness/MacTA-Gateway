@@ -1,8 +1,8 @@
 import React from "react";
 import './ListAppProf.css';
 import ReviewApplications from "./ReviewApplications.js";
-import {Box} from '@material-ui/core';
-import {NavLink } from "react-router-dom";
+import {Box, Button, Grid} from '@material-ui/core';
+import {NavLink} from "react-router-dom";
 
 
 class ListAppProf extends React.Component {
@@ -10,9 +10,18 @@ class ListAppProf extends React.Component {
     return (
       <Box component="div" className="background">
       	<Box component="div" className="foreground">
-      		<NavLink exact to="/reviewapplications1P13">
-            	ENGINEER 1P13
-          	</NavLink>
+      		<Grid className="FixPadding" container spacing={3}>
+      			<Grid item xs={12}>
+      				<h2 className="Title"> Your Postings: </h2>
+      			</Grid>
+      			<Grid item xs={12}>
+      				<NavLink className="linkText" exact to="/reviewapplications1P13">
+      					<Button className="linkButton" variant="contained" exact to="/reviewapplications1P13">
+            				ENGINEER 1P13
+            			</Button>
+          			</NavLink>
+          		</Grid>
+          	</Grid>
       	</Box>
       </Box>
     );
