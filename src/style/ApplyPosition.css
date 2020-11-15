@@ -1,0 +1,33 @@
+.background {
+  background-color: #7a003c;
+  height: 100vh;
+}
+
+.foreground {
+  background-color: #ffffff;
+  width: 97%;
+  height: 94%;
+  top: 3%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ReqDoc,
+.Questions,
+.Review {
+  padding: 3%;
+}
+
+/* Additional Questions Component */
+.inputField {
+  width: 97%;
+}
+
+.questionsBody {
+  text-align: left;
+}
+
+/* Review Application Component */
+.reviewBody {
+    text-align: left;
+}
