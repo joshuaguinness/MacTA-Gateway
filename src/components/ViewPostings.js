@@ -61,11 +61,23 @@ class PostDetails extends React.Component {
 	constructor(props){
 		super(props);
 		this.toggleSl = this.toggleSl.bind(this);
-		this.state = {message:"Add to Shortlist", slVal : false}
+		this.state = {message:"Add to Shortlist", slVal : false, bgColor : "lightgray"}
 	}
 
 	toggleSl(e) {
+		
+
+		if(!this.state.slVal){
+			this.setState({message: "Remove From Shortlist"})
+			this.setState({bgColor : "lightblue"})
+		}
+		if(this.state.slVal){
+			this.setState({message: "Add to Shortlist"})
+			this.setState({bgColor : "lightgray"})
+		}
+
 		this.setState({slVal: !this.state.slVal})
+
 		this.props.updateSlVal(e.currentTarget.dataset.index)
 	}
 
@@ -74,12 +86,40 @@ class PostDetails extends React.Component {
 			<div>
 			{this.props.cDetails.map(
          		({id, title, dept, desc, hours, resp, sl}) =>
-         			<div key={id}>
-         				<p> {title} </p>
-         				<Button key={id} data-index={id} onClick={this.toggleSl}> {this.state.message}  </Button>
-         				<p> {desc} </p>
-         				<p> {hours} </p>
-         				<p> {resp} </p>
+         			<div className="outer" key={id}>
+         				<Grid container spacing={0}>
+         					<Grid item xs={12}>
+		         				<p className="cTitle"> <b> {title} </b> </p>
+		         			</Grid>
+		         			<Grid item xs={6}>
+		         				<Button className="slButton" variant="contained" key={id} data-index={id} onClick={this.toggleSl} style={{backgroundColor:this.state.bgColor}}> {this.state.message}  </Button>
+		         			</Grid>
+		         			<Grid item xs={6}>
+		         				<Button className="applyButton" variant="contained"> Apply Now! </Button>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<p className="cDescTitle"> <b> Desctiption: </b> </p>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<p className="cDesc"> {desc} </p>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<p className="cHoursTitle"> <b> Weekly Hours: </b> </p>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<ul className="cHours">
+		         					<li > {hours} hours </li>
+		         				</ul>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<p className="cHoursTitle"> <b> Responsibilities: </b> </p>
+		         			</Grid>
+		         			<Grid item xs={12}>
+		         				<ul className="cResp">
+		         					<li > {resp} </li>
+		         				</ul>
+         					</Grid>
+         				</Grid>
          			</div>
          		)}
 			</div>
@@ -263,7 +303,7 @@ class ViewPostings extends React.Component {
   			 dept: "Faculty of Engineering",
   			 hours: "Full Time",
   			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence",
-  			 desc: "placeholder",
+  			 desc: "The Epic Lab is an experiential laboratory designed to allow first year students the chance to have hands on experience with the topics discussed in the 1P13 course. This includes Engineering Design, Software Engineering and Materials Engineering. You will be reporting to multiple professors within the faculty of Engineering during your time as an instructor.  ",
   			 shortlist: false},
 
   			 {id: 5,

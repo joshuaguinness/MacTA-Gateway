@@ -26,11 +26,13 @@
 .posts {
 	width: 100%;
 	height: 86vh;
+	overflow-y: scroll;
 }
 
 .details {
 	width: 100%;
 	height: 86vh;
+	overflow-y: scroll;
 }
 
 .dSpacing {
@@ -65,8 +67,61 @@
 	text-align: left;
 }
 
+.cTitle {
+	font-size: 25px;
+	display: inline-block;
+	width:100%;
+	text-align: center;
+}
+
 .department {
 	display: inline-block;
 	width:100%;
 	text-align: left;
+}
+
+.slButton {
+	background-color: lightgray;
+	width :75%;
+	height : 200%;
+}
+
+.applyButton {
+	background-color: lightgray;
+	width :75%;
+		height : 200%;
+}
+
+.cDescTitle {
+	padding-top: 75px;
+	padding-left: 60px;
+	text-align: left;
+	font-size: 18px;
+}
+
+.cDesc {
+	padding-left: 60px;
+	padding-right: 60px;
+	text-align: left;
+	text-align: justify;
+}
+
+.cResp {
+	padding-left: 100px;
+	padding-right: 60px;
+	text-align: left;
+	text-align: justify;
+}
+
+.cHours {
+	padding-left: 100px;
+	padding-right: 60px;
+	text-align: left;
+	text-align: justify;
+}
+
+.cHoursTitle {
+	padding-left: 60px;
+	text-align: left;
+	font-size: 18px;
 }
