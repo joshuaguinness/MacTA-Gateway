@@ -3,8 +3,12 @@ import {
   Grid,
   Button,
   ButtonGroup,
-  Typography,
   TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@material-ui/core";
 import { DropzoneArea } from "material-ui-dropzone";
 import "../style/ApplyPosition.css";
@@ -109,6 +113,8 @@ class ApplyPosition extends React.Component {
         { id: 1, q: "What do you consider to be your weaknesses?", a: "" },
         { id: 2, q: "What do you consider to be your strengths?", a: "" },
       ],
+      dialog: false,
+      jobTitle: "SFWRENG 2FA3 Undergrad TA",
     };
   }
 
@@ -122,10 +128,15 @@ class ApplyPosition extends React.Component {
     this.setState({ files: fileList });
   }
 
+  dialogToggle() {
+    this.setState({ dialog: !this.state.dialog });
+  }
+
   render() {
     return (
       <div className={"background"}>
         <div className={"foreground"}>
+          <h1>{this.state.jobTitle} Application</h1>
           <Grid container spacing={2}>
             <Grid container item justify="center">
               <ButtonGroup disableElevation variant="contained" color="primary">
@@ -191,9 +202,42 @@ class ApplyPosition extends React.Component {
                   appFiles={this.state.files}
                   appQuestions={this.state.questions}
                 />
-                <Button disableElevation variant="contained" color="primary">
+                <Button
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  onClick={this.dialogToggle.bind(this)}
+                >
                   Submit
                 </Button>
+
+                {/* Success Message */}
+                <Dialog
+                  open={this.state.dialog}
+                  onClose={this.dialogToggle.bind(this)}
+                  aria-labelledby="alter-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Application Submitted"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Your application for the {this.state.jobTitle} position
+                      has been successfully submitted. You may now leave this
+                      page.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={this.dialogToggle.bind(this)}
+                      color="primary"
+                      autofocus
+                    >
+                      Close
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div>
             )}
           </Grid>
