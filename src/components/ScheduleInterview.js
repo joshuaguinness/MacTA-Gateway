@@ -21,6 +21,7 @@ class SideBar extends React.Component {
     super(props);
     this.state = {
       interview: {
+        id: 0,
         job: "",
         candidate: "",
         location: "",
@@ -28,6 +29,7 @@ class SideBar extends React.Component {
         end: new Date(),
       },
       dialog: false,
+      showUpcoming: false,
     };
   }
 
@@ -101,12 +103,21 @@ class SideBar extends React.Component {
 
   saveInterview() {
     let interview = { ...this.state.interview };
+    interview.id = this.props.getNextId();
     this.props.addInterview(interview);
     this.dialogToggle();
   }
 
   dialogToggle() {
     this.setState({ dialog: !this.state.dialog });
+  }
+
+  upcomingToggle() {
+    this.setState({ showUpcoming: !this.state.showUpcoming });
+  }
+
+  deleteInterview(id) {
+    this.props.deleteInterview(id);
   }
 
   render() {
@@ -215,41 +226,117 @@ class SideBar extends React.Component {
         </div>
 
         {/* Submit Button */}
-        <Button
-          disableElevation
-          variant="contained"
-          color="primary"
-          onClick={() => this.saveInterview()}
-        >
-          Schedule
-        </Button>
+        <div className={"section"}>
+          <Button
+            disableElevation
+            variant="contained"
+            color="primary"
+            onClick={() => this.saveInterview()}
+          >
+            Schedule
+          </Button>
 
-        {/* Success Message */}
-        <Dialog
-          open={this.state.dialog}
-          onClose={this.dialogToggle.bind(this)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Interview Scheduled"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Your interview has been successfully scheduled. You may now leave
-              this page.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={this.dialogToggle.bind(this)}
-              color="primary"
-              autoFocus
-            >
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+          {/* Success Message */}
+          <Dialog
+            open={this.state.dialog}
+            onClose={this.dialogToggle.bind(this)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Interview Scheduled"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Your interview has been successfully scheduled. You may now
+                leave this page.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.dialogToggle.bind(this)}
+                color="primary"
+                autoFocus
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+
+        {/* View Scheduled Interviews */}
+        <div className={"section"}>
+          <Button
+            disableElevation
+            variant="contained"
+            onClick={this.upcomingToggle.bind(this)}
+          >
+            View Upcoming Interviews
+          </Button>
+
+          {/* Scheduled Interviews List */}
+          <Dialog
+            open={this.state.showUpcoming}
+            onClose={this.upcomingToggle.bind(this)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Upcoming Interviews"}
+            </DialogTitle>
+            <DialogContent>
+              {this.props.interviews.map((interview) => (
+                <DialogContentText
+                  id="alert-dialog-description"
+                  className={"body"}
+                  key={interview.id}
+                >
+                  <Grid container spacing={2} justify="space-between">
+                    <Grid item>
+                      Candidate: {interview.candidate}
+                      <br />
+                      Position: {interview.job}
+                      <br />
+                      Date: {interview.start.toDateString()}
+                      <br />
+                      Time:{" "}
+                      {interview.start.getHours() +
+                        ":" +
+                        (interview.start.getMinutes() < 10 ? "0" : "") +
+                        interview.start.getMinutes()}{" "}
+                      -{" "}
+                      {interview.end.getHours() +
+                        ":" +
+                        (interview.end.getMinutes() < 10 ? "0" : "") +
+                        interview.end.getMinutes()}
+                      <br />
+                      Location: {interview.location}
+                      <br />
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        disableElevation
+                        variant="secondary"
+                        onClick={() => this.deleteInterview(interview.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </DialogContentText>
+              ))}
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={this.upcomingToggle.bind(this)}
+                color="primary"
+                autoFocus
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     );
   }
@@ -260,10 +347,14 @@ class ScheduleInterview extends React.Component {
     super(props);
     this.setDate = this.setDate.bind(this);
     this.addInterview = this.addInterview.bind(this);
+    this.getNextId = this.getNextId.bind(this);
+    this.deleteInterview = this.deleteInterview.bind(this);
     this.state = {
       dateTime: new Date(),
+      idCounter: 1,
       interviews: [
         {
+          id: 1,
           job: "ENGINEER 1P13 Undergrad TA",
           candidate: "Joshua Guinness",
           location: "ITB 163",
@@ -290,6 +381,19 @@ class ScheduleInterview extends React.Component {
     this.setState({ interviews: [...newInterviews, interview] });
   }
 
+  deleteInterview(id) {
+    let newInterviews = this.state.interviews.filter(
+      (interview) => interview.id !== id
+    );
+    this.setState({ interviews: newInterviews });
+  }
+
+  getNextId() {
+    let nextId = this.state.idCounter + 1;
+    this.setState({ idCounter: nextId });
+    return nextId;
+  }
+
   render() {
     return (
       <div className={"background"}>
@@ -311,6 +415,8 @@ class ScheduleInterview extends React.Component {
                 jobs={this.state.jobs}
                 candidates={this.state.candidates}
                 addInterview={this.addInterview}
+                getNextId={this.getNextId}
+                deleteInterview={this.deleteInterview}
               />
             </div>
           </div>
