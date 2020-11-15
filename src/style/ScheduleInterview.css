@@ -1,0 +1,43 @@
+.background {
+  background-color: #7a003c;
+  height: 100vh;
+}
+
+.foreground {
+  background-color: #ffffff;
+  width: 97%;
+  height: 94%;
+  top: 3%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.body {
+  display: flex;
+  height: 93%;
+}
+
+.calendar {
+  width: 75%;
+  height: 100%;
+}
+
+.scheduler {
+  width: 25%;
+  height: 100%;
+}
+
+.datesub {
+  font-size: 13pt;
+}
+
+.datemain {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 50pt;
+}
+
+.section {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
