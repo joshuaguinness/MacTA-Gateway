@@ -86,6 +86,12 @@ class SideBar extends React.Component {
     this.setState({ interview: newCandidate });
   }
 
+  setLocation(location) {
+    let newLocation = this.state.interview;
+    newLocation.location = location;
+    this.setState({ interview: newLocation });
+  }
+
   render() {
     return (
       <div>
@@ -173,6 +179,16 @@ class SideBar extends React.Component {
               ))}
             </Select>
           </FormControl>
+        </div>
+
+        {/* Location Section */}
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="Location"
+            variant="outlined"
+            onChange={(e) => this.setLocation(e.target.value)}
+          />
         </div>
       </div>
     );
