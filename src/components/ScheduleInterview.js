@@ -1,5 +1,6 @@
 import React from "react";
 import Calendar from "react-material-ui-calendar";
+import { TextField, Grid } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
 class SideBar extends React.Component {
@@ -37,12 +38,37 @@ class SideBar extends React.Component {
   render() {
     return (
       <div>
-        <p>
-          {this.getMonthName(this.props.dateTime.getMonth())}{" "}
-          {this.props.dateTime.getFullYear()}
-        </p>
-        <p>{this.props.dateTime.getDate()}</p>
-        <p>{this.getWeekdayName(this.props.dateTime.getDay())}</p>
+        {/* Date Section */}
+        <div>
+          <p>
+            {this.getMonthName(this.props.dateTime.getMonth())}{" "}
+            {this.props.dateTime.getFullYear()}
+          </p>
+          <p>{this.props.dateTime.getDate()}</p>
+          <p>{this.getWeekdayName(this.props.dateTime.getDay())}</p>
+        </div>
+
+        {/* Time Section */}
+        <div>
+          <Grid container spacing={5} justify="center">
+            <Grid item>
+              <TextField
+                id="time"
+                label="Start"
+                type="time"
+                defaultValue="12:00"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="time"
+                label="End"
+                type="time"
+                defaultValue="13:00"
+              />
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
