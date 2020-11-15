@@ -25,22 +25,25 @@ class CreatePosting extends React.Component {
       startTime: "",
       requiredDocuments: "",
       additionalApplicationQuestions: [],
-      active: "ReqDoc",
+      active: "NamePosting",
       dialog: false,
     };
 
     this.handleCourseTitleChange = this.handleCourseTitleChange.bind(this);
     this.handleCourseCodeChange = this.handleCourseCodeChange.bind(this);
+    this.handleCourseDescriptionChange = this.handleCourseDescriptionChange.bind(this);
   }
 
   handleCourseTitleChange(title) {
-    console.log(title);
     this.setState({ courseTitle: title });
   }
 
   handleCourseCodeChange(code) {
-    console.log(code);
     this.setState({ courseCode: code });
+  }
+
+  handleCourseDescriptionChange(desc) {
+    this.setState({ courseDescription: desc});
   }
 
   dialogToggle() {
@@ -117,7 +120,7 @@ class CreatePosting extends React.Component {
             {/* Post Details Page */}
             {this.state.active === "PostDetails" && (
               <div>
-                <PostDetails />
+                <PostDetails courseDescription={this.state.courseDescription} updateCourseDescription={this.handleCourseDescriptionChange}/>
                 <Button
                   disableElevation
                   variant="contained"
@@ -269,11 +272,29 @@ class NamePosting extends React.Component {
 }
 
 class PostDetails extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.changeCourseDescription = this.changeCourseDescription.bind(this);
+  }
+
+  changeCourseDescription(e) {
+    this.props.updateCourseDescription(e.target.value);
+  }
+
   render() {
     return (
       <div>
         <h3>Please add your posting details in the text box below.</h3>
-        <p>Post Details</p>
+        <TextField
+          id="postdetails"
+          label="Post Details"
+          multiline
+          row={6}
+          defaultValue={this.props.courseDescription}
+          variant="outlined"
+          onChange={this.changeCourseDescription}
+        />
       </div>
     );
   }
