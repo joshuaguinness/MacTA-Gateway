@@ -4,6 +4,19 @@ import { TextField, Grid } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
 class SideBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      interview: {
+        job: "",
+        candidate: "",
+        location: "",
+        start: new Date(),
+        end: new Date(),
+      },
+    };
+  }
+
   getMonthName(month) {
     let monthNames = [
       "January",
@@ -35,6 +48,25 @@ class SideBar extends React.Component {
     return dayNames[day];
   }
 
+  setTime(id, time) {
+    let newTime = this.state.interview;
+    if (id === "start") {
+      newTime.start.setHours(parseInt(time.slice(0, 2)));
+      newTime.start.setMinutes(parseInt(time.slice(3, 5)));
+      newTime.start.setSeconds(0);
+      newTime.start.setMilliseconds(0);
+      this.setState({ interview: newTime });
+    } else if (id === "end") {
+      newTime.end.setHours(parseInt(time.slice(0, 2)));
+      newTime.end.setMinutes(parseInt(time.slice(3, 5)));
+      newTime.end.setSeconds(0);
+      newTime.end.setMilliseconds(0);
+      this.setState({ interview: newTime });
+    }
+
+    console.log(this.state.interview);
+  }
+
   render() {
     return (
       <div>
@@ -56,7 +88,11 @@ class SideBar extends React.Component {
                 id="time"
                 label="Start"
                 type="time"
-                defaultValue="12:00"
+                defaultValue={
+                  this.state.interview.start.getHours() +
+                  ":" +
+                  this.state.interview.start.getMinutes()
+                }
               />
             </Grid>
             <Grid item>
@@ -64,7 +100,13 @@ class SideBar extends React.Component {
                 id="time"
                 label="End"
                 type="time"
-                defaultValue="13:00"
+                defaultValue={
+                  this.state.interview.end.getHours() +
+                  1 +
+                  ":" +
+                  this.state.interview.end.getMinutes()
+                }
+                onChange={(e) => this.setTime("end", e.target.value)}
               />
             </Grid>
           </Grid>
@@ -82,7 +124,7 @@ class ScheduleInterview extends React.Component {
       dateTime: new Date(),
       interviews: [
         {
-          job: "ENGINEER 1P13 Undergra TA",
+          job: "ENGINEER 1P13 Undergrad TA",
           candidate: "Joshua Guinness",
           location: "ITB 163",
           start: new Date("November 24, 2020 16:30:00"),
