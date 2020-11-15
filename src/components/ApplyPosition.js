@@ -127,7 +127,7 @@ class ApplyPosition extends React.Component {
       <div className={"background"}>
         <div className={"foreground"}>
           <Grid container spacing={2}>
-            <Grid item>
+            <Grid container item justify="center">
               <ButtonGroup disableElevation variant="contained" color="primary">
                 <Button
                   onClick={(event) => this.setState({ active: "ReqDoc" })}
