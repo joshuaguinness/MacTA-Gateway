@@ -68,6 +68,7 @@
 	max-height: 73vh;
 	height: 73vh;
 	max-width: 45vw;
+	width: 45vw;
 	background-color: gray;
 
 	outline-color:gray;
@@ -76,8 +77,12 @@
 }
 
 .Outer2 {
+	margin-left: 22%;
+}
+
+.appBar2 {
 	max-width: 45vw;
-	margin-left: 25%;
+	max-height: 6vh;
 }
 
 .title2 {
@@ -90,4 +95,28 @@
 	padding-left: 15px;
 	padding-top: 15px;
 	min-height: 75vh;
+}
+
+.rightBeside {
+	display: inline-block;
+	max-width: 30vw;
+	margin-right: 0;
+}
+
+.needToFit {
+	margin-left: -5%;
+	width: 105%;
+	max-height: 60vh;
+	height: 60vh;
+}
+
+.ql-toolbar {
+	max-width: 25vw;
+}
+
+.ql-container {
+	max-height: 55vh;
+	max-width: 25vw;
+	overflow-y: scroll;
+	height: 55vh !important;
 }

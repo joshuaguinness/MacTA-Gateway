@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { pdfjs } from 'react-pdf';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Resume from './static/pdf/comp_sci_-_two_page_sample.pdf'
 import Transcript from './static/pdf/transcript.pdf'
 
@@ -168,8 +170,11 @@ class AppBody extends React.Component {
 		const f1 = Resume;
 		const f2 = Transcript;
 		return(
+			<div>
 			<div className = "Outer2">
-				<AppBar position="static" color="default">
+			<Grid container spacing={0}>
+				<Grid item xs={8} >
+				<AppBar className="appBar2" position="static" color="default">
 			        <Tabs
 			          value={this.state.value}
 			          onChange={this.handleChange}
@@ -200,10 +205,40 @@ class AppBody extends React.Component {
 			        <TabPanel value={this.state.value} index={2}>
 			        	<RenderPdf file={f2}/>
 			        </TabPanel>
-			        </div>
+			        </div>	
+			    </Grid>
+			    <Grid item xs={4} >
+			    <div className="rightBeside">
+					<MyEditor />
+				</div>
+				</Grid>
+				</Grid>	
+			</div>
 			</div>
 		);
 	}
+}
+
+class MyEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value : ''};
+    this.setValue = this.setValue.bind(this);
+  }
+
+  setValue(e) {
+  	this.setState({value: e})
+  }
+
+  render() {
+    return (
+    	<div className="needToFit" >
+      		<ReactQuill theme="snow" value={this.state.value} onChange={this.setValue}>
+      			
+      		</ReactQuill>
+      	</div>
+    );
+  }
 }
 
 class ReviewApplications extends React.Component {
