@@ -10,6 +10,9 @@ import {
   DialogContentText,
   DialogActions,
 } from "@material-ui/core";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 class CreatePosting extends React.Component {
   constructor(props) {
@@ -23,7 +26,10 @@ class CreatePosting extends React.Component {
       courseResponsibilities: "",
       deadline: "",
       startTime: "",
-      requiredDocuments: "",
+      resume: false,
+      coverLetter: false,
+      transcript: false,
+      lettersOfReference: false,
       additionalApplicationQuestions: [],
       active: "NamePosting",
       dialog: false,
@@ -35,7 +41,15 @@ class CreatePosting extends React.Component {
       this
     );
     this.handleCourseSkillsChange = this.handleCourseSkillsChange.bind(this);
-    this.handleCourseResponsbilitiesChange = this.handleCourseResponsbilitiesChange.bind(this);
+    this.handleCourseResponsbilitiesChange = this.handleCourseResponsbilitiesChange.bind(
+      this
+    );
+    this.handleResumeChange = this.handleResumeChange.bind(this);
+    this.handleCoverLetterChange = this.handleCoverLetterChange.bind(this);
+    this.handleTranscriptChange = this.handleTranscriptChange.bind(this);
+    this.handleLettersOfReferenceChange = this.handleLettersOfReferenceChange.bind(
+      this
+    );
   }
 
   handleCourseTitleChange(title) {
@@ -56,6 +70,22 @@ class CreatePosting extends React.Component {
 
   handleCourseResponsbilitiesChange(resp) {
     this.setState({ courseResponsibilities: resp });
+  }
+
+  handleResumeChange(res) {
+    this.setState({ resume: res });
+  }
+
+  handleCoverLetterChange(cl) {
+    this.setState({ coverLetter: cl });
+  }
+
+  handleTranscriptChange(trans) {
+    this.setState({ transcript: trans });
+  }
+
+  handleLettersOfReferenceChange(letters) {
+    this.setState({ lettersOfReference: letters });
   }
 
   dialogToggle() {
@@ -138,7 +168,9 @@ class CreatePosting extends React.Component {
                   courseSkills={this.state.courseSkills}
                   updateCourseSkills={this.handleCourseSkillsChange}
                   courseResponsibilities={this.state.courseResponsibilities}
-                  updateCourseResponsibilities={this.handleCourseResponsbilitiesChange}
+                  updateCourseResponsibilities={
+                    this.handleCourseResponsbilitiesChange
+                  }
                 />
                 <Button
                   disableElevation
@@ -168,10 +200,19 @@ class CreatePosting extends React.Component {
                 </Button>
               </div>
             )}
-            {/* Post Details Page */}
+            {/* Required Documents Page */}
             {this.state.active === "RequiredDocuments" && (
               <div>
-                <RequiredDocuments />
+                <RequiredDocuments
+                  resume={this.state.resume}
+                  coverLetter={this.state.coverLetter}
+                  transcript={this.state.transcript}
+                  lettersOfReference={this.state.lettersOfReference}
+                  updateResume={this.handleResumeChange}
+                  updateCoverLetter={this.handleCoverLetterChange}
+                  updateTranscript={this.handleTranscriptChange}
+                  updateLettersOfReference={this.handleLettersOfReferenceChange}
+                />
                 <Button
                   disableElevation
                   variant="contained"
@@ -362,10 +403,85 @@ class ApplicationDeadline extends React.Component {
 }
 
 class RequiredDocuments extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.changeResume = this.changeResume.bind(this);
+    this.changeCoverLetter = this.changeCoverLetter.bind(this);
+    this.changeTranscript = this.changeTranscript.bind(this);
+    this.changeLettersOfReference = this.changeLettersOfReference.bind(this);
+  }
+
+  changeResume(e) {
+    this.props.updateResume(e.target.checked);
+  }
+
+  changeCoverLetter(e){
+    this.props.updateCoverLetter(e.target.checked);
+  }
+
+  changeTranscript(e) {
+    this.props.updateTranscript(e.target.checked);
+  }
+
+  changeLettersOfReference(e){
+    this.props.updateLettersOfReference(e.target.checked);
+  }
+
   render() {
     return (
       <div>
-        <p>Required Documents</p>
+        <h3>Required Documents</h3>
+        <h5>
+          Select which documents you would like to be required for applications
+          to submit
+        </h5>
+        <FormGroup column>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.props.resume}
+                onChange={this.changeResume}
+                name="resume"
+                color="primary"
+              />
+            }
+            label="Resume"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.props.coverLetter}
+                onChange={this.changeCoverLetter}
+                name="coverletter"
+                color="primary"
+              />
+            }
+            label="Cover Letter"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.props.transcript}
+                onChange={this.changeTranscript}
+                name="transcript"
+                color="primary"
+              />
+            }
+            label="Transcript"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.props.lettersOfReference}
+                onChange={this.changeLettersOfReference}
+                name="lettersofreference"
+                color="primary"
+              />
+            }
+            label="Letters Of Reference"
+          />
+        </FormGroup>
       </div>
     );
   }
@@ -394,9 +510,6 @@ class Review extends React.Component {
 export default CreatePosting;
 
 /* TODO
-Add post details
-- Add required skills
-- Add job responsibilities 
 
 Set deadline 
 - Select month, day, year 
