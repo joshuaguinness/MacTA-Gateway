@@ -3,7 +3,7 @@ import "./App.css";
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import CreatePosting from "./components/CreatePosting.js";
 import ViewPostings from "./components/ViewPostings.js";
-import ReviewApplications from "./components/ReviewApplications.js";
+import ListAppProf from "./components/ListAppProf.js";
 import Profile from "./components/Profile.js";
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 
@@ -32,7 +32,7 @@ class App extends React.Component {
             <ViewPostings />
           </Route>
           <Route exact path="/reviewapplications">
-            <ReviewApplications />
+            <ListAppProf />
           </Route>
           <Route exact path="/profile">
             <Profile />
