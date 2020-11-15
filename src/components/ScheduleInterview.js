@@ -7,6 +7,7 @@ import {
   Select,
   MenuItem,
   FormControl,
+  Button,
 } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
@@ -92,6 +93,11 @@ class SideBar extends React.Component {
     this.setState({ interview: newLocation });
   }
 
+  saveInterview() {
+    let interview = { ...this.state.interview };
+    this.props.addInterview(interview);
+  }
+
   render() {
     return (
       <div>
@@ -127,7 +133,6 @@ class SideBar extends React.Component {
                 type="time"
                 defaultValue={
                   this.state.interview.end.getHours() +
-                  1 +
                   ":" +
                   this.state.interview.end.getMinutes()
                 }
@@ -138,7 +143,6 @@ class SideBar extends React.Component {
         </div>
 
         {/* Job Title Section */}
-        <br />
         <div>
           <FormControl variant="outlined">
             <InputLabel id="demo-simple-select-outlined-label">
@@ -160,7 +164,6 @@ class SideBar extends React.Component {
         </div>
 
         {/* Candidate Section */}
-        <br />
         <div>
           <FormControl variant="outlined">
             <InputLabel id="demo-simple-select-outlined-label">
@@ -190,6 +193,16 @@ class SideBar extends React.Component {
             onChange={(e) => this.setLocation(e.target.value)}
           />
         </div>
+
+        {/* Submit Button */}
+        <Button
+          disableElevation
+          variant="contained"
+          color="primary"
+          onClick={() => this.saveInterview()}
+        >
+          Schedule
+        </Button>
       </div>
     );
   }
@@ -199,6 +212,7 @@ class ScheduleInterview extends React.Component {
   constructor(props) {
     super(props);
     this.setDate = this.setDate.bind(this);
+    this.addInterview = this.addInterview.bind(this);
     this.state = {
       dateTime: new Date(),
       interviews: [
@@ -224,6 +238,11 @@ class ScheduleInterview extends React.Component {
     this.setState({ dateTime: date });
   }
 
+  addInterview(interview) {
+    let newInterviews = this.state.interviews;
+    this.setState({ interviews: [...newInterviews, interview] });
+  }
+
   render() {
     return (
       <div className={"background"}>
@@ -244,6 +263,7 @@ class ScheduleInterview extends React.Component {
                 interviews={this.state.interviews}
                 jobs={this.state.jobs}
                 candidates={this.state.candidates}
+                addInterview={this.addInterview}
               />
             </div>
           </div>
