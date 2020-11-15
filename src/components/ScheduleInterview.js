@@ -78,7 +78,12 @@ class SideBar extends React.Component {
     let newJob = this.state.interview;
     newJob.job = job;
     this.setState({ interview: newJob });
-    console.log(this.state.interview.job);
+  }
+
+  setCandidate(candidate) {
+    let newCandidate = this.state.interview;
+    newCandidate.candidate = candidate;
+    this.setState({ interview: newCandidate });
   }
 
   render() {
@@ -142,6 +147,28 @@ class SideBar extends React.Component {
               {this.props.jobs.map((job) => (
                 <MenuItem value={job} key={job}>
                   {job}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+
+        {/* Candidate Section */}
+        <br />
+        <div>
+          <FormControl variant="outlined">
+            <InputLabel id="demo-simple-select-outlined-label">
+              Candidate
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              label="Candidate"
+              onChange={(e) => this.setCandidate(e.target.value)}
+            >
+              {this.props.candidates.map((candidate) => (
+                <MenuItem value={candidate} key={candidate}>
+                  {candidate}
                 </MenuItem>
               ))}
             </Select>
