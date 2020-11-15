@@ -2,19 +2,7 @@ import React from "react";
 import Calendar from "react-material-ui-calendar";
 import "../style/ScheduleInterview.css";
 
-class ScheduleInterview extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setDate = this.setDate.bind(this);
-    this.state = {
-      dateTime: new Date(),
-    };
-  }
-
-  setDate(date) {
-    this.setState({ dateTime: date });
-  }
-
+class SideBar extends React.Component {
   getMonthName(month) {
     let monthNames = [
       "January",
@@ -48,6 +36,49 @@ class ScheduleInterview extends React.Component {
 
   render() {
     return (
+      <div>
+        <p>
+          {this.getMonthName(this.props.dateTime.getMonth())}{" "}
+          {this.props.dateTime.getFullYear()}
+        </p>
+        <p>{this.props.dateTime.getDate()}</p>
+        <p>{this.getWeekdayName(this.props.dateTime.getDay())}</p>
+      </div>
+    );
+  }
+}
+
+class ScheduleInterview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setDate = this.setDate.bind(this);
+    this.state = {
+      dateTime: new Date(),
+      interviews: [
+        {
+          job: "ENGINEER 1P13 Undergra TA",
+          candidate: "Joshua Guinness",
+          location: "ITB 163",
+          start: new Date("November 24, 2020 16:30:00"),
+          end: new Date("November 24, 2020 17:30:00"),
+        },
+      ],
+      jobs: [],
+      candidates: [
+        "Joshua Guinness",
+        "Arkin Modi",
+        "Nicholas Mari",
+        "Bevin Krowne",
+      ],
+    };
+  }
+
+  setDate(date) {
+    this.setState({ dateTime: date });
+  }
+
+  render() {
+    return (
       <div className={"background"}>
         <div className={"foreground"}>
           <h1>Schedule Interview</h1>
@@ -61,12 +92,12 @@ class ScheduleInterview extends React.Component {
               />
             </div>
             <div className={"scheduler"}>
-              <p>
-                {this.getMonthName(this.state.dateTime.getMonth())}{" "}
-                {this.state.dateTime.getFullYear()}
-              </p>
-              <p>{this.state.dateTime.getDate()}</p>
-              <p>{this.getWeekdayName(this.state.dateTime.getDay())}</p>
+              <SideBar
+                dateTime={this.state.dateTime}
+                interviews={this.state.interviews}
+                jobs={this.state.jobs}
+                candidates={this.state.candidates}
+              />
             </div>
           </div>
         </div>
