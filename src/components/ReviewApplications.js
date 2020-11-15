@@ -1,6 +1,6 @@
 import React from "react";
 import './ReviewApplications.css';
-import {Box, Button, Grid, Tabs, Tab, Typography, AppBar} from '@material-ui/core';
+import {Box, Button, Grid, Tabs, Tab, Typography, AppBar, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
@@ -81,27 +81,13 @@ class BodyTabs extends React.Component {
       				</div>
 
       			<div className="alignRight">
-  			      <TabPanel value={this.state.value} index={0}>
-			        <AppBody />
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={1}>
-			        Item Two
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={2}>
-			        Item Three
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={3}>
-			        Item Four
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={4}>
-			        Item Five
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={5}>
-			        Item Six
-			      </TabPanel>
-			      <TabPanel value={this.state.value} index={6}>
-			        Item Seven
-			      </TabPanel>
+
+				{this.props.people.map(
+					({id, name, qr1, qr2}) =>
+						<TabPanel value={this.state.value} index={id}>
+			        		<AppBody resp1={qr1} resp2={qr2}/>
+			      		</TabPanel>
+				)}
 				</div>
   			</div>
   		);
@@ -202,7 +188,14 @@ class AppBody extends React.Component {
 			          <RenderPdf file={f1}/>
 			        </TabPanel>
 			        <TabPanel value={this.state.value} index={1}>
-			          	Questions
+			        	<Paper className="resps">
+			        		<p> <b> What is your greatest weakness? </b> </p>
+			          		{this.props.resp1}
+							<br />
+							<br />
+			          		<p> <b> What is your greatest strength? </b> </p>
+			          		{this.props.resp2}
+			          	</Paper>
 			        </TabPanel>
 			        <TabPanel value={this.state.value} index={2}>
 			        	<RenderPdf file={f2}/>
@@ -276,7 +269,7 @@ class ReviewApplications extends React.Component {
           			</NavLink>
           		</Grid>
           		<Grid item xs={11}>
-          		    <p> Name </p>
+          		    <p className="title2"> <b> ENGINEER 1P13 Applications </b> </p>
           		</Grid>
           	</Grid>
           	<BodyTabs people={this.state.people}/>
