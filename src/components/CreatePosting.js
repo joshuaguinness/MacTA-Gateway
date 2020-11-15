@@ -5,6 +5,17 @@ import Step from '@material-ui/core/Step';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StepButton from '@material-ui/core/StepButton';
+import {
+  Grid,
+  ButtonGroup,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@material-ui/core";
+// import { DropzoneArea } from "material-ui-dropzone";
 
 import PostingCreation from './PostingCreation.js'
 
@@ -22,7 +33,8 @@ class CreatePosting extends React.Component {
       deadline: "",
       startTime: "",
       requiredDocuments: "",
-      additionalApplicationQuestions: []
+      additionalApplicationQuestions: [],
+      active: "ReqDoc"
     };
 
     this.handleCourseTitleChange = this.handleCourseTitleChange.bind(this);
@@ -36,24 +48,31 @@ class CreatePosting extends React.Component {
 
   render() {
     return (
-      <div>
-        <HorizontalNonLinearStepper />
-        {/* <AppBar position="static">
-          <Tabs
-            value={this.state.tabNumber}
-            // onChange={handleChange}
-            aria-label="simple tabs example"
-          >
-            <Tab label="Name of Posting">
-              Hello
-            </Tab>
-            <Tab label="Post Details"  />
-            <Tab label="Application Deadline"  />
-            <Tab label="Required Documents" />
-            <Tab label="Add Additional Questions" />
-            <Tab label="Review" />
-          </Tabs>
-        </AppBar> */}
+      <div className={"background"}>
+        <div className={"foreground"}>
+          <h1>{this.state.jobTitle} Application</h1>
+          <Grid container spacing={2}>
+            <Grid container item justify="center">
+              <ButtonGroup disableElevation variant="contained" color="primary">
+                <Button
+                  onClick={(event) => this.setState({ active: "ReqDoc" })}
+                >
+                  Required Documents
+                </Button>
+                <Button
+                  onClick={(event) => this.setState({ active: "Questions" })}
+                >
+                  Additional Questions
+                </Button>
+                <Button
+                  onClick={(event) => this.setState({ active: "Review" })}
+                >
+                  Review Application
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }
