@@ -10,6 +10,12 @@ import {
   DialogContentText,
   DialogActions,
 } from "@material-ui/core";
+// import DateFnsUtils from '@date-io/date-fns';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -24,8 +30,10 @@ class CreatePosting extends React.Component {
       courseDescription: "",
       courseSkills: "",
       courseResponsibilities: "",
-      deadline: "",
-      startTime: "",
+      deadlineDate: "2020-11-15",
+      deadlineTime: "23:59",
+      startDate: "2020-11-15",
+      endDate: "2020-11-15",
       resume: false,
       coverLetter: false,
       transcript: false,
@@ -50,6 +58,10 @@ class CreatePosting extends React.Component {
     this.handleLettersOfReferenceChange = this.handleLettersOfReferenceChange.bind(
       this
     );
+    this.handleDeadlineDateChange = this.handleDeadlineDateChange.bind(this);
+    this.handleDeadlineTimeChange = this.handleDeadlineTimeChange.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
   }
 
   handleCourseTitleChange(title) {
@@ -86,6 +98,22 @@ class CreatePosting extends React.Component {
 
   handleLettersOfReferenceChange(letters) {
     this.setState({ lettersOfReference: letters });
+  }
+
+  handleDeadlineDateChange(date) {
+    this.setState({ deadlineDate: date });
+  }
+
+  handleDeadlineTimeChange(time) {
+    this.setState({ deadlineTime: time });
+  }
+
+  handleStartDateChange(date) {
+    this.setState({ startDate: date });
+  }
+
+  handleEndDateChange(date) {
+    this.setState({ endDate: date });
   }
 
   dialogToggle() {
@@ -171,6 +199,10 @@ class CreatePosting extends React.Component {
                   updateCourseResponsibilities={
                     this.handleCourseResponsbilitiesChange
                   }
+                  startDate={this.state.startDate}
+                  updateStartDate={this.handleStartDateChange}
+                  endDate={this.state.endDate}
+                  updateEndDate={this.handleEndDateChange}
                 />
                 <Button
                   disableElevation
@@ -187,7 +219,12 @@ class CreatePosting extends React.Component {
             {/* Application Deadline Page */}
             {this.state.active === "ApplicationDeadline" && (
               <div>
-                <ApplicationDeadline />
+                <ApplicationDeadline
+                  deadlineDate={this.state.deadlineDate}
+                  deadlineTime={this.state.deadlineTime}
+                  updateDeadlineDate={this.handleDeadlineDateChange}
+                  updateDeadlineTime={this.handleDeadlineTimeChange}
+                />
                 <Button
                   disableElevation
                   variant="contained"
@@ -225,7 +262,7 @@ class CreatePosting extends React.Component {
                 </Button>
               </div>
             )}
-            {/* Post Details Page */}
+            {/* Additional Questions Page */}
             {this.state.active === "AdditionalQuestions" && (
               <div>
                 <AdditionalQuestions />
@@ -340,6 +377,8 @@ class PostDetails extends React.Component {
     this.changeCourseResponsibilities = this.changeCourseResponsibilities.bind(
       this
     );
+    this.changeStartDate = this.changeStartDate.bind(this);
+    this.changeEndDate = this.changeEndDate.bind(this);
   }
 
   changeCourseDescription(e) {
@@ -352,6 +391,14 @@ class PostDetails extends React.Component {
 
   changeCourseResponsibilities(e) {
     this.props.updateCourseResponsibilities(e.target.value);
+  }
+
+  changeStartDate(e) {
+    this.props.updateStartDate(e.target.value);
+  }
+
+  changeEndDate(e) {
+    this.props.updateEndDate(e.target.value);
   }
 
   render() {
@@ -387,16 +434,74 @@ class PostDetails extends React.Component {
           variant="outlined"
           onChange={this.changeCourseResponsibilities}
         />
+        <br />
+        <TextField
+          id="startdate"
+          label="Position Start Date"
+          type="date"
+          defaultValue={this.props.startDate}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={this.changeStartDate}
+        />
+        <br />
+        <TextField
+          id="enddate"
+          label="Position End Date"
+          type="date"
+          defaultValue={this.props.endDate}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={this.changeEndDate}
+        />
       </div>
     );
   }
 }
 
 class ApplicationDeadline extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.changeDeadlineDate = this.changeDeadlineDate.bind(this);
+    this.changeDeadlineTime = this.changeDeadlineTime.bind(this);
+    this.changeDateTime = this.changeDateTime.bind(this);
+  }
+
+  changeDeadlineDate(date) {
+    this.props.updateDeadlineDate(date);
+  }
+
+  changeDeadlineTime(time) {
+    this.props.updateDeadlineTime(time);
+  }
+
+  changeDateTime(e) {
+    const dateTime = e.target.value;
+    const date = dateTime.slice(0, 10);
+    const time = dateTime.slice(11, 16);
+    this.changeDeadlineDate(date);
+    this.changeDeadlineTime(time);
+  }
+
   render() {
     return (
       <div>
-        <p>Application Deadline</p>
+        <h3>Application Deadline</h3>
+        <h5>Please add an application deadline</h5>
+        <TextField
+          id="applicationdeadline"
+          label="Application Deadline"
+          type="datetime-local"
+          defaultValue={this.props.deadlineDate + "T" + this.props.deadlineTime}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={this.changeDateTime}
+        />
+        <br />
       </div>
     );
   }
@@ -416,7 +521,7 @@ class RequiredDocuments extends React.Component {
     this.props.updateResume(e.target.checked);
   }
 
-  changeCoverLetter(e){
+  changeCoverLetter(e) {
     this.props.updateCoverLetter(e.target.checked);
   }
 
@@ -424,7 +529,7 @@ class RequiredDocuments extends React.Component {
     this.props.updateTranscript(e.target.checked);
   }
 
-  changeLettersOfReference(e){
+  changeLettersOfReference(e) {
     this.props.updateLettersOfReference(e.target.checked);
   }
 
@@ -436,7 +541,7 @@ class RequiredDocuments extends React.Component {
           Select which documents you would like to be required for applications
           to submit
         </h5>
-        <FormGroup column>
+        <FormGroup>
           <FormControlLabel
             control={
               <Checkbox
@@ -511,15 +616,10 @@ export default CreatePosting;
 
 /* TODO
 
-Set deadline 
-- Select month, day, year 
-- Select hours, minutes 
-
 Set start time 
 - Select month, day, year 
 - Select hours, minutes 
 
-Set required documents 
 Add additional application questions 
 */
 
