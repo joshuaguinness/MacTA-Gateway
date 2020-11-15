@@ -1,6 +1,5 @@
 import React from "react";
 import './ListAppProf.css';
-import ReviewApplications from "./ReviewApplications.js";
 import {Box, Button, Grid} from '@material-ui/core';
 import {NavLink} from "react-router-dom";
 
@@ -16,7 +15,7 @@ class ListAppProf extends React.Component {
       			</Grid>
       			<Grid item xs={12}>
       				<NavLink className="linkText" exact to="/reviewapplications1P13">
-      					<Button className="linkButton" variant="contained" exact to="/reviewapplications1P13">
+      					<Button className="linkButton" variant="contained">
             				ENGINEER 1P13
             			</Button>
           			</NavLink>
