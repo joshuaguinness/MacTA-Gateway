@@ -31,7 +31,11 @@ class CreatePosting extends React.Component {
 
     this.handleCourseTitleChange = this.handleCourseTitleChange.bind(this);
     this.handleCourseCodeChange = this.handleCourseCodeChange.bind(this);
-    this.handleCourseDescriptionChange = this.handleCourseDescriptionChange.bind(this);
+    this.handleCourseDescriptionChange = this.handleCourseDescriptionChange.bind(
+      this
+    );
+    this.handleCourseSkillsChange = this.handleCourseSkillsChange.bind(this);
+    this.handleCourseResponsbilitiesChange = this.handleCourseResponsbilitiesChange.bind(this);
   }
 
   handleCourseTitleChange(title) {
@@ -43,7 +47,15 @@ class CreatePosting extends React.Component {
   }
 
   handleCourseDescriptionChange(desc) {
-    this.setState({ courseDescription: desc});
+    this.setState({ courseDescription: desc });
+  }
+
+  handleCourseSkillsChange(skills) {
+    this.setState({ courseSkills: skills });
+  }
+
+  handleCourseResponsbilitiesChange(resp) {
+    this.setState({ courseResponsibilities: resp });
   }
 
   dialogToggle() {
@@ -120,7 +132,14 @@ class CreatePosting extends React.Component {
             {/* Post Details Page */}
             {this.state.active === "PostDetails" && (
               <div>
-                <PostDetails courseDescription={this.state.courseDescription} updateCourseDescription={this.handleCourseDescriptionChange}/>
+                <PostDetails
+                  courseDescription={this.state.courseDescription}
+                  updateCourseDescription={this.handleCourseDescriptionChange}
+                  courseSkills={this.state.courseSkills}
+                  updateCourseSkills={this.handleCourseSkillsChange}
+                  courseResponsibilities={this.state.courseResponsibilities}
+                  updateCourseResponsibilities={this.handleCourseResponsbilitiesChange}
+                />
                 <Button
                   disableElevation
                   variant="contained"
@@ -276,10 +295,22 @@ class PostDetails extends React.Component {
     super(props);
 
     this.changeCourseDescription = this.changeCourseDescription.bind(this);
+    this.changeCourseSkills = this.changeCourseSkills.bind(this);
+    this.changeCourseResponsibilities = this.changeCourseResponsibilities.bind(
+      this
+    );
   }
 
   changeCourseDescription(e) {
     this.props.updateCourseDescription(e.target.value);
+  }
+
+  changeCourseSkills(e) {
+    this.props.updateCourseSkills(e.target.value);
+  }
+
+  changeCourseResponsibilities(e) {
+    this.props.updateCourseResponsibilities(e.target.value);
   }
 
   render() {
@@ -287,13 +318,33 @@ class PostDetails extends React.Component {
       <div>
         <h3>Please add your posting details in the text box below.</h3>
         <TextField
-          id="postdetails"
-          label="Post Details"
+          id="postdescription"
+          label="Description"
           multiline
           row={6}
           defaultValue={this.props.courseDescription}
           variant="outlined"
           onChange={this.changeCourseDescription}
+        />
+        <br />
+        <TextField
+          id="postskills"
+          label="Skills"
+          multiline
+          row={6}
+          defaultValue={this.props.courseSkills}
+          variant="outlined"
+          onChange={this.changeCourseSkills}
+        />
+        <br />
+        <TextField
+          id="postresponsibilities"
+          label="Responsibilities"
+          multiline
+          row={6}
+          defaultValue={this.props.courseResponsibilities}
+          variant="outlined"
+          onChange={this.changeCourseResponsibilities}
         />
       </div>
     );
@@ -344,9 +395,6 @@ export default CreatePosting;
 
 /* TODO
 Add post details
-- Add course title
-- Add course code
-- Add description
 - Add required skills
 - Add job responsibilities 
 
