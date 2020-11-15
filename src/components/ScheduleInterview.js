@@ -1,6 +1,13 @@
 import React from "react";
 import Calendar from "react-material-ui-calendar";
-import { TextField, Grid } from "@material-ui/core";
+import {
+  TextField,
+  Grid,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
 class SideBar extends React.Component {
@@ -67,6 +74,13 @@ class SideBar extends React.Component {
     console.log(this.state.interview);
   }
 
+  setJob(job) {
+    let newJob = this.state.interview;
+    newJob.job = job;
+    this.setState({ interview: newJob });
+    console.log(this.state.interview.job);
+  }
+
   render() {
     return (
       <div>
@@ -111,6 +125,28 @@ class SideBar extends React.Component {
             </Grid>
           </Grid>
         </div>
+
+        {/* Job Title Section */}
+        <br />
+        <div>
+          <FormControl variant="outlined">
+            <InputLabel id="demo-simple-select-outlined-label">
+              Job Title
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              label="Job Title"
+              onChange={(e) => this.setJob(e.target.value)}
+            >
+              {this.props.jobs.map((job) => (
+                <MenuItem value={job} key={job}>
+                  {job}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
       </div>
     );
   }
@@ -131,7 +167,7 @@ class ScheduleInterview extends React.Component {
           end: new Date("November 24, 2020 17:30:00"),
         },
       ],
-      jobs: [],
+      jobs: ["ENGINEER 1P13 Undergrad TA", "SFWRENG 4HC3 Undergrad TA"],
       candidates: [
         "Joshua Guinness",
         "Arkin Modi",
