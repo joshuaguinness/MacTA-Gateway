@@ -1,12 +1,7 @@
 import React from "react";
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import TabPanel from '@material-ui/lab/TabPanel';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StepButton from '@material-ui/core/StepButton';
@@ -27,10 +22,17 @@ class CreatePosting extends React.Component {
       deadline: "",
       startTime: "",
       requiredDocuments: "",
-      additionalApplicationQuestions: [],
-      tabNumber: 0
+      additionalApplicationQuestions: []
     };
+
+    this.handleCourseTitleChange = this.handleCourseTitleChange.bind(this);
   }
+
+  handleCourseTitleChange(title) {
+    this.setState({ courseTitle: title });
+  }
+
+  // Directly call the sub components from within here and get right of the middle man, will also allow easier passing of state and such
 
   render() {
     return (
@@ -75,20 +77,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Post Details', 'Application Deadline', 'Required Documents', 'Add Additional Questions', 'Review'];
+  return ['Name of Posting', 'Post Details', 'Application Deadline', 'Required Documents', 'Add Additional Questions', 'Review'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <PostingCreation tab='PostDetails' />;
+      return <PostingCreation tab='NamePosting' />
     case 1:
-      return <PostingCreation tab='ApplicationDeadline' />;
+      return <PostingCreation tab='PostDetails' />;
     case 2:
-      return <PostingCreation tab='RequiredDocuments' />;
+      return <PostingCreation tab='ApplicationDeadline' />;
     case 3:
-      return <PostingCreation tab='AdditionalQuestions' />;
+      return <PostingCreation tab='RequiredDocuments' />;
     case 4:
+      return <PostingCreation tab='AdditionalQuestions' />;
+    case 5:
       return 'Review';
     default:
       return 'Unknown step';
