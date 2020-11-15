@@ -8,6 +8,7 @@ import {
   MenuItem,
   FormControl,
   Button,
+  Alert,
 } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
@@ -103,16 +104,18 @@ class SideBar extends React.Component {
       <div>
         {/* Date Section */}
         <div>
-          <p>
+          <p className={"datesub"}>
             {this.getMonthName(this.props.dateTime.getMonth())}{" "}
             {this.props.dateTime.getFullYear()}
           </p>
-          <p>{this.props.dateTime.getDate()}</p>
-          <p>{this.getWeekdayName(this.props.dateTime.getDay())}</p>
+          <p className={"datemain"}>{this.props.dateTime.getDate()}</p>
+          <p className={"datesub"}>
+            {this.getWeekdayName(this.props.dateTime.getDay())}
+          </p>
         </div>
 
         {/* Time Section */}
-        <div>
+        <div className={"section"}>
           <Grid container spacing={5} justify="center">
             <Grid item>
               <TextField
@@ -143,8 +146,8 @@ class SideBar extends React.Component {
         </div>
 
         {/* Job Title Section */}
-        <div>
-          <FormControl variant="outlined">
+        <div className={"section"}>
+          <FormControl variant="outlined" style={{ width: 255 }}>
             <InputLabel id="demo-simple-select-outlined-label">
               Job Title
             </InputLabel>
@@ -153,6 +156,9 @@ class SideBar extends React.Component {
               id="demo-simple-select-outlined"
               label="Job Title"
               onChange={(e) => this.setJob(e.target.value)}
+              inputProps={{
+                id: "job",
+              }}
             >
               {this.props.jobs.map((job) => (
                 <MenuItem value={job} key={job}>
@@ -164,8 +170,8 @@ class SideBar extends React.Component {
         </div>
 
         {/* Candidate Section */}
-        <div>
-          <FormControl variant="outlined">
+        <div className={"section"}>
+          <FormControl variant="outlined" style={{ width: 255 }}>
             <InputLabel id="demo-simple-select-outlined-label">
               Candidate
             </InputLabel>
@@ -174,6 +180,9 @@ class SideBar extends React.Component {
               id="demo-simple-select-outlined"
               label="Candidate"
               onChange={(e) => this.setCandidate(e.target.value)}
+              inputProps={{
+                id: "candidate",
+              }}
             >
               {this.props.candidates.map((candidate) => (
                 <MenuItem value={candidate} key={candidate}>
@@ -185,9 +194,10 @@ class SideBar extends React.Component {
         </div>
 
         {/* Location Section */}
-        <div>
+        <div className={"section"}>
           <TextField
             id="outlined-basic"
+            style={{ width: 255 }}
             label="Location"
             variant="outlined"
             onChange={(e) => this.setLocation(e.target.value)}

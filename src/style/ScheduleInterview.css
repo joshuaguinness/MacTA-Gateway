@@ -13,16 +13,31 @@
 }
 
 .body {
-    display: flex;
-    height: 93%;
+  display: flex;
+  height: 93%;
 }
 
 .calendar {
-    width: 75%;
-    height: 100%;
+  width: 75%;
+  height: 100%;
 }
 
 .scheduler {
-    width: 25%;
-    height: 100%;
+  width: 25%;
+  height: 100%;
+}
+
+.datesub {
+  font-size: 13pt;
+}
+
+.datemain {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 50pt;
+}
+
+.section {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
