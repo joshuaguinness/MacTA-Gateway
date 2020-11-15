@@ -11,8 +11,6 @@ import {
   DialogActions,
 } from "@material-ui/core";
 
-import PostingCreation from "./PostingCreation.js";
-
 class CreatePosting extends React.Component {
   constructor(props) {
     super(props);
@@ -32,10 +30,17 @@ class CreatePosting extends React.Component {
     };
 
     this.handleCourseTitleChange = this.handleCourseTitleChange.bind(this);
+    this.handleCourseCodeChange = this.handleCourseCodeChange.bind(this);
   }
 
   handleCourseTitleChange(title) {
+    console.log(title);
     this.setState({ courseTitle: title });
+  }
+
+  handleCourseCodeChange(code) {
+    console.log(code);
+    this.setState({ courseCode: code });
   }
 
   dialogToggle() {
@@ -93,7 +98,12 @@ class CreatePosting extends React.Component {
             {/* Name Posting Page */}
             {this.state.active === "NamePosting" && (
               <div>
-                <NamePosting />
+                <NamePosting
+                  courseTitle={this.state.courseTitle}
+                  courseCode={this.state.courseCode}
+                  updateCourseTitle={this.handleCourseTitleChange}
+                  updateCourseCode={this.handleCourseCodeChange}
+                />
                 <Button
                   disableElevation
                   variant="contained"
@@ -169,8 +179,7 @@ class CreatePosting extends React.Component {
             {/* Review Application Page */}
             {this.state.active === "Review" && (
               <div>
-                <Review
-                />
+                <Review />
                 <Button
                   disableElevation
                   variant="contained"
@@ -221,10 +230,15 @@ class NamePosting extends React.Component {
     super(props);
 
     this.changeCourseTitle = this.changeCourseTitle.bind(this);
+    this.changeCourseCode = this.changeCourseCode.bind(this);
   }
 
   changeCourseTitle(e) {
-    this.props.onCourseTitleChange(e.target.value);
+    this.props.updateCourseTitle(e.target.value);
+  }
+
+  changeCourseCode(e) {
+    this.props.updateCourseCode(e.target.value);
   }
 
   render() {
@@ -238,6 +252,7 @@ class NamePosting extends React.Component {
           variant="outlined"
           margin="dense"
           onChange={this.changeCourseTitle}
+          defaultValue={this.props.courseTitle}
         />
         <br />
         <TextField
@@ -245,6 +260,8 @@ class NamePosting extends React.Component {
           label="Course Code"
           variant="outlined"
           margin="dense"
+          onChange={this.changeCourseCode}
+          defaultValue={this.props.courseCode}
         />
       </div>
     );
