@@ -8,7 +8,11 @@ import {
   MenuItem,
   FormControl,
   Button,
-  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
@@ -23,6 +27,7 @@ class SideBar extends React.Component {
         start: new Date(),
         end: new Date(),
       },
+      dialog: false,
     };
   }
 
@@ -97,6 +102,11 @@ class SideBar extends React.Component {
   saveInterview() {
     let interview = { ...this.state.interview };
     this.props.addInterview(interview);
+    this.dialogToggle();
+  }
+
+  dialogToggle() {
+    this.setState({ dialog: !this.state.dialog });
   }
 
   render() {
@@ -213,6 +223,33 @@ class SideBar extends React.Component {
         >
           Schedule
         </Button>
+
+        {/* Success Message */}
+        <Dialog
+          open={this.state.dialog}
+          onClose={this.dialogToggle.bind(this)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Interview Scheduled"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Your interview has been successfully scheduled. You may now leave
+              this page.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.dialogToggle.bind(this)}
+              color="primary"
+              autoFocus
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
