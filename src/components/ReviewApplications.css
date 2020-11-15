@@ -65,16 +65,20 @@
 
 .overview {
 	overflow-y: scroll;
-	max-height: 79vh;
+	max-height: 73vh;
+	height: 73vh;
 	max-width: 45vw;
 	background-color: gray;
-	margin-left: 25%;
 
 	outline-color:gray;
 	outline-width: 1px;
 	outline-style: solid;
 }
 
+.Outer2 {
+	max-width: 45vw;
+	margin-left: 25%;
+}
+
 .docs {
-	margin-left: 4.5%
 }

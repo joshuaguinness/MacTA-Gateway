@@ -1,11 +1,12 @@
 import React from "react";
 import './ReviewApplications.css';
-import {Box, Button, Grid, Tabs, Tab, Typography} from '@material-ui/core';
+import {Box, Button, Grid, Tabs, Tab, Typography, AppBar} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { pdfjs } from 'react-pdf';
-import myPdf from './static/pdf/comp_sci_-_two_page_sample.pdf'
+import Resume from './static/pdf/comp_sci_-_two_page_sample.pdf'
+import Transcript from './static/pdf/transcript.pdf'
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -72,13 +73,10 @@ class BodyTabs extends React.Component {
    						onChange={this.handleChange}
           				className={this.useStyles.tabs}
       				>
-      					<Tab label="one" className="test2" data-index={0} {...a11yProps(0)} />
-      					<Tab label="2" className="test2" data-index={1} {...a11yProps(1)} />
-      					<Tab label="3" className="test2" data-index={2} {...a11yProps(2)} />
-      					<Tab label="4" className="test2" data-index={3} {...a11yProps(3)} />
-      					<Tab label="5" className="test2" data-index={4} {...a11yProps(4)} />
-      					<Tab label="6" className="test2" data-index={5} {...a11yProps(5)} />
-      					<Tab label="7" className="test2" data-index={6} {...a11yProps(6)} />
+      					{this.props.people.map(
+      						({id, name, qr1, qr2}) =>
+      							<Tab label={name} className="test2" data-index={id} {...a11yProps({id})} />
+      						)}
       				</Tabs>
       				</div>
 
@@ -110,10 +108,15 @@ class BodyTabs extends React.Component {
   	}
 }
 
-class Sample extends React.Component {
-  state = {
-    numPages: null,
-  }
+class RenderPdf extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+    		numPages: null,
+  		}
+	}
+
 
   onFileChange = (event) => {
     this.setState({
@@ -158,13 +161,53 @@ class AppBody extends React.Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = {value : 0, index:0}
+		this.handleChange = this.handleChange.bind(this)
 	}
 
+	useStyles = makeStyles((theme) => ({
+	  root: {
+    		backgroundColor: theme.palette.background.paper,
+    		width: 500,
+  		},
+	}));
+
+  	handleChange(e) {
+  		var parsed = parseInt(e.currentTarget.dataset.index, 10)
+  		console.log(parsed)
+  		this.setState({value: parsed})
+  	}
+
 	render() {
-		const f1 = myPdf;
+		const f1 = Resume;
+		const f2 = Transcript;
 		return(
-			<div className="overview">
-				<Sample file={f1}/>
+			<div className = "Outer2">
+				<AppBar position="static" color="default">
+			        <Tabs
+			          value={this.state.value}
+			          onChange={this.handleChange}
+			          indicatorColor="primary"
+			          textColor="primary"
+			          variant="fullWidth"
+			          aria-label="full width tabs example"
+			        >
+			          <Tab label="Resume" data-index={0} {...a11yProps(0)} />
+			          <Tab label="Questions" data-index={1} {...a11yProps(1)} />
+			          <Tab label="Transcript" data-index={2} {...a11yProps(2)} />
+			        </Tabs>
+			    </AppBar>
+			    <div className="overview">
+			        <TabPanel value={this.state.value} index={0}>
+			          <RenderPdf file={f1}/>
+			        </TabPanel>
+			        <TabPanel value={this.state.value} index={1}>
+			          	Questions
+			        </TabPanel>
+			        <TabPanel value={this.state.value} index={2}>
+			        	<RenderPdf file={f2}/>
+			        </TabPanel>
+			        </div>
 			</div>
 		);
 	}
@@ -173,6 +216,50 @@ class AppBody extends React.Component {
 class ReviewApplications extends React.Component {
   constructor(props) {
 		super(props);
+		this.state = {
+			people : [{
+				id:0,
+				name:'Lilibeth Andrada',
+				qr1:"I'm a Perfectionist",
+				qr2:'Time Management'
+			},
+			{
+				id:1,
+				name:'Michael Armstrong',
+				qr1:'I focus on details too much',
+				qr2:'Quick thinking'
+			},
+			{
+				id:2,
+				name:'Cathal Diaz',
+				qr1:'I get distracted easily',
+				qr2:'My Work Ethic'
+			},
+			{
+				id:3,
+				name:'Gethin Good',
+				qr1:'Spelling',
+				qr2:'Adaptability is my greatest strength'
+			},
+			{
+				id:4,
+				name:'Bevin Krowne',
+				qr1:'I work too hard',
+				qr2:'Public Speaking'
+			},
+			{
+				id:5,
+				name:'Paula Schreier',
+				qr1:"I'm a perfectionist",
+				qr2:'My attention to detail'
+			},
+			{
+				id:6,
+				name:'Nana Teagan',
+				qr1:'Math is my greatest weakness',
+				qr2:'My desire to learn and teach'
+			}],
+		};
 	}
 
   render() {
@@ -192,7 +279,7 @@ class ReviewApplications extends React.Component {
           		    <p> Name </p>
           		</Grid>
           	</Grid>
-          	<BodyTabs />
+          	<BodyTabs people={this.state.people}/>
       	</Box>
       </Box>
     );
