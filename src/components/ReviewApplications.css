@@ -49,6 +49,17 @@
 	outline-color: lightgray !important;
 }
 
+.test5 {
+	position: absolute;
+	width: 20vw;
+	height: 94vh;
+	overflow-y: scroll;
+	outline-width: 1px;
+	outline-style: solid;
+	outline-color: lightgray;
+	margin-left: 1px;
+}
+
 .alignRight {
 	width: 100%
 }
@@ -67,6 +78,19 @@
 	overflow-y: scroll;
 	max-height: 73vh;
 	height: 73vh;
+	max-width: 45vw;
+	width: 45vw;
+	background-color: gray;
+
+	outline-color:gray;
+	outline-width: 1px;
+	outline-style: solid;
+}
+
+.overview2 {
+	overflow-y: scroll;
+	max-height: 80vh;
+	height: 80vh;
 	max-width: 45vw;
 	width: 45vw;
 	background-color: gray;
@@ -103,6 +127,13 @@
 
 .rightBeside {
 	display: inline-block;
+	max-width: 30vw;
+	margin-right: 0;
+}
+
+.rightBeside2 {
+	display: inline-block;
+	margin-top: 25vh;
 	max-width: 30vw;
 	margin-right: 0;
 }
