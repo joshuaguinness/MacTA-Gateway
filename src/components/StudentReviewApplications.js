@@ -87,7 +87,7 @@ class BodyTabs extends React.Component {
 				{this.props.people.map(
 					({id, name, qr1, qr2, message, action}) =>
 						<TabPanel value={this.state.value} index={id}>
-			        		<AppBody resp1={qr1} resp2={qr2} message={message} action={action}/>
+			        		<AppBody title={name} resp1={qr1} resp2={qr2} message={message} action={action}/>
 			      		</TabPanel>
 				)}
 				</div>
@@ -196,7 +196,8 @@ class AppBody extends React.Component {
 
 		return(
 			<div>
-			<div className = "Outer2">
+			<h2 className="RemovePadding"> {this.props.title} - Application </h2>
+			<div className = "Outer3">
 			<Grid container spacing={0}>
 				<Grid item xs={8} >
 				<AppBar className="appBar2" position="static" color="default">
@@ -300,15 +301,15 @@ class StudentReviewApplications extends React.Component {
 		this.state = {
 			Package : [{
 				id:0,
-				name:'2DM3 – Discrete Math I',
+				name:'SFWRENG 2DM3 – Discrete Math I',
 				qr1:"I'm a Perfectionist",
 				qr2:'Time Management',
-				message: "Congradulations! you have been offered the position",
+				message: "Congratulations! you have been offered the position",
 				action: "Job Offer"
 			},
 			{
 				id:1,
-				name:'2SO3 – Principles of Programming',
+				name:'SFWRENG 2SO3 – Principles of Programming',
 				qr1:'I focus on details too much',
 				qr2:'Quick thinking',
 				message: "Your Interview time is Tue Nov 24 2020 from 16:30 - 17:30 in ITB 163.",

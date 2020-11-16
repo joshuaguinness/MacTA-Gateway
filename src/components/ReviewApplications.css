@@ -89,8 +89,8 @@
 
 .overview2 {
 	overflow-y: scroll;
-	max-height: 80vh;
-	height: 80vh;
+	max-height: 75vh;
+	height: 75vh;
 	max-width: 45vw;
 	width: 45vw;
 	background-color: gray;
@@ -104,8 +104,19 @@
 	max-width: 35vw;
 }
 
+.RemovePadding {
+	padding: 0 0 0 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 .Outer2 {
 	margin-left: 22%;
+}
+
+.Outer3 {
+	margin-left: 22%;
+	margin-top: 2%;
 }
 
 .appBar2 {
