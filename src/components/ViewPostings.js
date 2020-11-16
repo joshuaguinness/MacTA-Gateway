@@ -43,8 +43,9 @@ class Thumbnail extends React.Component {
   			 title: "CHEM 1A03 Teaching Assistant",
   			 ts: "CHEM1A03",
   			 dept: "Faculty of Science, Department of Chemistry and Chemical Biology",
+  			 deptSmall: ["Science", "Chemistry and Chemical Biology"],
   			 hours: "15-20",
-  			 resp: "Tutorial Instruction, Invigilating, Equiptment Maintenence, Marking",
+  			 resp: ["Tutorial Instruction", "Invigilating", "Equiptment Maintenence", "Marking"],
   			 desc: "A discussion of chemical fundamentals, including bonding, structure, reactivity, and energetics, with emphasis on applications to health, energy, and the environment. ",
   			 skills: "Communication Skills",
   			 shortlist: false,
@@ -55,8 +56,9 @@ class Thumbnail extends React.Component {
   			 title: "COMPSCI 2XA3 Teaching Assistant",
   			 ts: "COMPSCI2XA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 deptSmall: ["Engineering", "Computing and Software"],
   			 hours: "10-15",
-  			 resp: "Tutorial Instruction, Invigilating",
+  			 resp: ["Tutorial Instruction", "Invigilating"],
   			 skills: "Communication Skills, Coding, Git and Version Control",
   			 desc: "Unix and shell programming, makefiles, version control; assembly basics, translating high-level language into assembly, parameter passing, arrays, recursion; compiling, debugging, profiling, and software optimizations.",
   			 shortlist: false,
@@ -67,8 +69,9 @@ class Thumbnail extends React.Component {
   			 title: "COMPSCI 2XB3 Teaching Assistant",
   			 ts: "COMPSCI2XB3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 deptSmall: ["Engineering", "Computing and Software"],
   			 hours: "10-15",
-  			 resp: "Tutorial Instruction, Invigilating, Marking",
+  			 resp: ["Tutorial Instruction", "Invigilating", "Marking"],
   			 skills: "Communication Skills, Coding, Git and Version Control",
   			 desc: "Open-ended design of computational solutions to practical problems that involve both theoretical (algorithmic) analysis and implementation; solving computational problems through an experiential approach.",
   			 shortlist: false,
@@ -79,8 +82,9 @@ class Thumbnail extends React.Component {
   			 title: "ECON 1B03 Teaching Assistant",
   			 ts: "ECON1B03",
   			 dept: "DeGroote School of Business, Department of Economics",
+  			 deptSmall: ["Business", "Economics"],
   			 hours: "5-10",
-  			 resp: "Tutorial Instruction, Invigilating, Marking",
+  			 resp: ["Tutorial Instruction", "Invigilating", "Marking"],
   			 skills: "Communication Skills, Financial knowledge",
   			 desc: "This first course in microeconomics will explore basic concepts of demand and supply, consumers and producers, market structure and policy implications. It is an asynchronous online course, meaning the content is presented online.",
   			 shortlist: false,
@@ -88,11 +92,12 @@ class Thumbnail extends React.Component {
   			 bgColor: "lightgray"},
 
   			 {id: 4,
-  			 title: "ENGINEER 1P13 EPIC Lab IAI",
+  			 title: "ENGINEER 1P13 Undergrad TA",
   			 ts: "ENGINEER1P13",
   			 dept: "Faculty of Engineering",
+  			 deptSmall: ["Engineering"],
   			 hours: "Full Time",
-  			 resp: "Tutorial Instruction, Invigilating, Project/Lab Development, Equiptment Maintenence, Marking",
+  			 resp: ["Tutorial Instruction", "Invigilating", "Project/Lab Development", "Equiptment Maintenence", "Marking"],
   			 desc: "The Epic Lab is an experiential laboratory designed to allow first year students the chance to have hands on experience with the topics discussed in the 1P13 course. This includes Engineering Design, Software Engineering and Materials Engineering. You will be reporting to multiple professors within the faculty of Engineering during your time as an instructor.  ",
   			 skills: "Communication Skills, Coding, CAD Design, Sketching",
   			 shortlist: false,
@@ -103,8 +108,9 @@ class Thumbnail extends React.Component {
   			 title: "ENGLISH 1AA3 Teaching Assistant",
   			 ts: "ENGLISH1AA3",
   			 dept: "Faculty of Humanities, Department of English and Cultural Studies",
+  			 deptSmall: ["Humanities", "English and Cultural Studies"],
   			 hours: "0-5",
-  			 resp: "Tutorial Instruction, Invigilating, Marking",
+  			 resp: ["Tutorial Instruction", "Invigilating, Marking"],
   			 desc: "This course introduces students to some of the fundamental skills in literary criticism, i.e., the rigorous and capacious interpretation of literary texts. We focus on a selection of shorter texts, including poems, short stories, and autobiographical writings. The course emphasizes the development of critical skills in reading literature and writing effectively about literature.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
@@ -115,8 +121,9 @@ class Thumbnail extends React.Component {
   			 title: "SFWRENG 2FA3 – Discrete Math II",
   			 ts: "SFWRENG2FA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 deptSmall: ["Engineering", "Computing and Software"],
   			 hours: "5-10",
-  			 resp: "Tutorial Instruction, Invigilating",
+  			 resp: ["Tutorial Instruction", "Invigilating"],
   			 desc: "Predicate logic and formal proofs, grammars and automata, modular arithmetic, and their applications to computing.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
@@ -166,26 +173,23 @@ class Thumbnail extends React.Component {
 
 	render() {
 
-		var temp = this.state.posts
-		var toShow = [];
+		var toShow = this.state.posts
 		var deptFilters = this.props.deptFilters;
 		var hoursFilters = this.props.hoursFilters;
 		var respFilters = this.props.respFilters;
 		var onSL = this.props.SLFilters;
 
-			deptFilters.forEach(function(name){
-				toShow = toShow.concat(temp.filter(posts => posts.dept.includes(name) === true));
-			});
-
-			hoursFilters.forEach(function(name){
-				toShow = toShow.concat(temp.filter(posts => posts.hours.includes(name) === true));
-			});
-
-			respFilters.forEach(function(name){
-				toShow = toShow.concat(temp.filter(posts => posts.resp.includes(name) === true));
-			});
-
-		if(toShow.length === 0) toShow = toShow.concat(this.state.posts);
+			if(Array.isArray(deptFilters) && deptFilters.length) {
+				toShow = toShow.filter(posts => deptFilters.some(item => posts.deptSmall.includes(item)) === true);
+			}
+			if(Array.isArray(hoursFilters) && hoursFilters.length) {
+				toShow = toShow.filter(posts => hoursFilters.includes(posts.hours) === true);
+			}
+			if(Array.isArray(respFilters) && respFilters.length) {
+				toShow = toShow.filter(posts => respFilters.some(item => posts.resp.includes(item)) === true);
+			}
+			
+		if(!toShow.length && !deptFilters && !hoursFilters && !respFilters) toShow = toShow.concat(this.state.posts);
 
 		if(onSL) toShow = toShow.filter(posts => posts.shortlist === true);
 
