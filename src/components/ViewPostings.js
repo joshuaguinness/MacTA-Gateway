@@ -1,5 +1,6 @@
 import React from "react";
 import '../style/ViewPostings.css';
+import filter from "./static/images/filter.png"
 import {Grid, Box, Button, Select, MenuItem, 
 	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -355,7 +356,13 @@ class FilterDropdowns extends React.Component {
 	render() {
 		return (
 			<div>
+
+				
+
 				<div className="dSpacing">
+					<img src={filter} className="filterIcon" alt="Filter Icon" />
+					
+
 					<FormControl className="spacingControl">
 						<InputLabel id="dept-label">Department</InputLabel>
 						<Select labelId="dept-label" multiple

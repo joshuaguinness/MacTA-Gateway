@@ -77,8 +77,17 @@
 }
 
 .dSpacing {
-	margin-left: 15%;
+	margin-left: 5%;
 	margin-right: 0;
+}
+
+.filterIcon {
+	display: inline-flex;
+	position: relative;
+	width: 3%;
+	height: 3%;
+	padding-top: .5%;
+	padding-right: 5%;
 }
 
 .spacingControl {
