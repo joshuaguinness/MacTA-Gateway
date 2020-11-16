@@ -216,7 +216,7 @@ class Thumbnail extends React.Component {
 					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}, index) =>
 						<TabPanel className="alignRight2" value={this.state.value} index={index} key={index}>
 			        		<PostDetails 
-        				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
+        				id={index} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
         				updateSlVal={this.updateSlVal}
         				ts={ts}
         				match={this.props.match}
