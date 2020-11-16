@@ -4,7 +4,7 @@ import ApplyPosition from "./ApplyPosition.js"
 import {Grid, Box, Button, Select, MenuItem, 
 	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, NavLink} from "react-router-dom";
+import { BrowserRouter as Router, Link, Route} from "react-router-dom";
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -41,6 +41,7 @@ class Thumbnail extends React.Component {
 		this.state = {posts: [
   			{id: 0,
   			 title: "CHEM 1A03 Teaching Assistant",
+  			 ts: "CHEM1A03",
   			 dept: "Faculty of Science, Department of Chemistry and Chemical Biology",
   			 hours: "15-20",
   			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence, Marking",
@@ -52,6 +53,7 @@ class Thumbnail extends React.Component {
 
   			 {id: 1,
   			 title: "COMPSCI 2XA3 Teaching Assistant",
+  			 ts: "COMPSCI2XA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating",
@@ -63,6 +65,7 @@ class Thumbnail extends React.Component {
 
   			 {id: 2,
   			 title: "COMPSCI 2XB3 Teaching Assistant",
+  			 ts: "COMPSCI2XB3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
@@ -74,6 +77,7 @@ class Thumbnail extends React.Component {
 
   			 {id: 3,
   			 title: "ECON 1B03 Teaching Assistant",
+  			 ts: "ECON1B03",
   			 dept: "DeGroote School of Business, Department of Economics",
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
@@ -85,6 +89,7 @@ class Thumbnail extends React.Component {
 
   			 {id: 4,
   			 title: "ENGINEER 1P13 EPIC Lab IAI",
+  			 ts: "ENGINEER1P13",
   			 dept: "Faculty of Engineering",
   			 hours: "Full Time",
   			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence, Marking",
@@ -95,7 +100,8 @@ class Thumbnail extends React.Component {
   			 bgColor: "lightgray"},
 
   			 {id: 5,
-  			 title: "English 1AA3 Teaching Assistant",
+  			 title: "ENGLISH 1AA3 Teaching Assistant",
+  			 ts: "ENGLISH1AA3",
   			 dept: "Faculty of Humanities, Department of English and Cultural Studies",
   			 hours: "0-5",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
@@ -107,6 +113,7 @@ class Thumbnail extends React.Component {
 
   			 {id: 6,
   			 title: "SFWRENG 2FA3 – Discrete Math II",
+  			 ts: "SFWRENG2FA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating",
@@ -203,11 +210,13 @@ class Thumbnail extends React.Component {
       			<div className="alignMe3">
 
 				{toShow.map(
-					({id, title, dept, desc, hours, resp, skills, bgColor, message}) =>
+					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}) =>
 						<TabPanel className="alignRight2" value={this.state.value} index={id}>
 			        		<PostDetails 
         				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
         				updateSlVal={this.updateSlVal}
+        				ts={ts}
+        				match={this.props.match}
         				/>
 			      		</TabPanel>
 				)}
@@ -241,9 +250,9 @@ class PostDetails extends React.Component {
      				<Button className="slButton" variant="contained" key={this.props.id} data-index={this.props.id} onClick={this.toggleSl} style={{backgroundColor:this.props.bgColor}}> {this.props.message}  </Button>
      			</Grid>
      			<Grid item xs={6}>
-	     				<NavLink exact to="/applyposition">
+	     				<Link exact to={`/applyposition/${this.props.ts}`}>
 	     					<Button className="applyButton" variant="contained"> Apply Now! </Button>
-	     				</NavLink>
+	     				</Link>
      			</Grid>
      			<Grid item xs={12}>
      				<p className="cDescTitle"> <b> Department/Faculty: </b> </p>
@@ -474,6 +483,7 @@ class ViewPostings extends React.Component {
          					hoursFilters={this.state.hoursFilters} 
          					respFilters={this.state.respFilters} 
          					SLFilters={this.state.onSL} 
+         					match={this.props.routerProps}
          				/>
          			</Box>
         		</Grid>

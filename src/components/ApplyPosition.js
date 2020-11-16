@@ -132,10 +132,13 @@ class ApplyPosition extends React.Component {
   }
 
   render() {
+
+    let match = this.props.match
+
     return (
       <div className={"background"}>
         <div className={"foreground2"}>
-          <h1>{this.props.jobTitle} Application</h1>
+          <h1>{match.params.title} Application</h1>
           <Grid  container spacing={2}>
             <Grid container item justify="center">
               <ButtonGroup disableElevation variant="contained" color="primary">
