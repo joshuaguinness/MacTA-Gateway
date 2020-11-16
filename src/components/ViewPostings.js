@@ -1,23 +1,165 @@
 import React from "react";
 import './ViewPostings.css';
+import ApplyPosition from "./ApplyPosition.js"
 import {Grid, Box, Button, Select, MenuItem, 
-	InputLabel, FormControl, Checkbox, ListItemText, Input  } from '@material-ui/core';
+	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography, Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, NavLink} from "react-router-dom";
+
+function TabPanel(props) {
+	  const { children, value, index, ...other } = props;
+
+	  return (
+	    <div
+	      role="tabpanel"
+	      hidden={value !== index}
+	      id={`vertical-tabpanel-${index}`}
+	      aria-labelledby={`vertical-tab-${index}`}
+	      {...other}
+	    >
+	      {value === index && (
+	        <Box p={3}>
+	          <Typography>{children}</Typography>
+	        </Box>
+	      )}
+	    </div>
+	  );
+	}
+
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
 
 class Thumbnail extends React.Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = {posts: [
+  			{id: 0,
+  			 title: "CHEM 1A03 Teaching Assistant",
+  			 dept: "Faculty of Science, Department of Chemistry and Chemical Biology",
+  			 hours: "15-20",
+  			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence, Marking",
+  			 desc: "placeholder",
+  			 skills: "Communication Skills",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 1,
+  			 title: "COMPSCI 2XA3 Teaching Assistant",
+  			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 hours: "10-15",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 skills: "Communication Skills, Coding, Git and Version Control",
+  			 desc: "placeholder",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 2,
+  			 title: "COMPSCI 2XB3 Teaching Assistant",
+  			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 hours: "10-15",
+  			 resp: "Tutorial Instruction, Invigillating, Marking",
+  			 skills: "Communication Skills, Coding, Git and Version Control",
+  			 desc: "placeholder",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 3,
+  			 title: "ECON 1B03 Teaching Assistant",
+  			 dept: "DeGroote School of Business, Department of Economics",
+  			 hours: "5-10",
+  			 resp: "Tutorial Instruction, Invigillating, Marking",
+  			 skills: "Communication Skills, Financial knowledge",
+  			 desc: "placeholder",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 4,
+  			 title: "ENGINEER 1P13 EPIC Lab IAI",
+  			 dept: "Faculty of Engineering",
+  			 hours: "Full Time",
+  			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence, Marking",
+  			 desc: "The Epic Lab is an experiential laboratory designed to allow first year students the chance to have hands on experience with the topics discussed in the 1P13 course. This includes Engineering Design, Software Engineering and Materials Engineering. You will be reporting to multiple professors within the faculty of Engineering during your time as an instructor.  ",
+  			 skills: "Communication Skills, Coding, CAD Design, Sketching",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 5,
+  			 title: "English 1AA3 Teaching Assistant",
+  			 dept: "Faculty of Humanities, Department of English and Cultural Studies",
+  			 hours: "0-5",
+  			 resp: "Tutorial Instruction, Invigillating, Marking",
+  			 desc: "placeholder",
+  			 skills: "Communication Skills, Grammar, Reading, Writing",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"},
+
+  			 {id: 6,
+  			 title: "SFWRENG 2FA3 – Discrete Math II",
+  			 dept: "Faculty of Engineering, Department of Computing and Software",
+  			 hours: "5-10",
+  			 resp: "Tutorial Instruction, Invigillating",
+  			 desc: "placeholder",
+  			 skills: "Communication Skills, Grammar, Reading, Writing",
+  			 shortlist: false,
+  			 message: "Add to Shortlist",
+  			 bgColor: "lightgray"}
+  			],
+  			value : 0}
+
 		this.handleChange = this.handleChange.bind(this)
+		this.updateSlVal = this.updateSlVal.bind(this)
 	}
 
+	useStyles = makeStyles((theme) => ({
+	  root: {
+	    flexGrow: 1,
+	    backgroundColor: theme.palette.background.paper,
+	    display: 'flex',
+	    height: 224,
+	  },
+	  tabs: {
+	    borderRight: `2px solid ${theme.palette.divider}`,
+	  },
+	}));
+
 	handleChange(e) {
-		console.log(e)
-		this.props.displayDetails(e.currentTarget.dataset.index)
+		var parsed = parseInt(e.currentTarget.dataset.index, 10)
+  		console.log(parsed)
+  		this.setState({value: parsed})
 	}
+
+	updateSlVal(e) {
+  		let postHolder = this.state.posts;
+
+  		if(postHolder[e]['shortlist']) {
+  			postHolder[e]['message'] = "Add To Shortlist"
+  			postHolder[e]['bgColor'] = "lightgray"
+  		}
+  		if(!postHolder[e]['shortlist']) {
+  			postHolder[e]['message'] = "Remove From Shortlist"
+  			postHolder[e]['bgColor'] = "lightblue"
+  		}
+
+  		postHolder[e]['shortlist'] = !postHolder[e]['shortlist']
+
+  		this.setState({postHolder})
+  	}
 
 	render() {
 
-		var temp = this.props.posts
+		var temp = this.state.posts
 		var toShow = [];
 		var deptFilters = this.props.deptFilters;
 		var hoursFilters = this.props.hoursFilters;
@@ -36,22 +178,41 @@ class Thumbnail extends React.Component {
 				toShow = toShow.concat(temp.filter(posts => posts.resp.includes(name) === true));
 			});
 
-		if(toShow.length === 0) toShow = toShow.concat(this.props.posts);
+		if(toShow.length === 0) toShow = toShow.concat(this.state.posts);
 
 		if(onSL) toShow = toShow.filter(posts => posts.shortlist === true);
 
 		return(
-			<div>
-         		 {toShow.map(
-         		 ({id, title, dept, desc, hours, resp}) =>
-         			<Button className="postButton" key={id} data-index={id} onClick={this.handleChange}>
-         				<div className="info">
-         		 			<p className="title"> <b> {title} </b> </p>
-         					<p className="department"> <em> {dept} </em> </p>
-         				</div>
-         		 	</Button>
-         		 )}
-         	</div>
+         	<div className = "alignMe2">
+      			 <div className="test3">
+          			<Tabs
+          				className="test3"
+          				orientation="vertical"
+          				variant="scrollable"
+          				value={this.state.value}
+   						onChange={this.handleChange}
+          				className={this.useStyles.tabs}
+      				>
+      					{toShow.map(
+      						({id, title}) =>
+      							<Tab label={title} className="test2" data-index={id} {...a11yProps({id})} />
+      						)}
+      				</Tabs>
+      				</div>
+
+      			<div className="alignMe3">
+
+				{toShow.map(
+					({id, title, dept, desc, hours, resp, skills, bgColor, message}) =>
+						<TabPanel className="alignRight2" value={this.state.value} index={id}>
+			        		<PostDetails 
+        				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
+        				updateSlVal={this.updateSlVal}
+        				/>
+			      		</TabPanel>
+				)}
+				</div>
+  			</div>
 		);
 	}
 }
@@ -61,67 +222,66 @@ class PostDetails extends React.Component {
 	constructor(props){
 		super(props);
 		this.toggleSl = this.toggleSl.bind(this);
-		this.state = {message:"Add to Shortlist", slVal : false, bgColor : "lightgray"}
 	}
 
 	toggleSl(e) {
-		
-
-		if(!this.state.slVal){
-			this.setState({message: "Remove From Shortlist"})
-			this.setState({bgColor : "lightblue"})
-		}
-		if(this.state.slVal){
-			this.setState({message: "Add to Shortlist"})
-			this.setState({bgColor : "lightgray"})
-		}
-
-		this.setState({slVal: !this.state.slVal})
-
 		this.props.updateSlVal(e.currentTarget.dataset.index)
 	}
 
 	render() {
+
 		return(
-			<div>
-			{this.props.cDetails.map(
-         		({id, title, dept, desc, hours, resp, sl}) =>
-         			<div className="outer" key={id}>
-         				<Grid container spacing={0}>
-         					<Grid item xs={12}>
-		         				<p className="cTitle"> <b> {title} </b> </p>
-		         			</Grid>
-		         			<Grid item xs={6}>
-		         				<Button className="slButton" variant="contained" key={id} data-index={id} onClick={this.toggleSl} style={{backgroundColor:this.state.bgColor}}> {this.state.message}  </Button>
-		         			</Grid>
-		         			<Grid item xs={6}>
-		         				<Button className="applyButton" variant="contained"> Apply Now! </Button>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<p className="cDescTitle"> <b> Desctiption: </b> </p>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<p className="cDesc"> {desc} </p>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<p className="cHoursTitle"> <b> Weekly Hours: </b> </p>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<ul className="cHours">
-		         					<li > {hours} hours </li>
-		         				</ul>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<p className="cHoursTitle"> <b> Responsibilities: </b> </p>
-		         			</Grid>
-		         			<Grid item xs={12}>
-		         				<ul className="cResp">
-		         					<li > {resp} </li>
-		         				</ul>
-         					</Grid>
-         				</Grid>
-         			</div>
-         		)}
+			<div className="" key={this.props.id}>
+
+				<Grid container spacing={0}>
+					<Grid item xs={12}>
+     				<p className="cTitle"> <b> {this.props.title} </b> </p>
+     			</Grid>
+     			<Grid item xs={6}>
+     				<Button className="slButton" variant="contained" key={this.props.id} data-index={this.props.id} onClick={this.toggleSl} style={{backgroundColor:this.props.bgColor}}> {this.props.message}  </Button>
+     			</Grid>
+     			<Grid item xs={6}>
+	     				<NavLink exact to="/applyposition">
+	     					<Button className="applyButton" variant="contained"> Apply Now! </Button>
+	     				</NavLink>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cDescTitle"> <b> Department/Faculty: </b> </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cDesc"> {this.props.dept} </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cHoursTitle"> <b> Desctiption: </b> </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cDesc"> {this.props.desc} </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cHoursTitle"> <b> Weekly Hours: </b> </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<ul className="cHours">
+     					<li > {this.props.hours} hours </li>
+     				</ul>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<p className="cHoursTitle"> <b> Responsibilities: </b> </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<ul className="cResp">
+     					<li > {this.props.resp} </li>
+     				</ul>
+					</Grid>
+				</Grid>
+				<Grid item xs={12}>
+     				<p className="cHoursTitle"> <b> Skills Required: </b> </p>
+     			</Grid>
+     			<Grid item xs={12}>
+     				<ul className="cResp">
+     					<li > {this.props.skills} </li>
+     				</ul>
+				</Grid>
 			</div>
 		);
 	}
@@ -137,6 +297,8 @@ class FilterDropdowns extends React.Component {
   		'Economics',
   		'English and Cultural Studies',
   		'Engineering',
+  		'Humanities',
+  		'Business',
 		],
 
 		hours : [
@@ -258,89 +420,16 @@ class ViewPostings extends React.Component {
 
   constructor(props) {
   	super(props);
-  	this.changeCurrentDetails = this.changeCurrentDetails.bind(this)
   	this.updateDeptFilter = this.updateDeptFilter.bind(this)
   	this.updateRespFilter = this.updateRespFilter.bind(this)
   	this.updateHoursFilter = this.updateHoursFilter.bind(this)
   	this.updateOnSL = this.updateOnSL.bind(this)
-  	this.updateSlVal = this.updateSlVal.bind(this)
 
-  	this.state = {posts: [
-  			{id: 0,
-  			 title: "CHEM 1A03 Teaching Assistant",
-  			 dept: "Department of Chemistry and Chemical Biology",
-  			 hours: "15-20",
-  			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence",
-  			 desc: "placeholder",
-  			 shortlist: false},
-
-  			 {id: 1,
-  			 title: "COMPSCI 2XA3 Teaching Assistant",
-  			 dept: "Department of Computing and Software",
-  			 hours: "10-15",
-  			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
-  			 shortlist: false},
-
-  			 {id: 2,
-  			 title: "COMPSCI 2XB3 Teaching Assistant",
-  			 dept: "Department of Computing and Software",
-  			 hours: "10-15",
-  			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
-  			 shortlist: false},
-
-  			 {id: 3,
-  			 title: "ECON 1B03 Teaching Assistant",
-  			 dept: "Department of Economics",
-  			 hours: "5-10",
-  			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
-  			 shortlist: false},
-
-  			 {id: 4,
-  			 title: "ENGINEER 1P13 EPIC Lab IAI",
-  			 dept: "Faculty of Engineering",
-  			 hours: "Full Time",
-  			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence",
-  			 desc: "The Epic Lab is an experiential laboratory designed to allow first year students the chance to have hands on experience with the topics discussed in the 1P13 course. This includes Engineering Design, Software Engineering and Materials Engineering. You will be reporting to multiple professors within the faculty of Engineering during your time as an instructor.  ",
-  			 shortlist: false},
-
-  			 {id: 5,
-  			 title: "English 1AA3 Teaching Assistant",
-  			 dept: "Department of English and Cultural Studies",
-  			 hours: "0-5",
-  			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
-  			 shortlist: false},
-
-  			 {id: 6,
-  			 title: "English 2AA3 Teaching Assistant",
-  			 dept: "Department of English and Cultural Studies",
-  			 hours: "5-10",
-  			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
-  			 shortlist: false}
-  			],
-
-  			currDetails: [],
+  	this.state = {
   			deptFilters: [],
   			hoursFilters: [],
   			respFilters: [],
   			onSL: false,};
-
-
-  	let postsHolder = this.state.posts;
-  	let detailsHolder = this.state.currDetails;
-  	detailsHolder[0] = postsHolder[0];
-  	this.setState({detailsHolder});
-  }
-
-  changeCurrentDetails(id) {
-  	let postsHolder = this.state.posts;
-  	let detailsHolder = this.state.currDetails;
-  	detailsHolder[0] = postsHolder[id];
-  	this.setState({detailsHolder});
   }
 
   updateDeptFilter(e) {
@@ -360,13 +449,6 @@ class ViewPostings extends React.Component {
   	this.setState({onSL : e});
   }
 
-  updateSlVal(e) {
-  	let postHolder = this.state.posts;
-  	postHolder[e]['shortlist'] = !postHolder[e]['shortlist']
-  	console.log(postHolder[e]['shortlist'])
-  	this.setState({postHolder})
-  }
-
   render() {
 
     return (
@@ -383,7 +465,7 @@ class ViewPostings extends React.Component {
     					/>
         			</Box>
         		</Grid>
-        		<Grid item xs={4}>
+        		<Grid item xs={12}>
          			<Box component="div" className="pOutline posts">
          				<Thumbnail 
          					posts={this.state.posts} 
@@ -394,14 +476,6 @@ class ViewPostings extends React.Component {
          					SLFilters={this.state.onSL} 
          				/>
          			</Box>
-        		</Grid>
-        		<Grid item xs={8}>
-        			<Box component="div" className="pOutline details"> <br />
-        				<PostDetails 
-        				cDetails={this.state.currDetails} 
-        				updateSlVal={this.updateSlVal}
-        				/>
-        			</Box>
         		</Grid>
       		</Grid>
       	</Box>

@@ -3,19 +3,29 @@
   height: 100vh;
 }
 
-.foreground {
+.foreground2 {
   background-color: #ffffff;
   width: 97%;
   height: 94%;
   top: 3%;
   margin: 0 auto;
   position: relative;
+  max-height: 94%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
 }
 
 .ReqDoc,
 .Questions,
 .Review {
   padding: 3%;
+}
+
+.stopOverflow {
+  position: relative;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 
 /* Additional Questions Component */
