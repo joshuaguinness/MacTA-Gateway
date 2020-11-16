@@ -71,6 +71,7 @@ class Profile extends React.Component {
               account={this.state.account}
               password={this.state.password}
               profilePic={this.state.profilePic}
+              viewChecked={this.props.viewChecked}
               onPhoneChange={this.handlePhoneChange}
               onProgramChange={this.handleProgramChange}
               onProfilePicChange={this.handleProfilePicChange}

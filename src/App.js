@@ -218,7 +218,7 @@ class App extends React.Component {
           </Route>
           <Route exact path="/applyposition/:title" render={routerProps => <ApplyPosition {...routerProps} /> } />
           <Route exact path="/profile">
-            <Profile />
+            <Profile viewChecked={this.state.viewChecked}/>
           </Route>
           <Route exact path="/reviewapplications1P13">
             <ReviewApplications />

@@ -72,22 +72,36 @@ class EditProfile extends React.Component {
     return (
       <div>
         <h3>McMaster University</h3>
-        <TextField
-          className={classes.root}
-          fullWidth
-          id="programdetails"
-          variant="outlined"
-          label="Program Details"
-          defaultValue={this.props.program}
-          onChange={this.handleProgramChange}
-        />
-        <TextField
-          className={classes.root}
-          variant="outlined"
-          type="number"
-          label="GPA"
-          defaultValue={this.props.gpa}
-        />
+        {this.props.viewChecked ? (
+          <div>
+            <TextField
+              className={classes.root}
+              fullWidth
+              id="programdetails"
+              variant="outlined"
+              label="Program Details"
+              defaultValue={this.props.program}
+              onChange={this.handleProgramChange}
+            />
+            <TextField
+              className={classes.root}
+              variant="outlined"
+              type="number"
+              label="GPA"
+              defaultValue={this.props.gpa}
+            />
+          </div>
+        ) : (
+          <TextField
+            className={classes.root}
+            fullWidth
+            id="programdetails"
+            variant="outlined"
+            label="Department"
+            defaultValue={this.props.program}
+            onChange={this.handleProgramChange}
+          />
+        )}
         <h4>Contact Details</h4>
         <TextField
           className={classes.root}
@@ -112,31 +126,35 @@ class EditProfile extends React.Component {
           label="Mailing Address"
           defaultValue={this.props.mailing}
         />
-        <h4>Banking Details</h4>
-        <TextField
-          className={classes.root}
-          id="institution"
-          variant="outlined"
-          type="number"
-          label="Institution"
-          defaultValue={this.props.institution}
-        />
-        <TextField
-          className={classes.root}
-          id="transit"
-          variant="outlined"
-          type="number"
-          label="Transit"
-          defaultValue={this.props.transit}
-        />
-        <TextField
-          className={classes.root}
-          id="account"
-          variant="outlined"
-          type="number"
-          label="Account"
-          defaultValue={this.props.account}
-        />
+        {this.props.viewChecked ? (
+          <div>
+            <h4>Banking Details</h4>
+            <TextField
+              className={classes.root}
+              id="institution"
+              variant="outlined"
+              type="number"
+              label="Institution"
+              defaultValue={this.props.institution}
+            />
+            <TextField
+              className={classes.root}
+              id="transit"
+              variant="outlined"
+              type="number"
+              label="Transit"
+              defaultValue={this.props.transit}
+            />
+            <TextField
+              className={classes.root}
+              id="account"
+              variant="outlined"
+              type="number"
+              label="Account"
+              defaultValue={this.props.account}
+            />
+          </div>
+        ) : null}
         <h4>Change Password</h4>
         <TextField
           id="standard-password-input"
@@ -155,13 +173,17 @@ class EditProfile extends React.Component {
           defaultValue={this.props.profilePic}
           onChange={this.handleProfilePicChange}
         />
-        <h4>Upload Transcript</h4>
-        <div>
-          <TranscriptUpload
-            appFiles={this.state.files}
-            parentSaveFiles={this.saveFiles}
-          />
-        </div>
+        {this.props.viewChecked ? (
+          <div>
+            <h4>Upload Transcript</h4>
+            <div>
+              <TranscriptUpload
+                appFiles={this.state.files}
+                parentSaveFiles={this.saveFiles}
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
