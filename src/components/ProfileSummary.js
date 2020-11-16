@@ -1,23 +1,20 @@
 import React from "react";
 import profilepicture from "./static/images/parnasd.jpeg";
-import "./Profile.css"
+import "../style/Profile.css"
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
 />;
 
 class ProfileSummary extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
       <div>
         <img
           src={profilepicture}
-          alt="Profile Picture"
           width="225"
+          alt="David Parnas"
           height="225"
         ></img>
         <h3>David Parnas</h3>

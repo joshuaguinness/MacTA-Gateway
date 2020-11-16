@@ -2,7 +2,7 @@ import React from "react";
 import EditProfile from "./EditProfile.js";
 import ProfileSummary from "./ProfileSummary.js";
 import Grid from "@material-ui/core/Grid";
-import "./Profile.css"
+import "../style/Profile.css"
 
 class Profile extends React.Component {
   constructor(props) {

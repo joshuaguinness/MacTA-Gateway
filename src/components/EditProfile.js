@@ -1,26 +1,52 @@
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from '@material-ui/core/styles';
-import "./Profile.css"
+import { withStyles } from "@material-ui/core/styles";
+import { DropzoneArea } from "material-ui-dropzone";
+import "../style/Profile.css";
 
 const styles = {
   root: {
-    marginLeft: '30px',
+    marginLeft: "30px",
     marginright: "30px",
     marginTop: "10px",
     marginBottom: "10px",
-    alignItems: "right"
+    alignItems: "right",
   },
 };
 
-class EditProfile extends React.Component {
+class TranscriptUpload extends React.Component {
+  saveFiles(files) {
+    this.props.parentSaveFiles(files);
+  }
 
+  render() {
+    return (
+      <div>
+        <p>Please upload your transcript as a PDF.</p>
+        <DropzoneArea
+          initialFiles={this.props.appFiles}
+          showFileNamesInPreview={true}
+          showPreviewsInDropzone={false}
+          showPreviews={true}
+          onChange={(files) => this.saveFiles(files)}
+        />
+      </div>
+    );
+  }
+}
+
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      files: [],
+    };
+
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleProgramChange = this.handleProgramChange.bind(this);
+    this.saveFiles = this.saveFiles.bind(this);
   }
 
   handlePhoneChange(e) {
@@ -31,15 +57,18 @@ class EditProfile extends React.Component {
     this.props.onProgramChange(e.target.value);
   }
 
-  render() {
+  saveFiles(fileList) {
+    this.setState({ files: fileList });
+  }
 
+  render() {
     const { classes } = this.props;
 
     return (
       <div>
         <h3>McMaster University</h3>
         <TextField
-        className={classes.root}
+          className={classes.root}
           fullWidth
           id="programdetails"
           variant="outlined"
@@ -48,16 +77,15 @@ class EditProfile extends React.Component {
           onChange={this.handleProgramChange}
         />
         <TextField
-        className={classes.root}
+          className={classes.root}
           variant="outlined"
           type="number"
-          className="gpa"
           label="GPA"
           defaultValue={this.props.gpa}
         />
-        <h5>Contact Details</h5>
+        <h4>Contact Details</h4>
         <TextField
-        className={classes.root}
+          className={classes.root}
           id="phonenumber"
           variant="outlined"
           label="Phone Number"
@@ -65,23 +93,23 @@ class EditProfile extends React.Component {
           onChange={this.handlePhoneChange}
         />
         <TextField
-        className={classes.root}
+          className={classes.root}
           id="backupemail"
           variant="outlined"
           label="Backup Email"
           defaultValue={this.props.backupemail}
         />
         <TextField
-        className={classes.root}
+          className={classes.root}
           fullWidth
           id="mailingaddress"
           variant="outlined"
           label="Mailing Address"
           defaultValue={this.props.mailing}
         />
-        <h5>Banking Details</h5>
+        <h4>Banking Details</h4>
         <TextField
-        className={classes.root}
+          className={classes.root}
           id="institution"
           variant="outlined"
           type="number"
@@ -89,7 +117,7 @@ class EditProfile extends React.Component {
           defaultValue={this.props.institution}
         />
         <TextField
-        className={classes.root}
+          className={classes.root}
           id="transit"
           variant="outlined"
           type="number"
@@ -97,14 +125,21 @@ class EditProfile extends React.Component {
           defaultValue={this.props.transit}
         />
         <TextField
-        className={classes.root}
+          className={classes.root}
           id="account"
           variant="outlined"
           type="number"
           label="Account"
           defaultValue={this.props.account}
         />
-        <h5>Change Password</h5>
+        <h4>Change Password</h4>
+        <h4>Upload Transcript</h4>
+        <div>
+          <TranscriptUpload
+            appFiles={this.state.files}
+            parentSaveFiles={this.saveFiles}
+          />
+        </div>
       </div>
     );
   }
