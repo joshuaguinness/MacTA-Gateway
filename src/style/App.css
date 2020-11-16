@@ -46,3 +46,7 @@
 .navlink-active {
   font-weight: bold;
 }
+
+.MuiAppBar-colorPrimary {
+  background-color: #7A003C !important;
+}

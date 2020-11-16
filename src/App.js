@@ -1,6 +1,6 @@
 import React from "react";
 import "./style/App.css";
-import { HashRouter as Router, Route, NavLink } from "react-router-dom";
+import { HashRouter as Router, Route, NavLink, Redirect } from "react-router-dom";
 import CreatePosting from "./components/CreatePosting.js";
 import ViewPostings from "./components/ViewPostings.js";
 import ListAppProf from "./components/ListAppProf.js";
@@ -209,6 +209,9 @@ class App extends React.Component {
           </Dialog>
         </div>
         <Router>
+          <Route exact path="/">
+            {this.state.viewChecked ? <Redirect to="/viewpostings" /> : <Redirect to="/reviewapplications" />}
+          </Route>
           <Route exact path="/createposting">
             <CreatePosting />
           </Route>

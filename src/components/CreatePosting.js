@@ -648,9 +648,7 @@ class AdditionalQuestions extends React.Component {
 }
 
 class Review extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     return (
       <div>
