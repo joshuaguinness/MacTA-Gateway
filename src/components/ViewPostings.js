@@ -357,8 +357,6 @@ class FilterDropdowns extends React.Component {
 		return (
 			<div>
 
-				
-
 				<div className="dSpacing">
 					<img src={filter} className="filterIcon" alt="Filter Icon" />
 					
