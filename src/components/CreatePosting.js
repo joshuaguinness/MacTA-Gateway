@@ -59,6 +59,9 @@ class CreatePosting extends React.Component {
     this.handleDeadlineTimeChange = this.handleDeadlineTimeChange.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.handleAdditionalApplicationQuestions = this.handleAdditionalApplicationQuestions.bind(
+      this
+    );
   }
 
   handleCourseTitleChange(title) {
@@ -107,6 +110,10 @@ class CreatePosting extends React.Component {
 
   handleEndDateChange(date) {
     this.setState({ endDate: date });
+  }
+
+  handleAdditionalApplicationQuestions(ques) {
+    this.setState({ additionalApplicationQuestions: ques });
   }
 
   dialogToggle() {
@@ -258,7 +265,14 @@ class CreatePosting extends React.Component {
             {/* Additional Questions Page */}
             {this.state.active === "AdditionalQuestions" && (
               <div>
-                <AdditionalQuestions />
+                <AdditionalQuestions
+                  additionalApplicationQuestions={
+                    this.state.additionalApplicationQuestions
+                  }
+                  updateAdditionalApplicationQuestions={
+                    this.handleAdditionalApplicationQuestions
+                  }
+                />
                 <Button
                   disableElevation
                   variant="contained"
@@ -570,10 +584,57 @@ class RequiredDocuments extends React.Component {
 }
 
 class AdditionalQuestions extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      newQuestion: "",
+    };
+
+    this.changeAdditionalAppliactionQuestions = this.changeAdditionalAppliactionQuestions.bind(
+      this
+    );
+    this.updateQuestionState = this.updateQuestionState.bind(this);
+  }
+
+  changeAdditionalAppliactionQuestions(e) {
+    const newQArray = [
+      ...this.props.additionalApplicationQuestions,
+      this.state.newQuestion,
+    ];
+    this.props.updateAdditionalApplicationQuestions(newQArray);
+  }
+
+  updateQuestionState(e){
+    console.log(e.target.value);
+    this.setState({newQuestion: e.target.value})
+  }
+
   render() {
     return (
       <div>
-        <p>Additional Questions</p>
+        <h3>Additional Questions</h3>
+        <h5>
+          Please add any additional questions that you would like applicants to
+          answer as a part of the application process.
+        </h5>
+        <h5>Type them into the box, and click "Add" to add them.</h5>
+        <h6>Questions added so far:</h6>
+        {this.props.additionalApplicationQuestions.map((question) => (
+          <p>{question}</p>
+        ))}
+        <TextField
+          id="additionalquestion"
+          label="Question"
+          multiline
+          row={6}
+          defaultValue=""
+          variant="outlined"
+          onChange={this.updateQuestionState}
+        />
+        <br />
+        <Button variant="contained" color="primary" onClick={this.changeAdditionalAppliactionQuestions}>Add</Button>
+        <br />
       </div>
     );
   }
