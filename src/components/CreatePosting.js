@@ -37,7 +37,6 @@ class CreatePosting extends React.Component {
       resume: false,
       coverLetter: false,
       transcript: false,
-      lettersOfReference: false,
       additionalApplicationQuestions: [],
       active: "NamePosting",
       dialog: false,
@@ -286,7 +285,7 @@ class CreatePosting extends React.Component {
             {/* Review Application Page */}
             {this.state.active === "Review" && (
               <div>
-                <Review />
+                <Review {...this.state} />
                 <Button
                   disableElevation
                   variant="contained"
@@ -317,7 +316,7 @@ class CreatePosting extends React.Component {
                     <Button
                       onClick={this.dialogToggle.bind(this)}
                       color="primary"
-                      autofocus
+                      autoFocus
                     >
                       Close
                     </Button>
@@ -589,6 +588,7 @@ class AdditionalQuestions extends React.Component {
 
     this.state = {
       newQuestion: "",
+      key: this.props.additionalApplicationQuestions.length
     };
 
     this.changeAdditionalAppliactionQuestions = this.changeAdditionalAppliactionQuestions.bind(
@@ -600,14 +600,15 @@ class AdditionalQuestions extends React.Component {
   changeAdditionalAppliactionQuestions(e) {
     const newQArray = [
       ...this.props.additionalApplicationQuestions,
-      this.state.newQuestion,
+      {id: this.state.key, question: this.state.newQuestion},
     ];
+    const newKey = this.state.key + 1;
+    this.setState({key: newKey});
     this.props.updateAdditionalApplicationQuestions(newQArray);
   }
 
-  updateQuestionState(e){
-    console.log(e.target.value);
-    this.setState({newQuestion: e.target.value})
+  updateQuestionState(e) {
+    this.setState({ newQuestion: e.target.value });
   }
 
   render() {
@@ -620,9 +621,9 @@ class AdditionalQuestions extends React.Component {
         </h5>
         <h5>Type them into the box, and click "Add" to add them.</h5>
         <h6>Questions added so far:</h6>
-        {this.props.additionalApplicationQuestions.map((question) => (
-          <p>{question}</p>
-        ))}
+        {this.props.additionalApplicationQuestions.map(({id, question}) =>
+          <p key={id}>{question}</p>
+        )}
         <TextField
           id="additionalquestion"
           label="Question"
@@ -633,7 +634,13 @@ class AdditionalQuestions extends React.Component {
           onChange={this.updateQuestionState}
         />
         <br />
-        <Button variant="contained" color="primary" onClick={this.changeAdditionalAppliactionQuestions}>Add</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.changeAdditionalAppliactionQuestions}
+        >
+          Add
+        </Button>
         <br />
       </div>
     );
@@ -641,27 +648,36 @@ class AdditionalQuestions extends React.Component {
 }
 
 class Review extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <div>
-        <p>Review</p>
+        <h3>Please review before submitting</h3>
+        <h4>Name of Posting</h4>
+        <p>Course Title: {this.props.courseTitle}</p>
+        <p>Course Code: {this.props.courseCode}</p>
+        <h4>Post Details</h4>
+        <p>Description: {this.props.courseDescription}</p>
+        <p>Skills: {this.props.courseSkills}</p>
+        <p>Responsibilities: {this.props.courseResponsibilities}</p>
+        <p>Position Start Date: {this.props.startDate}</p>
+        <p>Position End Date: {this.props.endDate}</p>
+        <h4>Application Deadline</h4>
+        <p>Deadline Date: {this.props.deadlineDate}</p>
+        <p>Deadline Time: {this.props.deadlineTime}</p>
+        <h4>Required Documents</h4>
+        {this.props.resume ? <p>Resume</p> : null}
+        {this.props.coverLetter ? <p>Cover Letter</p> : null}
+        {this.props.transcript ? <p>Transcript</p> : null}
+        <h4>Additional Questions</h4>
+        {this.props.additionalApplicationQuestions.map(({id, question}) => (
+          <p key={id}>{question}</p>
+        ))}
       </div>
     );
   }
 }
 
 export default CreatePosting;
-
-/* TODO
-
-Add additional application questions 
-*/
-
-/*
-Creating Posting Component
-Sub component under each one
-State store in parent component
-
-Take out letters of reference
-
-*/
