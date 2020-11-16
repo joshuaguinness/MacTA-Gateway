@@ -8,6 +8,7 @@ import ReviewApplications from "./components/ReviewApplications.js";
 import ApplyPosition from "./components/ApplyPosition.js";
 import Profile from "./components/Profile.js";
 import ScheduleInterview from "./components/ScheduleInterview.js";
+import StudentReviewApplications from "./components/StudentReviewApplications.js"
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -86,6 +87,14 @@ class App extends React.Component {
                       activeClassName="navlink-active"
                     >
                       Apply for Position
+                    </NavLink>
+                    <NavLink
+                      exact
+                      to="/studentreviewapplications"
+                      className="navlink"
+                      activeClassName="navlink-active"
+                    >
+                      Review Submitted Applications
                     </NavLink>
                   </div>
                 ) : (
@@ -175,6 +184,9 @@ class App extends React.Component {
           </Route>
           <Route exact path="/scheduleinterview">
             <ScheduleInterview />
+          </Route>
+          <Route exact path="/studentreviewapplications">
+            <StudentReviewApplications />
           </Route>
         </Router>
       </div>
