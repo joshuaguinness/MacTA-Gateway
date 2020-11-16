@@ -1,5 +1,5 @@
 import React from "react";
-import './ReviewApplications.css';
+import '../style/ReviewApplications.css';
 import {Box, Button, Grid, Tabs, Tab, Typography, AppBar, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";

@@ -1,10 +1,9 @@
 import React from "react";
-import './ViewPostings.css';
-import ApplyPosition from "./ApplyPosition.js"
+import '../style/ViewPostings.css';
 import {Grid, Box, Button, Select, MenuItem, 
-	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography, Container } from '@material-ui/core';
+	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Link, Route} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -19,7 +18,7 @@ function TabPanel(props) {
 	    >
 	      {value === index && (
 	        <Box p={3}>
-	          <Typography>{children}</Typography>
+	          <Typography component={"span"}>{children}</Typography>
 	        </Box>
 	      )}
 	    </div>
@@ -45,7 +44,7 @@ class Thumbnail extends React.Component {
   			 dept: "Faculty of Science, Department of Chemistry and Chemical Biology",
   			 hours: "15-20",
   			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence, Marking",
-  			 desc: "placeholder",
+  			 desc: "A discussion of chemical fundamentals, including bonding, structure, reactivity, and energetics, with emphasis on applications to health, energy, and the environment. ",
   			 skills: "Communication Skills",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -58,7 +57,7 @@ class Thumbnail extends React.Component {
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating",
   			 skills: "Communication Skills, Coding, Git and Version Control",
-  			 desc: "placeholder",
+  			 desc: "Unix and shell programming, makefiles, version control; assembly basics, translating high-level language into assembly, parameter passing, arrays, recursion; compiling, debugging, profiling, and software optimizations.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
@@ -70,7 +69,7 @@ class Thumbnail extends React.Component {
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
   			 skills: "Communication Skills, Coding, Git and Version Control",
-  			 desc: "placeholder",
+  			 desc: "Open-ended design of computational solutions to practical problems that involve both theoretical (algorithmic) analysis and implementation; solving computational problems through an experiential approach.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
@@ -82,7 +81,7 @@ class Thumbnail extends React.Component {
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
   			 skills: "Communication Skills, Financial knowledge",
-  			 desc: "placeholder",
+  			 desc: "This first course in microeconomics will explore basic concepts of demand and supply, consumers and producers, market structure and policy implications. It is an asynchronous online course, meaning the content is presented online.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
@@ -105,7 +104,7 @@ class Thumbnail extends React.Component {
   			 dept: "Faculty of Humanities, Department of English and Cultural Studies",
   			 hours: "0-5",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
-  			 desc: "placeholder",
+  			 desc: "This course introduces students to some of the fundamental skills in literary criticism, i.e., the rigorous and capacious interpretation of literary texts. We focus on a selection of shorter texts, including poems, short stories, and autobiographical writings. The course emphasizes the development of critical skills in reading literature and writing effectively about literature.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -117,7 +116,7 @@ class Thumbnail extends React.Component {
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
+  			 desc: "Predicate logic and formal proofs, grammars and automata, modular arithmetic, and their applications to computing.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -193,7 +192,6 @@ class Thumbnail extends React.Component {
          	<div className = "alignMe2">
       			 <div className="test3">
           			<Tabs
-          				className="test3"
           				orientation="vertical"
           				variant="scrollable"
           				value={this.state.value}
@@ -202,7 +200,7 @@ class Thumbnail extends React.Component {
       				>
       					{toShow.map(
       						({id, title}) =>
-      							<Tab label={title} className="test2" data-index={id} {...a11yProps({id})} />
+      							<Tab label={title} className="test2" key={id} data-index={id} {...a11yProps({id})} />
       						)}
       				</Tabs>
       				</div>
@@ -211,7 +209,7 @@ class Thumbnail extends React.Component {
 
 				{toShow.map(
 					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}) =>
-						<TabPanel className="alignRight2" value={this.state.value} index={id}>
+						<TabPanel className="alignRight2" value={this.state.value} index={id} key={id}>
 			        		<PostDetails 
         				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
         				updateSlVal={this.updateSlVal}
@@ -250,7 +248,7 @@ class PostDetails extends React.Component {
      				<Button className="slButton" variant="contained" key={this.props.id} data-index={this.props.id} onClick={this.toggleSl} style={{backgroundColor:this.props.bgColor}}> {this.props.message}  </Button>
      			</Grid>
      			<Grid item xs={6}>
-	     				<Link exact to={`/applyposition/${this.props.ts}`}>
+	     				<Link to={`/applyposition/${this.props.ts}`}>
 	     					<Button className="applyButton" variant="contained"> Apply Now! </Button>
 	     				</Link>
      			</Grid>

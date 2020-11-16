@@ -1,12 +1,9 @@
 import React from "react";
-import './ReviewApplications.css';
+import '../style/ReviewApplications.css';
 import {Box, Button, Grid, Tabs, Tab, Typography, AppBar, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {NavLink} from "react-router-dom";
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { pdfjs } from 'react-pdf';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import Resume from './static/pdf/comp_sci_-_two_page_sample.pdf'
 import Transcript from './static/pdf/transcript.pdf'
 
