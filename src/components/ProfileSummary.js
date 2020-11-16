@@ -1,5 +1,4 @@
 import React from "react";
-import profilepicture from "./static/images/parnasd.jpeg";
 import "../style/Profile.css"
 <link
   rel="stylesheet"
@@ -12,13 +11,13 @@ class ProfileSummary extends React.Component {
     return (
       <div>
         <img
-          src={profilepicture}
-          width="225"
-          alt="David Parnas"
-          height="225"
+          src={this.props.profilePic}
+          width="325"
+          alt="Profile"
+          height="325"
         ></img>
         <h3>David Parnas</h3>
-        <h5>{this.props.program}</h5>
+        <h4>{this.props.program}</h4>
         <p>parnasd@mcmaster.ca</p>
         <p>{this.props.phone}</p>
       </div>
