@@ -28,6 +28,13 @@
 	height: 86vh;
 }
 
+.goFull {
+	position: fixed;
+    top: 2.5vh; right: 0; bottom: 0; left: 0;
+    max-width: 100vw;
+    max-height: 80vh;
+}
+
 .test3 {
 	width: 30vw;
 	height: 85.9vh;

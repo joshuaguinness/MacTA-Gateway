@@ -114,7 +114,6 @@ class ApplyPosition extends React.Component {
         { id: 2, q: "What do you consider to be your strengths?", a: "" },
       ],
       dialog: false,
-      jobTitle: "SFWRENG 2FA3 Undergrad TA",
     };
   }
 
@@ -135,9 +134,9 @@ class ApplyPosition extends React.Component {
   render() {
     return (
       <div className={"background"}>
-        <div className={"foreground"}>
-          <h1>{this.state.jobTitle} Application</h1>
-          <Grid container spacing={2}>
+        <div className={"foreground2"}>
+          <h1>{this.props.jobTitle} Application</h1>
+          <Grid  container spacing={2}>
             <Grid container item justify="center">
               <ButtonGroup disableElevation variant="contained" color="primary">
                 <Button

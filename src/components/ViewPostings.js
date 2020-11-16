@@ -1,8 +1,10 @@
 import React from "react";
 import './ViewPostings.css';
+import ApplyPosition from "./ApplyPosition.js"
 import {Grid, Box, Button, Select, MenuItem, 
-	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography,  } from '@material-ui/core';
+	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams } from "react-router-dom";
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -227,8 +229,10 @@ class PostDetails extends React.Component {
 	}
 
 	render() {
+
 		return(
 			<div className="" key={this.props.id}>
+
 				<Grid container spacing={0}>
 					<Grid item xs={12}>
      				<p className="cTitle"> <b> {this.props.title} </b> </p>
@@ -237,7 +241,11 @@ class PostDetails extends React.Component {
      				<Button className="slButton" variant="contained" key={this.props.id} data-index={this.props.id} onClick={this.toggleSl} style={{backgroundColor:this.props.bgColor}}> {this.props.message}  </Button>
      			</Grid>
      			<Grid item xs={6}>
-     				<Button className="applyButton" variant="contained"> Apply Now! </Button>
+     			    <Router>
+	     				<Link to="/apply">
+	     					<Button className="applyButton" variant="contained"> Apply Now! </Button>
+	     				</Link>
+				    </Router>
      			</Grid>
      			<Grid item xs={12}>
      				<p className="cDescTitle"> <b> Department/Faculty: </b> </p>
@@ -276,6 +284,14 @@ class PostDetails extends React.Component {
      					<li > {this.props.skills} </li>
      				</ul>
 				</Grid>
+
+				<Router>
+        			<Route path="/apply">
+          				<div className="goFull">
+							<ApplyPosition jobTitle={this.props.title}/> 
+						</div>
+        			</Route>
+				</Router>
 			</div>
 		);
 	}
