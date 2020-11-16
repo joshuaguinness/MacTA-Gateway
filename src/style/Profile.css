@@ -2,3 +2,17 @@
     border-right-style: solid;
     border-width: 1px;
 }
+
+.background {
+	background-color: #7A003C;
+	height: 100vh;
+}
+
+.foreground {
+	background-color: #FFF;
+	width: 97%;
+	height: 94%;
+	top: 3%;
+	margin: 0 auto;
+    position: relative;
+}

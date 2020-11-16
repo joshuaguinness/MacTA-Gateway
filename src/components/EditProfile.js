@@ -46,6 +46,7 @@ class EditProfile extends React.Component {
 
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleProgramChange = this.handleProgramChange.bind(this);
+    this.handleProfilePicChange = this.handleProfilePicChange.bind(this);
     this.saveFiles = this.saveFiles.bind(this);
   }
 
@@ -55,6 +56,10 @@ class EditProfile extends React.Component {
 
   handleProgramChange(e) {
     this.props.onProgramChange(e.target.value);
+  }
+
+  handleProfilePicChange(e) {
+    this.props.onProfilePicChange(e.target.value);
   }
 
   saveFiles(fileList) {
@@ -67,22 +72,36 @@ class EditProfile extends React.Component {
     return (
       <div>
         <h3>McMaster University</h3>
-        <TextField
-          className={classes.root}
-          fullWidth
-          id="programdetails"
-          variant="outlined"
-          label="Program Details"
-          defaultValue={this.props.program}
-          onChange={this.handleProgramChange}
-        />
-        <TextField
-          className={classes.root}
-          variant="outlined"
-          type="number"
-          label="GPA"
-          defaultValue={this.props.gpa}
-        />
+        {this.props.viewChecked ? (
+          <div>
+            <TextField
+              className={classes.root}
+              fullWidth
+              id="programdetails"
+              variant="outlined"
+              label="Program Details"
+              defaultValue={this.props.program}
+              onChange={this.handleProgramChange}
+            />
+            <TextField
+              className={classes.root}
+              variant="outlined"
+              type="number"
+              label="GPA"
+              defaultValue={this.props.gpa}
+            />
+          </div>
+        ) : (
+          <TextField
+            className={classes.root}
+            fullWidth
+            id="programdetails"
+            variant="outlined"
+            label="Department"
+            defaultValue={this.props.program}
+            onChange={this.handleProgramChange}
+          />
+        )}
         <h4>Contact Details</h4>
         <TextField
           className={classes.root}
@@ -107,39 +126,64 @@ class EditProfile extends React.Component {
           label="Mailing Address"
           defaultValue={this.props.mailing}
         />
-        <h4>Banking Details</h4>
-        <TextField
-          className={classes.root}
-          id="institution"
-          variant="outlined"
-          type="number"
-          label="Institution"
-          defaultValue={this.props.institution}
-        />
-        <TextField
-          className={classes.root}
-          id="transit"
-          variant="outlined"
-          type="number"
-          label="Transit"
-          defaultValue={this.props.transit}
-        />
-        <TextField
-          className={classes.root}
-          id="account"
-          variant="outlined"
-          type="number"
-          label="Account"
-          defaultValue={this.props.account}
-        />
+        {this.props.viewChecked ? (
+          <div>
+            <h4>Banking Details</h4>
+            <TextField
+              className={classes.root}
+              id="institution"
+              variant="outlined"
+              type="number"
+              label="Institution"
+              defaultValue={this.props.institution}
+            />
+            <TextField
+              className={classes.root}
+              id="transit"
+              variant="outlined"
+              type="number"
+              label="Transit"
+              defaultValue={this.props.transit}
+            />
+            <TextField
+              className={classes.root}
+              id="account"
+              variant="outlined"
+              type="number"
+              label="Account"
+              defaultValue={this.props.account}
+            />
+          </div>
+        ) : null}
         <h4>Change Password</h4>
-        <h4>Upload Transcript</h4>
-        <div>
-          <TranscriptUpload
-            appFiles={this.state.files}
-            parentSaveFiles={this.saveFiles}
-          />
-        </div>
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          defaultValue={this.props.password}
+        />
+        <h4>Update Profile Picture</h4>
+        <p>Please enter the site link for the new profile picture.</p>
+        <TextField
+          className={classes.root}
+          id="profilepic"
+          variant="outlined"
+          label="Profile Picture Link"
+          defaultValue={this.props.profilePic}
+          onChange={this.handleProfilePicChange}
+        />
+        {this.props.viewChecked ? (
+          <div>
+            <h4>Upload Transcript</h4>
+            <div>
+              <TranscriptUpload
+                appFiles={this.state.files}
+                parentSaveFiles={this.saveFiles}
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
