@@ -204,8 +204,8 @@ class Thumbnail extends React.Component {
           				className={this.useStyles.tabs}
       				>
       					{toShow.map(
-      						({id, title}) =>
-      							<Tab label={title} className="test2" key={id} data-index={id} {...a11yProps({id})} />
+      						({id, title}, index) =>
+      							<Tab label={title} className="test2" key={index} data-index={index} {...a11yProps({index})} />
       						)}
       				</Tabs>
       				</div>
@@ -213,8 +213,8 @@ class Thumbnail extends React.Component {
       			<div className="alignMe3">
 
 				{toShow.map(
-					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}) =>
-						<TabPanel className="alignRight2" value={this.state.value} index={id} key={id}>
+					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}, index) =>
+						<TabPanel className="alignRight2" value={this.state.value} index={index} key={index}>
 			        		<PostDetails 
         				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
         				updateSlVal={this.updateSlVal}
