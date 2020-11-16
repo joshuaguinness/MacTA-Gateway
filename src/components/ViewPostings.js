@@ -1,10 +1,9 @@
 import React from "react";
-import './ViewPostings.css';
-import ApplyPosition from "./ApplyPosition.js"
+import '../style/ViewPostings.css';
 import {Grid, Box, Button, Select, MenuItem, 
-	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography, Container } from '@material-ui/core';
+	InputLabel, FormControl, Checkbox, ListItemText, Input, Tabs, Tab, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, NavLink} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
 	  const { children, value, index, ...other } = props;
@@ -19,7 +18,7 @@ function TabPanel(props) {
 	    >
 	      {value === index && (
 	        <Box p={3}>
-	          <Typography>{children}</Typography>
+	          <Typography component={"span"}>{children}</Typography>
 	        </Box>
 	      )}
 	    </div>
@@ -41,10 +40,11 @@ class Thumbnail extends React.Component {
 		this.state = {posts: [
   			{id: 0,
   			 title: "CHEM 1A03 Teaching Assistant",
+  			 ts: "CHEM1A03",
   			 dept: "Faculty of Science, Department of Chemistry and Chemical Biology",
   			 hours: "15-20",
   			 resp: "Tutorial Instruction, Invigillating, Equiptment Maintenence, Marking",
-  			 desc: "placeholder",
+  			 desc: "A discussion of chemical fundamentals, including bonding, structure, reactivity, and energetics, with emphasis on applications to health, energy, and the environment. ",
   			 skills: "Communication Skills",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -52,39 +52,43 @@ class Thumbnail extends React.Component {
 
   			 {id: 1,
   			 title: "COMPSCI 2XA3 Teaching Assistant",
+  			 ts: "COMPSCI2XA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating",
   			 skills: "Communication Skills, Coding, Git and Version Control",
-  			 desc: "placeholder",
+  			 desc: "Unix and shell programming, makefiles, version control; assembly basics, translating high-level language into assembly, parameter passing, arrays, recursion; compiling, debugging, profiling, and software optimizations.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
 
   			 {id: 2,
   			 title: "COMPSCI 2XB3 Teaching Assistant",
+  			 ts: "COMPSCI2XB3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "10-15",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
   			 skills: "Communication Skills, Coding, Git and Version Control",
-  			 desc: "placeholder",
+  			 desc: "Open-ended design of computational solutions to practical problems that involve both theoretical (algorithmic) analysis and implementation; solving computational problems through an experiential approach.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
 
   			 {id: 3,
   			 title: "ECON 1B03 Teaching Assistant",
+  			 ts: "ECON1B03",
   			 dept: "DeGroote School of Business, Department of Economics",
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
   			 skills: "Communication Skills, Financial knowledge",
-  			 desc: "placeholder",
+  			 desc: "This first course in microeconomics will explore basic concepts of demand and supply, consumers and producers, market structure and policy implications. It is an asynchronous online course, meaning the content is presented online.",
   			 shortlist: false,
   			 message: "Add to Shortlist",
   			 bgColor: "lightgray"},
 
   			 {id: 4,
   			 title: "ENGINEER 1P13 EPIC Lab IAI",
+  			 ts: "ENGINEER1P13",
   			 dept: "Faculty of Engineering",
   			 hours: "Full Time",
   			 resp: "Tutorial Instruction, Invigillating, Project/Lab Development, Equiptment Maintenence, Marking",
@@ -95,11 +99,12 @@ class Thumbnail extends React.Component {
   			 bgColor: "lightgray"},
 
   			 {id: 5,
-  			 title: "English 1AA3 Teaching Assistant",
+  			 title: "ENGLISH 1AA3 Teaching Assistant",
+  			 ts: "ENGLISH1AA3",
   			 dept: "Faculty of Humanities, Department of English and Cultural Studies",
   			 hours: "0-5",
   			 resp: "Tutorial Instruction, Invigillating, Marking",
-  			 desc: "placeholder",
+  			 desc: "This course introduces students to some of the fundamental skills in literary criticism, i.e., the rigorous and capacious interpretation of literary texts. We focus on a selection of shorter texts, including poems, short stories, and autobiographical writings. The course emphasizes the development of critical skills in reading literature and writing effectively about literature.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -107,10 +112,11 @@ class Thumbnail extends React.Component {
 
   			 {id: 6,
   			 title: "SFWRENG 2FA3 – Discrete Math II",
+  			 ts: "SFWRENG2FA3",
   			 dept: "Faculty of Engineering, Department of Computing and Software",
   			 hours: "5-10",
   			 resp: "Tutorial Instruction, Invigillating",
-  			 desc: "placeholder",
+  			 desc: "Predicate logic and formal proofs, grammars and automata, modular arithmetic, and their applications to computing.",
   			 skills: "Communication Skills, Grammar, Reading, Writing",
   			 shortlist: false,
   			 message: "Add to Shortlist",
@@ -186,7 +192,6 @@ class Thumbnail extends React.Component {
          	<div className = "alignMe2">
       			 <div className="test3">
           			<Tabs
-          				className="test3"
           				orientation="vertical"
           				variant="scrollable"
           				value={this.state.value}
@@ -195,7 +200,7 @@ class Thumbnail extends React.Component {
       				>
       					{toShow.map(
       						({id, title}) =>
-      							<Tab label={title} className="test2" data-index={id} {...a11yProps({id})} />
+      							<Tab label={title} className="test2" key={id} data-index={id} {...a11yProps({id})} />
       						)}
       				</Tabs>
       				</div>
@@ -203,11 +208,13 @@ class Thumbnail extends React.Component {
       			<div className="alignMe3">
 
 				{toShow.map(
-					({id, title, dept, desc, hours, resp, skills, bgColor, message}) =>
-						<TabPanel className="alignRight2" value={this.state.value} index={id}>
+					({id, title, ts, dept, desc, hours, resp, skills, bgColor, message}) =>
+						<TabPanel className="alignRight2" value={this.state.value} index={id} key={id}>
 			        		<PostDetails 
         				id={id} title={title} dept={dept} desc={desc} hours={hours} resp={resp} skills={skills} bgColor={bgColor} message={message}
         				updateSlVal={this.updateSlVal}
+        				ts={ts}
+        				match={this.props.match}
         				/>
 			      		</TabPanel>
 				)}
@@ -241,9 +248,9 @@ class PostDetails extends React.Component {
      				<Button className="slButton" variant="contained" key={this.props.id} data-index={this.props.id} onClick={this.toggleSl} style={{backgroundColor:this.props.bgColor}}> {this.props.message}  </Button>
      			</Grid>
      			<Grid item xs={6}>
-	     				<NavLink exact to="/applyposition">
+	     				<Link to={`/applyposition/${this.props.ts}`}>
 	     					<Button className="applyButton" variant="contained"> Apply Now! </Button>
-	     				</NavLink>
+	     				</Link>
      			</Grid>
      			<Grid item xs={12}>
      				<p className="cDescTitle"> <b> Department/Faculty: </b> </p>
@@ -474,6 +481,7 @@ class ViewPostings extends React.Component {
          					hoursFilters={this.state.hoursFilters} 
          					respFilters={this.state.respFilters} 
          					SLFilters={this.state.onSL} 
+         					match={this.props.routerProps}
          				/>
          			</Box>
         		</Grid>

@@ -100,14 +100,6 @@ class App extends React.Component {
                   <div>
                     <NavLink
                       exact
-                      to="/applyposition"
-                      className="navlink"
-                      activeClassName="navlink-active"
-                    >
-                      Apply for Position
-                    </NavLink>
-                    <NavLink
-                      exact
                       to="/studentreviewapplications"
                       className="navlink"
                       activeClassName="navlink-active"
@@ -220,15 +212,11 @@ class App extends React.Component {
           <Route exact path="/createposting">
             <CreatePosting />
           </Route>
-          <Route exact path="/viewpostings">
-            <ViewPostings />
-          </Route>
+          <Route exact path="/viewpostings" render={routerProps => <ViewPostings {...routerProps} /> } />
           <Route exact path="/reviewapplications">
             <ListAppProf />
           </Route>
-          <Route exact path="/applyposition">
-            <ApplyPosition />
-          </Route>
+          <Route exact path="/applyposition/:title" render={routerProps => <ApplyPosition {...routerProps} /> } />
           <Route exact path="/profile">
             <Profile />
           </Route>
