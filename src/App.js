@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./style/App.css";
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 import CreatePosting from "./components/CreatePosting.js";
 import ViewPostings from "./components/ViewPostings.js";
@@ -12,7 +12,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -34,7 +33,6 @@ class App extends React.Component {
     };
 
     this.handleViewChange = this.handleViewChange.bind(this);
-    // this.handleProfileClick = this.handleProfileClick.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
@@ -42,16 +40,6 @@ class App extends React.Component {
   handleViewChange(e) {
     this.setState({ viewChecked: e.target.checked });
   }
-
-  // handleProfileClick(e) {
-  //   return (
-  //     <Router>
-  //       <NavLink exact to="/profile">
-  //           Profile
-  //         </NavLink>
-  //     </Router>
-  //   );
-  // }
 
   handleMenu(e) {
     this.setState({ anchorEl: e.currentTarget });
@@ -81,9 +69,53 @@ class App extends React.Component {
             <Toolbar>
               <Typography variant="h6">McMaster Gateway</Typography>
               <Router>
-              <NavLink exact to="/createposting">
-            Create Posting
-          </NavLink>
+                <NavLink
+                  exact
+                  to="/viewpostings"
+                  className="navlink"
+                  activeClassName="navlink-active"
+                >
+                  View Postings
+                </NavLink>
+                {this.state.viewChecked ? (
+                  <div>
+                    <NavLink
+                      exact
+                      to="/applyposition"
+                      className="navlink"
+                      activeClassName="navlink-active"
+                    >
+                      Apply for Position
+                    </NavLink>
+                  </div>
+                ) : (
+                  <div>
+                    <NavLink
+                      exact
+                      to="/createposting"
+                      className="navlink"
+                      activeClassName="navlink-active"
+                    >
+                      Create Posting
+                    </NavLink>
+                    <NavLink
+                      exact
+                      to="/reviewapplications"
+                      className="navlink"
+                      activeClassName="navlink-active"
+                    >
+                      Review Applications
+                    </NavLink>
+                    <NavLink
+                      exact
+                      to="/scheduleinterview"
+                      className="navlink"
+                      activeClassName="navlink-active"
+                    >
+                      Schedule Interview
+                    </NavLink>
+                  </div>
+                )}
               </Router>
               <div>
                 <IconButton
@@ -93,7 +125,7 @@ class App extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  <AccountCircle/>
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -111,11 +143,10 @@ class App extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>
-                    {" "}
                     <Router>
-                    <NavLink exact to="/profile">
-                      Profile
-                    </NavLink>
+                      <NavLink exact to="/profile">
+                        Profile
+                      </NavLink>
                     </Router>
                   </MenuItem>
                 </Menu>
@@ -124,22 +155,6 @@ class App extends React.Component {
           </AppBar>
         </div>
         <Router>
-          {/* <NavLink exact to="/createposting">
-            Create Posting
-          </NavLink> */}
-          <NavLink exact to="/viewpostings">
-            View Postings
-          </NavLink>
-          <NavLink exact to="/reviewapplications">
-            Review Applications
-          </NavLink>
-          <NavLink exact to="/applyposition">
-            Apply for Position
-          </NavLink>
-          <NavLink exact to="/scheduleinterview">
-            Schedule Interview
-          </NavLink>
-
           <Route exact path="/createposting">
             <CreatePosting />
           </Route>
