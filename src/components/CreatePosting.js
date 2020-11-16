@@ -55,9 +55,6 @@ class CreatePosting extends React.Component {
     this.handleResumeChange = this.handleResumeChange.bind(this);
     this.handleCoverLetterChange = this.handleCoverLetterChange.bind(this);
     this.handleTranscriptChange = this.handleTranscriptChange.bind(this);
-    this.handleLettersOfReferenceChange = this.handleLettersOfReferenceChange.bind(
-      this
-    );
     this.handleDeadlineDateChange = this.handleDeadlineDateChange.bind(this);
     this.handleDeadlineTimeChange = this.handleDeadlineTimeChange.bind(this);
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
@@ -94,10 +91,6 @@ class CreatePosting extends React.Component {
 
   handleTranscriptChange(trans) {
     this.setState({ transcript: trans });
-  }
-
-  handleLettersOfReferenceChange(letters) {
-    this.setState({ lettersOfReference: letters });
   }
 
   handleDeadlineDateChange(date) {
@@ -514,7 +507,6 @@ class RequiredDocuments extends React.Component {
     this.changeResume = this.changeResume.bind(this);
     this.changeCoverLetter = this.changeCoverLetter.bind(this);
     this.changeTranscript = this.changeTranscript.bind(this);
-    this.changeLettersOfReference = this.changeLettersOfReference.bind(this);
   }
 
   changeResume(e) {
@@ -527,10 +519,6 @@ class RequiredDocuments extends React.Component {
 
   changeTranscript(e) {
     this.props.updateTranscript(e.target.checked);
-  }
-
-  changeLettersOfReference(e) {
-    this.props.updateLettersOfReference(e.target.checked);
   }
 
   render() {
@@ -575,17 +563,6 @@ class RequiredDocuments extends React.Component {
             }
             label="Transcript"
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.props.lettersOfReference}
-                onChange={this.changeLettersOfReference}
-                name="lettersofreference"
-                color="primary"
-              />
-            }
-            label="Letters Of Reference"
-          />
         </FormGroup>
       </div>
     );
@@ -616,10 +593,6 @@ export default CreatePosting;
 
 /* TODO
 
-Set start time 
-- Select month, day, year 
-- Select hours, minutes 
-
 Add additional application questions 
 */
 
@@ -628,5 +601,6 @@ Creating Posting Component
 Sub component under each one
 State store in parent component
 
+Take out letters of reference
 
 */
