@@ -1,6 +1,6 @@
 import React from "react";
 import './ReviewApplications.css';
-import {Box, Button, Grid, Tabs, Tab, Typography, AppBar, Paper } from '@material-ui/core';
+import {Box, Button, Grid, Tabs, Tab, Typography, AppBar, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {NavLink} from "react-router-dom";
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
@@ -149,7 +149,7 @@ class AppBody extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {value : 0, index:0}
+		this.state = {value : 0, index:0, open: false, open2: false}
 		this.handleChange = this.handleChange.bind(this)
 	}
 
@@ -166,9 +166,34 @@ class AppBody extends React.Component {
   		this.setState({value: parsed})
   	}
 
+  	setOpen(b){
+  		this.setState({open: b})
+  	}
+
+  	setOpen2(b){
+  		this.setState({open2: b})
+  	}
+
 	render() {
 		const f1 = Resume;
 		const f2 = Transcript;
+
+	  	const handleClickOpen = () => {
+	    	this.setOpen(true);
+	  	};
+
+  		const handleClose = () => {
+    		this.setOpen(false);
+  		};
+
+  		const handleClickOpen2 = () => {
+	    	this.setOpen2(true);
+	  	};
+
+  		const handleClose2 = () => {
+    		this.setOpen2(false);
+  		};
+
 		return(
 			<div>
 			<div className = "Outer2">
@@ -210,10 +235,58 @@ class AppBody extends React.Component {
 			    <Grid item xs={4} >
 			    <div className="rightBeside">
 					<MyEditor />
+					<Grid className="buttonGrids" container spacing={4} >
+						<Grid item xs={6} >
+							<Button className=" adSize markForInterview" variant="contained" onClick={handleClickOpen}> Mark for Interview </Button>
+						</Grid>
+						<Grid item xs={6} >
+							<Button className=" adSize reject" variant="contained" onClick={handleClickOpen2}> Reject Applicant </Button>
+						</Grid>
+					</Grid>
 				</div>
 				</Grid>
 				</Grid>	
 			</div>
+
+			<Dialog
+		        open={this.state.open}
+		        onClose={handleClose}
+		        aria-labelledby="alert-dialog-title"
+		        aria-describedby="alert-dialog-description"
+		    >
+		        <DialogTitle id="alert-dialog-title">{"Student Marked For Interview"}</DialogTitle>
+		        <DialogContent>
+		          <DialogContentText id="alert-dialog-description">
+		            The student has been marked for an interview. Please go to the Schedule Interview page to select a time and date. This window is safe to close.
+		          </DialogContentText>
+		        </DialogContent>
+		        <DialogActions>
+		          <Button onClick={handleClose} color="primary" autoFocus>
+		            Close
+		          </Button>
+		        </DialogActions>
+      		</Dialog>
+
+      		<Dialog
+		        open={this.state.open2}
+		        onClose={handleClose2}
+		        aria-labelledby="alert-dialog-title"
+		        aria-describedby="alert-dialog-description"
+		    >
+		        <DialogTitle id="alert-dialog-title">{"Application Rejected"}</DialogTitle>
+		        <DialogContent>
+		          <DialogContentText id="alert-dialog-description">
+		            The studnet application package has been rejected. The student will be emailed automatically. This window is safe to close.
+		          </DialogContentText>
+		        </DialogContent>
+		        <DialogActions>
+		          <Button onClick={handleClose2} color="primary" autoFocus>
+		            Close
+		          </Button>
+		        </DialogActions>
+      		</Dialog>
+
+
 			</div>
 		);
 	}
@@ -234,7 +307,6 @@ class MyEditor extends React.Component {
     return (
     	<div className="needToFit" >
       		<ReactQuill theme="snow" value={this.state.value} onChange={this.setValue}>
-      			
       		</ReactQuill>
       	</div>
     );
