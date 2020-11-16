@@ -46,6 +46,7 @@ class EditProfile extends React.Component {
 
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleProgramChange = this.handleProgramChange.bind(this);
+    this.handleProfilePicChange = this.handleProfilePicChange.bind(this);
     this.saveFiles = this.saveFiles.bind(this);
   }
 
@@ -55,6 +56,10 @@ class EditProfile extends React.Component {
 
   handleProgramChange(e) {
     this.props.onProgramChange(e.target.value);
+  }
+
+  handleProfilePicChange(e) {
+    this.props.onProfilePicChange(e.target.value);
   }
 
   saveFiles(fileList) {
@@ -133,6 +138,23 @@ class EditProfile extends React.Component {
           defaultValue={this.props.account}
         />
         <h4>Change Password</h4>
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          defaultValue={this.props.password}
+        />
+        <h4>Update Profile Picture</h4>
+        <p>Please enter the site link for the new profile picture.</p>
+        <TextField
+          className={classes.root}
+          id="profilepic"
+          variant="outlined"
+          label="Profile Picture Link"
+          defaultValue={this.props.profilePic}
+          onChange={this.handleProfilePicChange}
+        />
         <h4>Upload Transcript</h4>
         <div>
           <TranscriptUpload

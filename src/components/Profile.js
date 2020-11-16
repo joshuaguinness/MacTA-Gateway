@@ -17,13 +17,14 @@ class Profile extends React.Component {
       institution: "03",
       transit: "12345",
       account: "98765432",
-      profilepic: "./static/images/parnasd.jpeg",
+      profilePic: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/David_Parnas.jpg/225px-David_Parnas.jpg",
       transcript: "",
-      password: "admin",
+      password: "password123",
     };
 
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleProgramChange = this.handleProgramChange.bind(this);
+    this.handleProfilePicChange = this.handleProfilePicChange.bind(this);
   }
 
   handlePhoneChange(phone){
@@ -32,6 +33,10 @@ class Profile extends React.Component {
 
   handleProgramChange(program){
     this.setState({program: program});
+  }
+
+  handleProfilePicChange(pic){
+    this.setState({profilePic: pic});
   }
 
   render() {
@@ -50,6 +55,7 @@ class Profile extends React.Component {
             style={{borderRightStyle: "solid", borderWidth: "1px"}}
               program={this.state.program}
               phone={this.state.phone}
+              profilePic={this.state.profilePic}
             />
             </div>
           </Grid>
@@ -64,8 +70,10 @@ class Profile extends React.Component {
               transit={this.state.transit}
               account={this.state.account}
               password={this.state.password}
+              profilePic={this.state.profilePic}
               onPhoneChange={this.handlePhoneChange}
               onProgramChange={this.handleProgramChange}
+              onProfilePicChange={this.handleProfilePicChange}
             />
           </Grid>
         </Grid>
