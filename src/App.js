@@ -8,7 +8,7 @@ import ReviewApplications from "./components/ReviewApplications.js";
 import ApplyPosition from "./components/ApplyPosition.js";
 import Profile from "./components/Profile.js";
 import ScheduleInterview from "./components/ScheduleInterview.js";
-import StudentReviewApplications from "./components/StudentReviewApplications.js"
+import StudentReviewApplications from "./components/StudentReviewApplications.js";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -19,6 +19,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -31,11 +38,14 @@ class App extends React.Component {
     this.state = {
       viewChecked: true,
       anchorEl: null,
+      open: false,
     };
 
     this.handleViewChange = this.handleViewChange.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleViewChange(e) {
@@ -48,6 +58,14 @@ class App extends React.Component {
 
   handleClose(e) {
     this.setState({ anchorEl: null });
+  }
+
+  handleLogout() {
+    window.location.replace("https://www.mcmaster.ca/");
+  }
+
+  handleLogin() {
+    this.setState({ open: !this.state.open });
   }
 
   render() {
@@ -134,7 +152,7 @@ class App extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle/>
+                  <AccountCircle />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
@@ -158,10 +176,45 @@ class App extends React.Component {
                       </NavLink>
                     </Router>
                   </MenuItem>
+                  <MenuItem onClick={this.handleLogin}>Login</MenuItem>
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             </Toolbar>
           </AppBar>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleLogin}
+            aria-labelledby="alter-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Login"}</DialogTitle>
+            <DialogContent>
+              <TextField
+                fullWidth
+                id="loginemail"
+                variant="outlined"
+                label="Email"
+                defaultValue=""
+              />
+              <br />
+              <TextField
+                fullWidth
+                id="loginpassword"
+                variant="outlined"
+                label="Password"
+                defaultValue=""
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleLogin} color="primary" autoFocus>
+                Login
+              </Button>
+              <Button onClick={this.handleLogin} color="primary" autoFocus>
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
         <Router>
           <Route exact path="/createposting">
