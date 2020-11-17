@@ -44,8 +44,8 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <Box component="div" className="background">
-          <Box component="div" className="foreground">
+        <Box component="div" className="background-profile">
+          <Box component="div" className="foreground-profile">
             <Grid
               container
               spacing={3}

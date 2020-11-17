@@ -1,14 +1,14 @@
 .summaryprofile {
     border-right-style: solid;
-    border-width: 1px;
+    border-width: 2px;
 }
 
-.background {
+.background-profile {
 	background-color: #7A003C;
-	height: 100vh;
+	height: 100% !important;
 }
 
-.foreground {
+.foreground-profile {
 	background-color: #FFF;
 	width: 97%;
 	height: 94%;
@@ -19,4 +19,9 @@
 
 .FixPadding {
 	margin: 0 !important;
+}
+
+.transcript-upload {
+	width: 95% !important;
+	height: 95% !important;
 }

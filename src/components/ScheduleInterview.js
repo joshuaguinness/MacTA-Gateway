@@ -13,7 +13,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Box
+  Box,
 } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
@@ -399,29 +399,28 @@ class ScheduleInterview extends React.Component {
     return (
       <Box component="div" className="background">
         <Box component="div" className="foreground">
-        <Grid className="FixPadding" container spacing={3}>
-          <h1>Schedule Interview</h1>
-          <div className={"body"}>
-            <div className={"calendar"}>
-              <Calendar
-                light
-                // selection={this.formatDate}
-                selection={this.setDate}
-                generalStyle={{ height: "100%" }}
-              />
-            </div>
-            <div className={"scheduler"}>
-              <SideBar
-                dateTime={this.state.dateTime}
-                interviews={this.state.interviews}
-                jobs={this.state.jobs}
-                candidates={this.state.candidates}
-                addInterview={this.addInterview}
-                getNextId={this.getNextId}
-                deleteInterview={this.deleteInterview}
-              />
-            </div>
-          </div>
+          <Grid className="FixPadding gridInterview" container spacing={3}>
+            <Grid container item justify="center">
+              <h1>Schedule Interview</h1>
+            </Grid>
+              <Grid item xs={9}>
+                  <Calendar
+                    light
+                    selection={this.setDate}
+                    generalStyle={{ height: "100%" }}
+                  />
+              </Grid>
+              <Grid item xs={3}>
+                  <SideBar
+                    dateTime={this.state.dateTime}
+                    interviews={this.state.interviews}
+                    jobs={this.state.jobs}
+                    candidates={this.state.candidates}
+                    addInterview={this.addInterview}
+                    getNextId={this.getNextId}
+                    deleteInterview={this.deleteInterview}
+                  />
+            </Grid>
           </Grid>
         </Box>
       </Box>
