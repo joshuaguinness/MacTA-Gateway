@@ -38,7 +38,7 @@
 }
 
 .navlink {
-  color: white;
+  color: #7A003C;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -48,5 +48,16 @@
 }
 
 .MuiAppBar-colorPrimary {
-  background-color: #7A003C !important;
+  background-color: white !important;
+  color: #7A003C !important;
+}
+
+.macLogo {
+  width: 118px;
+  height: 66px;
+  margin-right: 20px;
+}
+
+.gateway {
+  margin-right: 20px !important;
 }

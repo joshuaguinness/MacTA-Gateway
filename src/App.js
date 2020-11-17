@@ -26,6 +26,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
+import macLogo from "./components/static/images/mac-logo.png";
+
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -86,7 +88,8 @@ class App extends React.Component {
           </FormGroup>
           <AppBar position="static">
             <Toolbar>
-              <Typography variant="h6">McMaster Gateway</Typography>
+            <img src={macLogo} alt="McMaster Logo" className="macLogo"/>
+              <Typography variant="h3" className="gateway">Gateway</Typography>
               <Router>
                 <NavLink
                   exact
@@ -143,8 +146,10 @@ class App extends React.Component {
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
+                  size="small"
+                  edge="end"
                 >
-                  <AccountCircle />
+                  <AccountCircle fontSize="large"/>
                 </IconButton>
                 <Menu
                   id="menu-appbar"

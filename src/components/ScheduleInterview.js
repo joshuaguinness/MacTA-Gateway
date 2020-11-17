@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Box
 } from "@material-ui/core";
 import "../style/ScheduleInterview.css";
 
@@ -396,8 +397,9 @@ class ScheduleInterview extends React.Component {
 
   render() {
     return (
-      <div className={"background"}>
-        <div className={"foreground"}>
+      <Box component="div" className="background">
+        <Box component="div" className="foreground">
+        <Grid className="FixPadding" container spacing={3}>
           <h1>Schedule Interview</h1>
           <div className={"body"}>
             <div className={"calendar"}>
@@ -420,8 +422,9 @@ class ScheduleInterview extends React.Component {
               />
             </div>
           </div>
-        </div>
-      </div>
+          </Grid>
+        </Box>
+      </Box>
     );
   }
 }

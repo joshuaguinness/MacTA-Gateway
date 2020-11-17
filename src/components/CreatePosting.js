@@ -10,15 +10,11 @@ import {
   DialogContentText,
   DialogActions,
 } from "@material-ui/core";
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Box from "@material-ui/core/Box";
+import "../style/CreatePosting.css";
 
 class CreatePosting extends React.Component {
   constructor(props) {
@@ -121,11 +117,11 @@ class CreatePosting extends React.Component {
 
   render() {
     return (
-      <div className={"background"}>
-        <div className={"foreground"}>
-          <h1>{this.state.jobTitle} Application</h1>
-          <Grid container spacing={2}>
+      <Box component="div" className="background">
+        <Box component="div" className="foreground">
+          <Grid container spacing={3} className="FixPadding">
             <Grid container item justify="center">
+            <h1>{this.state.jobTitle} Application</h1>
               <ButtonGroup disableElevation variant="contained" color="primary">
                 <Button
                   onClick={(event) => this.setState({ active: "NamePosting" })}
@@ -325,8 +321,8 @@ class CreatePosting extends React.Component {
               </div>
             )}
           </Grid>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   }
 }
@@ -588,7 +584,7 @@ class AdditionalQuestions extends React.Component {
 
     this.state = {
       newQuestion: "",
-      key: this.props.additionalApplicationQuestions.length
+      key: this.props.additionalApplicationQuestions.length,
     };
 
     this.changeAdditionalAppliactionQuestions = this.changeAdditionalAppliactionQuestions.bind(
@@ -600,10 +596,10 @@ class AdditionalQuestions extends React.Component {
   changeAdditionalAppliactionQuestions(e) {
     const newQArray = [
       ...this.props.additionalApplicationQuestions,
-      {id: this.state.key, question: this.state.newQuestion},
+      { id: this.state.key, question: this.state.newQuestion },
     ];
     const newKey = this.state.key + 1;
-    this.setState({key: newKey});
+    this.setState({ key: newKey });
     this.props.updateAdditionalApplicationQuestions(newQArray);
   }
 
@@ -621,9 +617,9 @@ class AdditionalQuestions extends React.Component {
         </h5>
         <h5>Type them into the box, and click "Add" to add them.</h5>
         <h6>Questions added so far:</h6>
-        {this.props.additionalApplicationQuestions.map(({id, question}) =>
+        {this.props.additionalApplicationQuestions.map(({ id, question }) => (
           <p key={id}>{question}</p>
-        )}
+        ))}
         <TextField
           id="additionalquestion"
           label="Question"
@@ -648,7 +644,6 @@ class AdditionalQuestions extends React.Component {
 }
 
 class Review extends React.Component {
-
   render() {
     return (
       <div>
@@ -670,7 +665,7 @@ class Review extends React.Component {
         {this.props.coverLetter ? <p>Cover Letter</p> : null}
         {this.props.transcript ? <p>Transcript</p> : null}
         <h4>Additional Questions</h4>
-        {this.props.additionalApplicationQuestions.map(({id, question}) => (
+        {this.props.additionalApplicationQuestions.map(({ id, question }) => (
           <p key={id}>{question}</p>
         ))}
       </div>

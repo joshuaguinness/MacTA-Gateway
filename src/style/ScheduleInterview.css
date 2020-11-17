@@ -41,3 +41,7 @@
   margin-top: 5vh;
   margin-bottom: 5vh;
 }
+
+.FixPadding {
+	margin: 0 !important;
+}
