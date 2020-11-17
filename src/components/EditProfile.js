@@ -12,6 +12,7 @@ const styles = {
     marginTop: "10px",
     marginBottom: "10px",
     alignItems: "right",
+    maxWidth: "400px"
   },
 };
 
@@ -22,7 +23,7 @@ class TranscriptUpload extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="transcript-upload">
         <p>Please upload your transcript as a PDF.</p>
         <DropzoneArea
           initialFiles={this.props.appFiles}

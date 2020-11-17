@@ -121,7 +121,9 @@ class CreatePosting extends React.Component {
         <Box component="div" className="foreground">
           <Grid container spacing={3} className="FixPadding">
             <Grid container item justify="center">
-            <h1>{this.state.jobTitle} Application</h1>
+              <h1>{this.state.jobTitle} Application</h1>
+            </Grid>
+            <Grid container item justify="center">
               <ButtonGroup disableElevation variant="contained" color="primary">
                 <Button
                   onClick={(event) => this.setState({ active: "NamePosting" })}
@@ -538,6 +540,7 @@ class RequiredDocuments extends React.Component {
           Select which documents you would like to be required for applications
           to submit
         </h5>
+        <Grid container item justify="center">
         <FormGroup>
           <FormControlLabel
             control={
@@ -573,6 +576,7 @@ class RequiredDocuments extends React.Component {
             label="Transcript"
           />
         </FormGroup>
+        </Grid>
       </div>
     );
   }
