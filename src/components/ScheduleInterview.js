@@ -317,7 +317,7 @@ class SideBar extends React.Component {
                     <Grid item>
                       <Button
                         disableElevation
-                        variant="secondary"
+                        color="secondary"
                         onClick={() => this.deleteInterview(interview.id)}
                       >
                         Delete

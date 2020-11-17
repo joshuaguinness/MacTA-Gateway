@@ -59,7 +59,6 @@ class BodyTabs extends React.Component {
 
   	handleChange(e) {
   		var parsed = parseInt(e.currentTarget.dataset.index, 10)
-  		console.log(parsed)
   		this.setState({value: parsed})
   	}
 
@@ -162,7 +161,6 @@ class AppBody extends React.Component {
 
   	handleChange(e) {
   		var parsed = parseInt(e.currentTarget.dataset.index, 10)
-  		console.log(parsed)
   		this.setState({value: parsed})
   	}
 
@@ -363,7 +361,6 @@ class ReviewApplications extends React.Component {
 	}
 
   render() {
-  	console.log("hello")
     return (
       <Box component="div" className="background">
       	<Box component="div" className="foreground">
