@@ -48,10 +48,11 @@ class Profile extends React.Component {
           <Box component="div" className="foreground">
             <Grid
               container
-              spacing={2}
+              spacing={3}
               direction="row"
               justify="center"
               alignItems="center"
+              className="FixPadding"
             >
               <Grid item xs={5}>
                 <div className="summaryprofile">
