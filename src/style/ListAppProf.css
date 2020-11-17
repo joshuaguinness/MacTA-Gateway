@@ -23,11 +23,35 @@
 
 .linkButton {
 	width: 25% !important;
-	height: 200%;
+	height: 150%;
 }
 
 .linkText {
 	font-size: 15px;
 	color: black;
 	text-decoration: none;
+}
+
+.modify-button-group {
+	margin-top: 30px !important;
+}
+
+.optionButton {
+	margin: 10px !important;
+}
+
+.deleteButton {
+	color:  red !important;
+}
+
+.filledButton {
+	color: green !important;
+}
+
+.closeButton {
+	color: rgb(138, 138, 2) !important;
+}
+
+.reopenButton {
+	color: rgb(0, 100, 0) !important;
 }
