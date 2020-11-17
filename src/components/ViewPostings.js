@@ -281,7 +281,10 @@ class PostDetails extends React.Component {
      			</Grid>
      			<Grid item xs={12}>
      				<ul className="cResp">
-     					<li > {this.props.resp} </li>
+     					{this.props.resp.map((resps) =>
+     							<li > {resps} </li>
+     						)}
+     					
      				</ul>
 					</Grid>
 				</Grid>
