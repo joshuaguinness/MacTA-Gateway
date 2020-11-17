@@ -150,7 +150,6 @@ class Thumbnail extends React.Component {
 
 	handleChange(e) {
 		var parsed = parseInt(e.currentTarget.dataset.index, 10)
-  		console.log(parsed)
   		this.setState({value: parsed})
 	}
 
@@ -450,19 +449,15 @@ class ViewPostings extends React.Component {
   }
 
   updateDeptFilter(e) {
-  	console.log(e)
   	this.setState({deptFilters : e});
   }
   updateHoursFilter(e) {
-  	console.log(e)
   	this.setState({hoursFilters : e});
   }
   updateRespFilter(e) {
-  	console.log(e)
   	this.setState({respFilters : e});
   }
   updateOnSL(e) {
-  	console.log(e)
   	this.setState({onSL : e});
   }
 

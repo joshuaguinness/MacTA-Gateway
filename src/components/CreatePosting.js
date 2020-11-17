@@ -174,6 +174,7 @@ class CreatePosting extends React.Component {
                   updateCourseTitle={this.handleCourseTitleChange}
                   updateCourseCode={this.handleCourseCodeChange}
                 />
+                <br></br>
                 <Button
                   disableElevation
                   variant="contained"
@@ -201,6 +202,7 @@ class CreatePosting extends React.Component {
                   endDate={this.state.endDate}
                   updateEndDate={this.handleEndDateChange}
                 />
+                <br></br>
                 <Button
                   disableElevation
                   variant="contained"
@@ -222,6 +224,7 @@ class CreatePosting extends React.Component {
                   updateDeadlineDate={this.handleDeadlineDateChange}
                   updateDeadlineTime={this.handleDeadlineTimeChange}
                 />
+                <br></br>
                 <Button
                   disableElevation
                   variant="contained"
@@ -247,6 +250,7 @@ class CreatePosting extends React.Component {
                   updateTranscript={this.handleTranscriptChange}
                   updateLettersOfReference={this.handleLettersOfReferenceChange}
                 />
+                <br></br>
                 <Button
                   disableElevation
                   variant="contained"
@@ -270,6 +274,7 @@ class CreatePosting extends React.Component {
                     this.handleAdditionalApplicationQuestions
                   }
                 />
+                <br></br>
                 <Button
                   disableElevation
                   variant="contained"
@@ -349,7 +354,7 @@ class NamePosting extends React.Component {
     return (
       <div>
         <h3>Please fill out the following text boxes</h3>
-        <h5>Please click the 'Complete Step' button when you are done.</h5>
+        <p>Please click the 'Post Details' button when you are done.</p>
         <TextField
           id="coursetitle"
           label="Course Title"
@@ -410,6 +415,7 @@ class PostDetails extends React.Component {
       <div>
         <h3>Please add your posting details in the text box below.</h3>
         <TextField
+          className="textfield"
           id="postdescription"
           label="Description"
           multiline
@@ -420,6 +426,7 @@ class PostDetails extends React.Component {
         />
         <br />
         <TextField
+        className="textfield"
           id="postskills"
           label="Skills"
           multiline
@@ -430,6 +437,7 @@ class PostDetails extends React.Component {
         />
         <br />
         <TextField
+        className="textfield"
           id="postresponsibilities"
           label="Responsibilities"
           multiline
@@ -440,6 +448,7 @@ class PostDetails extends React.Component {
         />
         <br />
         <TextField
+        className="textfield"
           id="startdate"
           label="Position Start Date"
           type="date"
@@ -451,6 +460,7 @@ class PostDetails extends React.Component {
         />
         <br />
         <TextField
+        className="textfield"
           id="enddate"
           label="Position End Date"
           type="date"
@@ -494,7 +504,7 @@ class ApplicationDeadline extends React.Component {
     return (
       <div>
         <h3>Application Deadline</h3>
-        <h5>Please add an application deadline</h5>
+        <p>Please add an application deadline</p>
         <TextField
           id="applicationdeadline"
           label="Application Deadline"
@@ -536,10 +546,10 @@ class RequiredDocuments extends React.Component {
     return (
       <div>
         <h3>Required Documents</h3>
-        <h5>
+        <p>
           Select which documents you would like to be required for applications
           to submit
-        </h5>
+        </p>
         <Grid container item justify="center">
         <FormGroup>
           <FormControlLabel
@@ -615,16 +625,17 @@ class AdditionalQuestions extends React.Component {
     return (
       <div>
         <h3>Additional Questions</h3>
-        <h5>
+        <p>
           Please add any additional questions that you would like applicants to
           answer as a part of the application process.
-        </h5>
-        <h5>Type them into the box, and click "Add" to add them.</h5>
-        <h6>Questions added so far:</h6>
+        </p>
+        <p>Type them into the box, and click "Add" to add them.</p>
+        <h4>Questions added so far:</h4>
         {this.props.additionalApplicationQuestions.map(({ id, question }) => (
           <p key={id}>{question}</p>
         ))}
         <TextField
+        className="textfield"
           id="additionalquestion"
           label="Question"
           multiline

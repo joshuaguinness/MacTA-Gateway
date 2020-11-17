@@ -5,7 +5,7 @@
 
 .background-profile {
 	background-color: #7A003C;
-	height: 100% !important;
+	height: 100%;
 }
 
 .foreground-profile {
@@ -23,5 +23,4 @@
 
 .transcript-upload {
 	width: 95% !important;
-	height: 95% !important;
 }

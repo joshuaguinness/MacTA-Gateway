@@ -24,7 +24,6 @@ class TranscriptUpload extends React.Component {
   render() {
     return (
       <div className="transcript-upload">
-        <p>Please upload your transcript as a PDF.</p>
         <DropzoneArea
           initialFiles={this.props.appFiles}
           showFileNamesInPreview={true}
@@ -177,6 +176,7 @@ class EditProfile extends React.Component {
         {this.props.viewChecked ? (
           <div>
             <h4>Upload Transcript</h4>
+            <p>Please upload your transcript as a PDF.</p>
             <div>
               <TranscriptUpload
                 appFiles={this.state.files}
